@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>التفسير الميسر</title>
+    
+    <!-- ===== PWA الأساسيات ===== -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#d4af37">
+    
+    <!-- ===== iOS Safari المُحسَّن ===== -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="القرآن الكريم">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- ===== أيقونات iOS ===== -->
+    <link rel="apple-touch-icon" href="icons/icon-180x180.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="icons/icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180x180.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="icons/icon-167x167.png">
+    
+    <!-- ===== Splash Screens لـ iOS ===== -->
+    <!-- iPhone X / XS / 11 Pro -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-1125x2436.png"
+          media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)">
+    
+    <!-- iPhone XR / 11 -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-828x1792.png"
+          media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)">
+    
+    <!-- iPhone 12/13/14 -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-1170x2532.png"
+          media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3)">
+    
+    <!-- iPhone 12/13/14 Pro Max -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-1284x2778.png"
+          media="(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3)">
+    
+    <!-- iPhone 14 Pro -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-1179x2556.png"
+          media="(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3)">
+    
+    <!-- iPhone 14 Pro Max -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-1290x2796.png"
+          media="(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3)">
+    
+    <!-- ===== معلومات التطبيق ===== -->
+    <meta name="application-name" content="القرآن الكريم">
+    <meta name="description" content="تطبيق إسلامي شامل - المصحف الشريف، أوقات الصلاة، الأذان">
+    <meta name="author" content="Your Name">
+    
+    <title>تطبيق القرآن الكريم</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    
+    <script>
+        (function() {
+            var theme = localStorage.getItem('appTheme') || 'dark';
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+    
+    <style>
+        /* ========================================
+           نظام الثيمات
+        ======================================== */
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #111118;
+            --card-bg: #1a1a1a;
+            --border-color: #333;
+            --golden: #d4af37;
+            --golden-light: rgba(212, 175, 55, 0.1);
+            --golden-bg: rgba(212, 175, 55, 0.2);
+            --text-primary: #ffffff;
+            --text-secondary: #e0e0e0;
+            --text-muted: #888;
+            --hover-bg: #222;
+            --tafsir-bg: #1a2520;
+            --tafsir-border: #2d5a4a;
+            --verse-bg: rgba(212, 175, 55, 0.08);
+        }
+
+        html[data-theme="light"] {
+            --bg-primary: #f5f5f7;
+            --bg-secondary: #ffffff;
+            --card-bg: #ffffff;
+            --border-color: #ddd;
+            --golden: #b8860b;
+            --golden-light: rgba(184, 134, 11, 0.1);
+            --golden-bg: rgba(184, 134, 11, 0.2);
+            --text-primary: #1a1a1a;
+            --text-secondary: #333;
+            --text-muted: #666;
+            --hover-bg: #f0f0f0;
+            --tafsir-bg: #e8f5e9;
+            --tafsir-border: #81c784;
+            --verse-bg: rgba(184, 134, 11, 0.08);
+        }
+
+        html[data-theme="blue"] {
+            --bg-primary: #e8f4fc;
+            --bg-secondary: #d0e8f7;
+            --card-bg: #ffffff;
+            --border-color: #a8d4f0;
+            --golden: #1565c0;
+            --golden-light: rgba(21, 101, 192, 0.1);
+            --golden-bg: rgba(21, 101, 192, 0.2);
+            --text-primary: #0d3b66;
+            --text-secondary: #1a5276;
+            --text-muted: #5a9bd4;
+            --hover-bg: #cce5f7;
+            --tafsir-bg: #e3f2fd;
+            --tafsir-border: #64b5f6;
+            --verse-bg: rgba(21, 101, 192, 0.08);
+        }
+
+        html[data-theme="green"] {
+            --bg-primary: #e8f5e9;
+            --bg-secondary: #d0ecd1;
+            --card-bg: #ffffff;
+            --border-color: #a5d6a7;
+            --golden: #2e7d32;
+            --golden-light: rgba(46, 125, 50, 0.1);
+            --golden-bg: rgba(46, 125, 50, 0.2);
+            --text-primary: #1b4d1e;
+            --text-secondary: #2e7d32;
+            --text-muted: #66bb6a;
+            --hover-bg: #c8e6c9;
+            --tafsir-bg: #f1f8e9;
+            --tafsir-border: #aed581;
+            --verse-bg: rgba(46, 125, 50, 0.08);
+        }
+
+        html[data-theme="brown"] {
+            --bg-primary: #f5f0eb;
+            --bg-secondary: #e8ddd4;
+            --card-bg: #ffffff;
+            --border-color: #c9b8a8;
+            --golden: #6d4c41;
+            --golden-light: rgba(109, 76, 65, 0.1);
+            --golden-bg: rgba(109, 76, 65, 0.2);
+            --text-primary: #3e2723;
+            --text-secondary: #5d4037;
+            --text-muted: #8d6e63;
+            --hover-bg: #d7ccc8;
+            --tafsir-bg: #efebe9;
+            --tafsir-border: #bcaaa4;
+            --verse-bg: rgba(109, 76, 65, 0.08);
+        }
+
+        html[data-theme="pink"] {
+            --bg-primary: #fdf2f5;
+            --bg-secondary: #fce4ec;
+            --card-bg: #ffffff;
+            --border-color: #f8b4c8;
+            --golden: #d81b60;
+            --golden-light: rgba(216, 27, 96, 0.1);
+            --golden-bg: rgba(216, 27, 96, 0.2);
+            --text-primary: #6d1039;
+            --text-secondary: #ad1457;
+            --text-muted: #e57399;
+            --hover-bg: #fce4ec;
+            --tafsir-bg: #fce4ec;
+            --tafsir-border: #f48fb1;
+            --verse-bg: rgba(216, 27, 96, 0.08);
+        }
+
+        /* ========================================
+           الأساسيات
+        ======================================== */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Amiri', serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.8;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* ========== الشريط العلوي ========== */
+        .top-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--bg-secondary);
+            border-bottom: 2px solid var(--golden);
+            padding: 12px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--golden);
+            text-decoration: none;
+            font-size: 1rem;
+            transition: opacity 0.3s;
+        }
+
+        .back-btn:hover { opacity: 0.7; }
+        .back-arrow { font-size: 1.4rem; }
+
+        .page-title {
+            color: var(--golden);
+            font-size: 1.2rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header-spacer { width: 60px; }
+
+        /* ========== اختيار السورة ========== */
+        .surah-selector {
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px;
+        }
+
+        .selector-row {
+            display: flex;
+            gap: 10px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .selector-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .selector-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .selector-input {
+            width: 100%;
+            padding: 10px 15px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-family: 'Amiri', serif;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+            cursor: pointer;
+        }
+
+        .selector-input:focus {
+            border-color: var(--golden);
+        }
+
+        .load-btn {
+            align-self: flex-end;
+            background: var(--golden);
+            color: var(--bg-primary);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-family: 'Amiri', serif;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .load-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px var(--golden-bg);
+        }
+
+        .load-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* ========== معلومات السورة ========== */
+        .surah-info {
+            text-align: center;
+            padding: 20px;
+            background: var(--golden-light);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .surah-name {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--golden);
+            margin-bottom: 5px;
+        }
+
+        .surah-details {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* ========== البسملة ========== */
+        .bismillah {
+            text-align: center;
+            padding: 20px;
+            font-family: 'Amiri Quran', serif;
+            font-size: 1.5rem;
+            color: var(--golden);
+            background: var(--verse-bg);
+        }
+
+        /* ========== محتوى التفسير ========== */
+        .tafsir-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 15px;
+            padding-bottom: 50px;
+        }
+
+        /* ========== بطاقة الآية والتفسير ========== */
+        .verse-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            transition: border-color 0.3s;
+        }
+
+        .verse-card:hover {
+            border-color: var(--golden);
+        }
+
+        /* ========== نص الآية ========== */
+        .verse-header {
+            background: var(--verse-bg);
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .verse-number-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+            background: var(--golden);
+            color: var(--bg-primary);
+            border-radius: 50%;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .verse-text {
+            font-family: 'Amiri Quran', serif;
+            font-size: 1.5rem;
+            line-height: 2.5;
+            color: var(--text-primary);
+            text-align: justify;
+            text-align-last: center;
+        }
+
+        /* ========== نص التفسير ========== */
+        .tafsir-box {
+            padding: 15px;
+            background: var(--tafsir-bg);
+            border-right: 4px solid var(--tafsir-border);
+        }
+
+        .tafsir-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--golden);
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .tafsir-text {
+            font-size: 1.1rem;
+            line-height: 2;
+            color: var(--text-secondary);
+            text-align: justify;
+        }
+
+        /* ========== التحميل ========== */
+        .loading-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+            color: var(--text-muted);
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid var(--border-color);
+            border-top-color: var(--golden);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-size: 1rem;
+        }
+
+        /* ========== حالة فارغة ========== */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .empty-title {
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+
+        .empty-text {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        /* ========== رسالة الخطأ ========== */
+        .error-message {
+            text-align: center;
+            padding: 40px 20px;
+            color: #e74c3c;
+        }
+
+        .error-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .retry-btn {
+            background: var(--golden);
+            color: var(--bg-primary);
+            border: none;
+            padding: 10px 25px;
+            border-radius: 20px;
+            font-family: 'Amiri', serif;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        /* ========== التنقل بين الصفحات ========== */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 20px;
+            flex-wrap: wrap;
+        }
+
+        .page-btn {
+            background: var(--card-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Amiri', serif;
+            transition: all 0.3s;
+        }
+
+        .page-btn:hover {
+            border-color: var(--golden);
+            background: var(--golden-light);
+        }
+
+        .page-btn.active {
+            background: var(--golden);
+            color: var(--bg-primary);
+            border-color: var(--golden);
+        }
+
+        .page-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        /* ========== نافذة اختيار السورة ========== */
+        .surah-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            padding: 20px;
+        }
+
+        .surah-modal.active {
+            display: flex;
+        }
+
+        .surah-modal-content {
+            background: var(--card-bg);
+            border: 2px solid var(--golden);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .surah-modal-header {
+            padding: 15px 20px;
+            background: var(--golden-light);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .surah-modal-title {
+            color: var(--golden);
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .surah-modal-close {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .surah-search-box {
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .surah-search-input {
+            width: 100%;
+            padding: 10px 15px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-family: 'Amiri', serif;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .surah-search-input:focus {
+            border-color: var(--golden);
+        }
+
+        .surah-modal-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        .surah-modal-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .surah-modal-item:hover {
+            background: var(--golden-light);
+        }
+
+        .surah-modal-number {
+            width: 35px;
+            height: 35px;
+            background: var(--golden);
+            color: var(--bg-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .surah-modal-name {
+            flex: 1;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+        }
+
+        .surah-modal-verses {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 480px) {
+            .selector-row {
+                flex-direction: column;
+            }
+
+            .load-btn {
+                width: 100%;
+            }
+
+            .verse-text {
+                font-size: 1.3rem;
+            }
+
+            .tafsir-text {
+                font-size: 1rem;
+            }
+
+            .page-title {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ========== الشريط العلوي ========== -->
+    <header class="top-header">
+        <a href="index.html" class="back-btn">
+            <span class="back-arrow">→</span>
+            <span>الرئيسية</span>
+        </a>
+        <h1 class="page-title">
+            <span>📘</span>
+            <span>التفسير الميسر</span>
+        </h1>
+        <div class="header-spacer"></div>
+    </header>
+
+    <!-- ========== اختيار السورة ========== -->
+    <div class="surah-selector">
+        <div class="selector-row">
+            <div class="selector-group">
+                <span class="selector-label">اختر السورة</span>
+                <input type="text" class="selector-input" id="surahInput" 
+                       placeholder="اضغط لاختيار السورة" readonly onclick="openSurahModal()">
+            </div>
+            <button class="load-btn" id="loadBtn" onclick="loadTafsir()" disabled>
+                عرض التفسير
+            </button>
+        </div>
+    </div>
+
+    <!-- ========== معلومات السورة ========== -->
+    <div class="surah-info" id="surahInfo" style="display: none;">
+        <h2 class="surah-name" id="surahName">--</h2>
+        <p class="surah-details" id="surahDetails">--</p>
+    </div>
+
+    <!-- ========== محتوى التفسير ========== -->
+    <main class="tafsir-content" id="tafsirContent">
+        <div class="empty-state">
+            <div class="empty-icon">📖</div>
+            <h3 class="empty-title">اختر سورة للبدء</h3>
+            <p class="empty-text">اختر السورة من القائمة أعلاه لعرض التفسير الميسر</p>
+        </div>
+    </main>
+
+    <!-- ========== نافذة اختيار السورة ========== -->
+    <div class="surah-modal" id="surahModal" onclick="closeSurahModal(event)">
+        <div class="surah-modal-content" onclick="event.stopPropagation()">
+            <div class="surah-modal-header">
+                <span class="surah-modal-title">📚 اختر السورة</span>
+                <button class="surah-modal-close" onclick="closeSurahModal()">&times;</button>
+            </div>
+            <div class="surah-search-box">
+                <input type="text" class="surah-search-input" id="surahSearchInput" 
+                       placeholder="ابحث عن سورة..." oninput="filterSurahs()">
+            </div>
+            <div class="surah-modal-list" id="surahModalList">
+                <!-- سيتم ملؤها بـ JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== JavaScript ========== -->
+    <script>
+        // ========================================
+        // المتغيرات العامة
+        // ========================================
+        let surahsList = [];
+        let selectedSurah = null;
+        let currentTafsirData = [];
+
+        // ========================================
+        // API Endpoints
+        // ========================================
+        
+        const API = {
+            surahs: 'https://api.quran.com/api/v4/chapters?language=ar',
+            verses: (surahId) => `https://api.quran.com/api/v4/quran/verses/uthmani?chapter_number=${surahId}&per_page=300`,
+            tafsir: (surahId) => `https://api.quran.com/api/v4/tafsirs/16/by_chapter/${surahId}?per_page=300`
+        };
+
+        // ========================================
+        // تحويل الأرقام للعربية
+        // ========================================
+        function toArabic(n) {
+            return n.toString().replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
+        }
+
+        // ========================================
+        // تهيئة الصفحة
+        // ========================================
+        async function init() {
+            await loadSurahsList();
+        }
+
+        // ========================================
+        // تحميل قائمة السور
+        // ========================================
+        async function loadSurahsList() {
+            try {
+                const response = await fetch(API.surahs);
+                const data = await response.json();
+                surahsList = data.chapters;
+                renderSurahsList();
+            } catch (error) {
+                console.error('خطأ في تحميل قائمة السور:', error);
+            }
+        }
+
+        // ========================================
+        // عرض قائمة السور في النافذة
+        // ========================================
+        function renderSurahsList(filtered = null) {
+            const list = document.getElementById('surahModalList');
+            const surahs = filtered || surahsList;
+
+            list.innerHTML = surahs.map(surah => `
+                <div class="surah-modal-item" onclick="selectSurah(${surah.id})">
+                    <span class="surah-modal-number">${toArabic(surah.id)}</span>
+                    <span class="surah-modal-name">${surah.name_arabic}</span>
+                    <span class="surah-modal-verses">${toArabic(surah.verses_count)} آية</span>
+                </div>
+            `).join('');
+        }
+
+        // ========================================
+        // فتح نافذة اختيار السورة
+        // ========================================
+        function openSurahModal() {
+            document.getElementById('surahModal').classList.add('active');
+            document.getElementById('surahSearchInput').value = '';
+            renderSurahsList();
+            document.getElementById('surahSearchInput').focus();
+        }
+
+        // ========================================
+        // إغلاق نافذة اختيار السورة
+        // ========================================
+        function closeSurahModal(event) {
+            if (event && event.target !== event.currentTarget) return;
+            document.getElementById('surahModal').classList.remove('active');
+        }
+
+        // ========================================
+        // البحث في السور
+        // ========================================
+        function filterSurahs() {
+            const query = document.getElementById('surahSearchInput').value.trim();
+            
+            if (!query) {
+                renderSurahsList();
+                return;
+            }
+
+            const filtered = surahsList.filter(surah => {
+                const name = surah.name_arabic.replace(/[\u064B-\u065F]/g, '');
+                const searchQuery = query.replace(/[\u064B-\u065F]/g, '');
+                return name.includes(searchQuery) || 
+                       surah.id.toString() === query ||
+                       surah.name_simple.toLowerCase().includes(query.toLowerCase());
+            });
+
+            renderSurahsList(filtered);
+        }
+
+        // ========================================
+        // اختيار السورة
+        // ========================================
+        function selectSurah(surahId) {
+            selectedSurah = surahsList.find(s => s.id === surahId);
+            
+            if (selectedSurah) {
+                document.getElementById('surahInput').value = 
+                    `${toArabic(selectedSurah.id)}. ${selectedSurah.name_arabic}`;
+                document.getElementById('loadBtn').disabled = false;
+            }
+            
+            closeSurahModal();
+        }
+
+        // ========================================
+        // تحميل التفسير
+        // ========================================
+        async function loadTafsir() {
+            if (!selectedSurah) return;
+
+            const content = document.getElementById('tafsirContent');
+            const surahInfo = document.getElementById('surahInfo');
+
+            // عرض التحميل
+            content.innerHTML = `
+                <div class="loading-container">
+                    <div class="loading-spinner"></div>
+                    <p class="loading-text">جارٍ تحميل التفسير...</p>
+                </div>
+            `;
+
+            try {
+                // جلب الآيات والتفسير بالتوازي
+                const [versesRes, tafsirRes] = await Promise.all([
+                    fetch(API.verses(selectedSurah.id)),
+                    fetch(API.tafsir(selectedSurah.id))
+                ]);
+
+                const versesData = await versesRes.json();
+                const tafsirData = await tafsirRes.json();
+
+                // عرض معلومات السورة
+                surahInfo.style.display = 'block';
+                document.getElementById('surahName').textContent = `سورة ${selectedSurah.name_arabic}`;
+                document.getElementById('surahDetails').textContent = 
+                    `${selectedSurah.revelation_place === 'makkah' ? 'مكية' : 'مدنية'} - ${toArabic(selectedSurah.verses_count)} آية`;
+
+                // عرض التفسير
+                renderTafsir(versesData.verses, tafsirData.tafsirs, selectedSurah.id);
+
+            } catch (error) {
+                console.error('خطأ في تحميل التفسير:', error);
+                content.innerHTML = `
+                    <div class="error-message">
+                        <div class="error-icon">⚠️</div>
+                        <p>حدث خطأ في تحميل التفسير</p>
+                        <p style="font-size: 0.9rem; opacity: 0.7;">تحقق من اتصالك بالإنترنت</p>
+                        <button class="retry-btn" onclick="loadTafsir()">إعادة المحاولة</button>
+                    </div>
+                `;
+            }
+        }
+
+        // ========================================
+        // عرض التفسير
+        // ========================================
+        function renderTafsir(verses, tafsirs, surahId) {
+            const content = document.getElementById('tafsirContent');
+    
+        // إنشاء map للتفاسير حسب رقم الآية
+        const tafsirMap = {};
+        tafsirs.forEach(t => {
+            // استخراج رقم الآية من verse_key (مثل "2:5" -> "5")
+            const verseNum = t.verse_key ? t.verse_key.split(':')[1] : t.verse_number;
+            tafsirMap[verseNum] = t.text;
+        });
+        
+        let html = '';
+
+        // البسملة (ما عدا سورة التوبة والفاتحة)
+        if (surahId !== 9 && surahId !== 1) {
+            html += `<div class="bismillah">بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ</div>`;
+        }
+
+        // ترتيب الآيات حسب رقم الآية
+        const sortedVerses = [...verses].sort((a, b) => {
+            const numA = parseInt(a.verse_key.split(':')[1]);
+            const numB = parseInt(b.verse_key.split(':')[1]);
+            return numA - numB;
+        });
+
+        // عرض كل آية مع تفسيرها
+        sortedVerses.forEach((verse) => {
+            const verseNumber = verse.verse_key.split(':')[1];
+            const tafsirText = tafsirMap[verseNumber];
+
+            html += `
+                <div class="verse-card">
+                    <div class="verse-header">
+                        <span class="verse-number-badge">${toArabic(verseNumber)}</span>
+                        <p class="verse-text">${verse.text_uthmani}</p>
+                    </div>
+                    <div class="tafsir-box">
+                        <div class="tafsir-label">
+                            <span>📝</span>
+                            <span>التفسير الميسر</span>
+                        </div>
+                        <p class="tafsir-text">${tafsirText || 'التفسير غير متوفر'}</p>
+                    </div>
+                </div>
+            `;
+        });
+
+    content.innerHTML = html;
+
+        // التمرير للأعلى
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+        // ========================================
+        // بدء التطبيق
+        // ========================================
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!-- أضف هذا في صفحة settings.html أو صفحة منفصلة -->
+
+<!-- مكتبة QR Code -->
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+
+<div class="qr-section">
+    <h3>📱 مسح للتحميل على الآيفون</h3>
+    <canvas id="qrcode"></canvas>
+    <p>امسح الكود بكاميرا الآيفون</p>
+</div>
+
+<script>
+    const appUrl = "https://radiant-cassata-993233.netlify.app"; // الرابط اليدوي
+    QRCode.toCanvas(document.getElementById('qrcode'), appUrl, {
+        width: 200,
+        margin: 2,
+        color: {
+            dark: '#000000',
+            light: '#ffffff'
+        }
+    });
+</script>

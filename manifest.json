@@ -1,0 +1,98 @@
+{
+    "name": "تطبيق القرآن الكريم",
+    "short_name": "القرآن",
+    "description": "تطبيق إسلامي شامل - المصحف الشريف، أوقات الصلاة، الأذان",
+    "start_url": "/index.html",
+    "scope": "/",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#0d0d0d",
+    "theme_color": "#d4af37",
+    "lang": "ar",
+    "dir": "rtl",
+    "categories": ["lifestyle", "education", "utilities"],
+    
+    "icons": [
+        {
+            "src": "icons/icon-72x72.png",
+            "sizes": "72x72",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "icons/icon-96x96.png",
+            "sizes": "96x96",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "icons/icon-128x128.png",
+            "sizes": "128x128",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "icons/icon-144x144.png",
+            "sizes": "144x144",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "icons/icon-152x152.png",
+            "sizes": "152x152",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "icons/icon-180x180.png",
+            "sizes": "180x180",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "icons/icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "icons/icon-384x384.png",
+            "sizes": "384x384",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "icons/icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    
+    "screenshots": [
+        {
+            "src": "screenshots/screen1.png",
+            "sizes": "1080x1920",
+            "type": "image/png",
+            "form_factor": "narrow"
+        }
+    ],
+    
+    "shortcuts": [
+        {
+            "name": "المصحف الشريف",
+            "short_name": "المصحف",
+            "url": "/quran.html",
+            "icons": [{ "src": "icons/quran-icon.png", "sizes": "96x96" }]
+        },
+        {
+            "name": "أوقات الصلاة",
+            "short_name": "الصلاة",
+            "url": "/tools.html",
+            "icons": [{ "src": "icons/prayer-icon.png", "sizes": "96x96" }]
+        }
+    ],
+
+    "related_applications": [],
+    "prefer_related_applications": false
+}

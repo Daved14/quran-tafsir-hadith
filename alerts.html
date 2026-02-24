@@ -1,0 +1,1499 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>التنبيهات</title>
+    
+    <!-- ===== PWA الأساسيات ===== -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#d4af37">
+    
+    <!-- ===== iOS Safari المُحسَّن ===== -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="القرآن الكريم">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- ===== أيقونات iOS ===== -->
+    <link rel="apple-touch-icon" href="icons/icon-180x180.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="icons/icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180x180.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="icons/icon-167x167.png">
+    
+    <!-- ===== Splash Screens لـ iOS ===== -->
+    <!-- iPhone X / XS / 11 Pro -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-1125x2436.png"
+          media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)">
+    
+    <!-- iPhone XR / 11 -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-828x1792.png"
+          media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)">
+    
+    <!-- iPhone 12/13/14 -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-1170x2532.png"
+          media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3)">
+    
+    <!-- iPhone 12/13/14 Pro Max -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-1284x2778.png"
+          media="(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3)">
+    
+    <!-- iPhone 14 Pro -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-1179x2556.png"
+          media="(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3)">
+    
+    <!-- iPhone 14 Pro Max -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-1290x2796.png"
+          media="(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3)">
+    
+    <!-- ===== معلومات التطبيق ===== -->
+    <meta name="application-name" content="القرآن الكريم">
+    <meta name="description" content="تطبيق إسلامي شامل - المصحف الشريف، أوقات الصلاة، الأذان">
+    <meta name="author" content="Your Name">
+    
+    <title>تطبيق القرآن الكريم</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- ⚡ تحميل الثيم فوراً -->
+    <script>
+        (function() {
+            var theme = localStorage.getItem('appTheme') || 'dark';
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+    
+    <style>
+        /* ========================================
+           نظام الثيمات - 6 ثيمات
+        ======================================== */
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #0f0f15;
+            --card-bg: #13131a;
+            --card-bg-gradient: linear-gradient(145deg, #13131a, #0f0f15);
+            --border-color: #1a1a25;
+            --golden: #f1c40f;
+            --golden-light: rgba(241, 196, 15, 0.1);
+            --golden-bg: rgba(241, 196, 15, 0.15);
+            --text-primary: #ffffff;
+            --text-secondary: #f5f5f5;
+            --text-muted: #888888;
+            --text-dim: #555555;
+            --hover-bg: #1a1a25;
+            --success: #2ecc71;
+            --success-light: rgba(46, 204, 113, 0.15);
+            --info: #3498db;
+            --info-light: rgba(52, 152, 219, 0.15);
+            --warning: #f39c12;
+            --warning-light: rgba(243, 156, 18, 0.15);
+            --danger: #e74c3c;
+            --danger-light: rgba(231, 76, 60, 0.15);
+            --accent: #4ecdc4;
+            --accent-light: rgba(78, 205, 196, 0.15);
+            --purple: #9b59b6;
+            --purple-light: rgba(155, 89, 182, 0.15);
+            --summary-gradient: linear-gradient(145deg, #1a2a28, #0f1a18);
+        }
+
+        html[data-theme="light"] {
+            --bg-primary: #f5f5f7;
+            --bg-secondary: #ffffff;
+            --card-bg: #ffffff;
+            --card-bg-gradient: linear-gradient(145deg, #ffffff, #f8f8f8);
+            --border-color: #e0e0e0;
+            --golden: #b8860b;
+            --golden-light: rgba(184, 134, 11, 0.1);
+            --golden-bg: rgba(184, 134, 11, 0.15);
+            --text-primary: #1a1a1a;
+            --text-secondary: #333333;
+            --text-muted: #666666;
+            --text-dim: #999999;
+            --hover-bg: #f0f0f0;
+            --summary-gradient: linear-gradient(145deg, #e8f5f3, #d0ebe7);
+        }
+
+        html[data-theme="blue"] {
+            --bg-primary: #e8f4fc;
+            --bg-secondary: #d0e8f7;
+            --card-bg: #ffffff;
+            --card-bg-gradient: linear-gradient(145deg, #ffffff, #f0f8ff);
+            --border-color: #a8d4f0;
+            --golden: #1565c0;
+            --golden-light: rgba(21, 101, 192, 0.1);
+            --golden-bg: rgba(21, 101, 192, 0.15);
+            --text-primary: #0d3b66;
+            --text-secondary: #1a5276;
+            --text-muted: #5a9bd4;
+            --text-dim: #85c1e9;
+            --hover-bg: #cce5f7;
+            --accent: #0288d1;
+            --summary-gradient: linear-gradient(145deg, #e3f2fd, #bbdefb);
+        }
+
+        html[data-theme="green"] {
+            --bg-primary: #e8f5e9;
+            --bg-secondary: #d0ecd1;
+            --card-bg: #ffffff;
+            --card-bg-gradient: linear-gradient(145deg, #ffffff, #f1f8e9);
+            --border-color: #a5d6a7;
+            --golden: #2e7d32;
+            --golden-light: rgba(46, 125, 50, 0.1);
+            --golden-bg: rgba(46, 125, 50, 0.15);
+            --text-primary: #1b4d1e;
+            --text-secondary: #2e7d32;
+            --text-muted: #66bb6a;
+            --text-dim: #a5d6a7;
+            --hover-bg: #c8e6c9;
+            --accent: #43a047;
+            --summary-gradient: linear-gradient(145deg, #e8f5e9, #c8e6c9);
+        }
+
+        html[data-theme="brown"] {
+            --bg-primary: #f5f0eb;
+            --bg-secondary: #e8ddd4;
+            --card-bg: #ffffff;
+            --card-bg-gradient: linear-gradient(145deg, #ffffff, #faf7f4);
+            --border-color: #c9b8a8;
+            --golden: #6d4c41;
+            --golden-light: rgba(109, 76, 65, 0.1);
+            --golden-bg: rgba(109, 76, 65, 0.15);
+            --text-primary: #3e2723;
+            --text-secondary: #5d4037;
+            --text-muted: #8d6e63;
+            --text-dim: #bcaaa4;
+            --hover-bg: #d7ccc8;
+            --accent: #795548;
+            --summary-gradient: linear-gradient(145deg, #efebe9, #d7ccc8);
+        }
+
+        html[data-theme="pink"] {
+            --bg-primary: #fdf2f5;
+            --bg-secondary: #fce4ec;
+            --card-bg: #ffffff;
+            --card-bg-gradient: linear-gradient(145deg, #ffffff, #fff5f8);
+            --border-color: #f8b4c8;
+            --golden: #d81b60;
+            --golden-light: rgba(216, 27, 96, 0.1);
+            --golden-bg: rgba(216, 27, 96, 0.15);
+            --text-primary: #6d1039;
+            --text-secondary: #ad1457;
+            --text-muted: #e57399;
+            --text-dim: #f48fb1;
+            --hover-bg: #fce4ec;
+            --accent: #e91e63;
+            --summary-gradient: linear-gradient(145deg, #fce4ec, #f8bbd9);
+        }
+
+        /* ========================================
+           الأساسيات
+        ======================================== */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* ========== الشريط العلوي ========== */
+        .top-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--bg-secondary);
+            border-bottom: 2px solid var(--golden);
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .back-section {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            color: var(--golden);
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .back-section:hover { opacity: 0.7; }
+        .back-arrow { font-size: 1.3rem; }
+
+        .page-title {
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .clear-all-btn {
+            background: none;
+            border: 1px solid var(--danger);
+            color: var(--danger);
+            font-size: 0.85rem;
+            cursor: pointer;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .clear-all-btn:hover {
+            background: var(--danger);
+            color: #fff;
+        }
+
+        /* ========== المحتوى ========== */
+        .main-content {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px 15px 50px;
+        }
+
+        /* ========== إحصائيات اليوم ========== */
+        .today-stats {
+            background: var(--card-bg-gradient);
+            border: 2px solid var(--golden);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .today-stats-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .today-stats-title {
+            color: var(--golden);
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .today-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .today-stat-item {
+            background: var(--golden-light);
+            padding: 15px 10px;
+            border-radius: 12px;
+        }
+
+        .today-stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--golden);
+        }
+
+        .today-stat-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+
+        /* ========== الملخص الأسبوعي ========== */
+        .weekly-summary {
+            background: var(--summary-gradient);
+            border: 2px solid var(--accent);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .weekly-summary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, var(--accent-light) 0%, transparent 70%);
+        }
+
+        .summary-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .summary-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .summary-date {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .summary-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 12px 8px;
+            background: var(--golden-light);
+            border-radius: 12px;
+        }
+
+        .stat-value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+
+        /* ========== شريط التقدم الأسبوعي ========== */
+        .week-progress {
+            margin-top: 15px;
+        }
+
+        .week-days {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .day-item {
+            text-align: center;
+            flex: 1;
+        }
+
+        .day-name {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+        }
+
+        .day-bar {
+            height: 40px;
+            background: var(--border-color);
+            border-radius: 5px;
+            margin: 0 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .day-fill {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--accent);
+            border-radius: 5px;
+            transition: height 0.5s ease;
+        }
+
+        .day-count {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+
+        .comparison-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .comparison-badge.positive {
+            background: var(--success-light);
+            color: var(--success);
+        }
+
+        .comparison-badge.negative {
+            background: var(--danger-light);
+            color: var(--danger);
+        }
+
+        .comparison-badge.neutral {
+            background: var(--golden-light);
+            color: var(--golden);
+        }
+
+        /* ========== شريط التقدم الكلي ========== */
+        .total-progress {
+            background: var(--card-bg-gradient);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .progress-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .progress-title {
+            color: var(--golden);
+            font-size: 1rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .progress-percentage {
+            color: var(--accent);
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .progress-bar {
+            height: 12px;
+            background: var(--border-color);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--golden), var(--accent));
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* ========== قسم التنبيهات ========== */
+        .section-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin: 25px 0 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* ========== بطاقة التنبيه ========== */
+        .alert-card {
+            background: var(--card-bg-gradient);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 18px;
+            margin-bottom: 12px;
+            display: flex;
+            gap: 15px;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .alert-card:hover {
+            border-color: var(--golden);
+            transform: translateY(-2px);
+        }
+
+        .alert-card.unread {
+            border-right: 3px solid var(--golden);
+        }
+
+        .alert-card.achievement {
+            border-color: var(--purple);
+            background: linear-gradient(145deg, var(--card-bg), var(--purple-light));
+        }
+
+        .alert-card.khatma {
+            border-color: var(--golden);
+            background: linear-gradient(145deg, var(--card-bg), var(--golden-light));
+            border-width: 2px;
+        }
+
+        .alert-icon-wrapper {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .alert-icon-wrapper.success { background: var(--success-light); }
+        .alert-icon-wrapper.info { background: var(--info-light); }
+        .alert-icon-wrapper.warning { background: var(--warning-light); }
+        .alert-icon-wrapper.achievement { background: var(--purple-light); }
+        .alert-icon-wrapper.khatma { background: var(--golden-light); }
+
+        .alert-content { flex: 1; }
+
+        .alert-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 5px;
+        }
+
+        .alert-message {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .alert-time {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            margin-top: 8px;
+        }
+
+        /* ========== حالة فارغة ========== */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .empty-title {
+            font-size: 1.2rem;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+
+        .empty-text {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        /* ========== زر الانتقال للمصحف ========== */
+        .go-quran-btn {
+            width: 100%;
+            background: var(--golden);
+            border: none;
+            color: var(--bg-primary);
+            padding: 15px;
+            border-radius: 12px;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: transform 0.2s, box-shadow 0.3s;
+            text-decoration: none;
+        }
+
+        .go-quran-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px var(--golden-bg);
+        }
+
+        /* ========== إعدادات التنبيهات ========== */
+        .settings-section {
+            background: var(--card-bg-gradient);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 25px;
+        }
+
+        .setting-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .setting-item:last-child { border-bottom: none; }
+
+        .setting-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .setting-icon { font-size: 1.3rem; }
+
+        .setting-text h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 3px;
+        }
+
+        .setting-text p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 26px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--border-color);
+            transition: 0.3s;
+            border-radius: 26px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            right: 3px;
+            bottom: 3px;
+            background-color: var(--text-muted);
+            transition: 0.3s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: var(--accent);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(-24px);
+            background-color: #fff;
+        }
+
+        /* ========== رابط الأحاديث ========== */
+        .hadith-link {
+            margin-top: 20px;
+        }
+
+        .hadith-link .alert-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            background: var(--golden-light);
+            flex-shrink: 0;
+        }
+
+        .hadith-link .alert-info { flex: 1; }
+
+        .hadith-link .alert-info h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 5px;
+        }
+
+        .hadith-link .alert-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .hadith-link .alert-badge {
+            background: var(--golden);
+            color: var(--bg-primary);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            align-self: center;
+        }
+
+        .hadith-link .alert-arrow {
+            color: var(--golden);
+            font-size: 1.3rem;
+            align-self: center;
+        }
+
+        /* ========== Toast ========== */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--success);
+            color: #fff;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 0.95rem;
+            z-index: 1000;
+            animation: slideUp 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 480px) {
+            .summary-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .today-stats-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 10px;
+            }
+
+            .today-stat-value {
+                font-size: 1.5rem;
+            }
+
+            .stat-value {
+                font-size: 1.2rem;
+            }
+
+            .day-name {
+                font-size: 0.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ========== الشريط العلوي ========== -->
+    <header class="top-header">
+        <a href="tools.html" class="back-section">
+            <span class="back-arrow">→</span>
+            <span>الأدوات</span>
+        </a>
+        <h1 class="page-title">🔔 التنبيهات</h1>
+        <button class="clear-all-btn" onclick="clearAllAlerts()">مسح الكل</button>
+    </header>
+
+    <!-- ========== المحتوى ========== -->
+    <main class="main-content">
+        
+        <!-- إحصائيات اليوم -->
+        <div class="today-stats">
+            <div class="today-stats-header">
+                <span>📅</span>
+                <span class="today-stats-title">إحصائيات اليوم</span>
+            </div>
+            <div class="today-stats-grid">
+                <div class="today-stat-item">
+                    <div class="today-stat-value" id="today-pages">٠</div>
+                    <div class="today-stat-label">صفحة مقروءة</div>
+                </div>
+                <div class="today-stat-item">
+                    <div class="today-stat-value" id="today-minutes">٠</div>
+                    <div class="today-stat-label">دقيقة قراءة</div>
+                </div>
+                <div class="today-stat-item">
+                    <div class="today-stat-value" id="today-sessions">٠</div>
+                    <div class="today-stat-label">جلسة</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- الملخص الأسبوعي -->
+        <div class="weekly-summary" id="weekly-summary">
+            <div class="summary-header">
+                <div class="summary-title">
+                    <span>📊</span>
+                    ملخص هذا الأسبوع
+                </div>
+                <span class="summary-date" id="week-date-range">--</span>
+            </div>
+            
+            <div class="summary-stats">
+                <div class="stat-item">
+                    <div class="stat-value" id="week-total-pages">٠</div>
+                    <div class="stat-label">إجمالي الصفحات</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="week-daily-avg">٠</div>
+                    <div class="stat-label">المعدل اليومي</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="week-best-day">٠</div>
+                    <div class="stat-label">أفضل يوم</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="week-active-days">٠/٧</div>
+                    <div class="stat-label">أيام القراءة</div>
+                </div>
+            </div>
+
+            <!-- شريط الأيام -->
+            <div class="week-progress">
+                <div class="week-days" id="week-days">
+                    <!-- سيتم ملؤها بـ JavaScript -->
+                </div>
+            </div>
+            
+            <div style="text-align: center;">
+                <div class="comparison-badge positive" id="week-comparison">
+                    <span>↑</span>
+                    <span id="comparison-text">أفضل من الأسبوع الماضي</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- شريط التقدم الكلي -->
+        <div class="total-progress">
+            <div class="progress-header">
+                <span class="progress-title">
+                    <span>📖</span>
+                    تقدم ختم القرآن
+                </span>
+                <span class="progress-percentage" id="total-percentage">٠٪</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="total-progress-fill" style="width: 0%"></div>
+            </div>
+            <div class="progress-info">
+                <span>قرأت <span id="total-pages-read">٠</span> صفحة</span>
+                <span>متبقي <span id="remaining-pages">٦٠٤</span> صفحة</span>
+            </div>
+        </div>
+
+        <!-- قائمة التنبيهات -->
+        <div class="section-title">
+            <span>📬</span>
+            التنبيهات والإنجازات
+        </div>
+        
+        <div id="alerts-list">
+            <!-- سيتم ملؤها بـ JavaScript -->
+        </div>
+
+        <!-- زر الانتقال للمصحف -->
+        <a href="quran.html" class="go-quran-btn">
+            <span>📖</span>
+            <span>متابعة القراءة</span>
+        </a>
+
+        <!-- إعدادات التنبيهات -->
+        <div class="settings-section">
+            <div class="section-title" style="margin: 0 0 10px 0;">
+                <span>⚙️</span>
+                إعدادات التنبيهات
+            </div>
+            
+            <div class="setting-item">
+                <div class="setting-info">
+                    <span class="setting-icon">📅</span>
+                    <div class="setting-text">
+                        <h4>تقرير أسبوعي</h4>
+                        <p>إشعار كل جمعة بملخص الأسبوع</p>
+                    </div>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="weekly-report-toggle" checked onchange="saveSettings()">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            
+            <div class="setting-item">
+                <div class="setting-info">
+                    <span class="setting-icon">🎯</span>
+                    <div class="setting-text">
+                        <h4>تذكير يومي</h4>
+                        <p>تذكير بقراءة القرآن يومياً</p>
+                    </div>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="daily-reminder-toggle" checked onchange="saveSettings()">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            
+            <div class="setting-item">
+                <div class="setting-info">
+                    <span class="setting-icon">🏆</span>
+                    <div class="setting-text">
+                        <h4>إشعارات الإنجازات</h4>
+                        <p>إشعار عند تحقيق إنجاز جديد</p>
+                    </div>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="achievement-toggle" checked onchange="saveSettings()">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+        </div>
+
+        <!-- رابط الأحاديث -->
+        <a href="hadith.html" class="alert-card hadith-link">
+            <div class="alert-icon">📜</div>
+            <div class="alert-info">
+                <h3>الأحاديث الشريفة</h3>
+                <p class="alert-desc">الأربعون النووية مع الشرح</p>
+            </div>
+            <span class="alert-badge">٤٢ حديث</span>
+            <span class="alert-arrow">←</span>
+        </a>
+
+    </main>
+
+    <!-- ========== JavaScript ========== -->
+    <script>
+        // ========================================
+        // المتغيرات العامة
+        // ========================================
+        const READING_DATA_KEY = 'quran_reading_data';
+        const ALERTS_KEY = 'app_alerts';
+        const SETTINGS_KEY = 'alert_settings';
+        const ACHIEVEMENTS_KEY = 'user_achievements';
+        const TOTAL_QURAN_PAGES = 604;
+
+        let alerts = JSON.parse(localStorage.getItem(ALERTS_KEY)) || [];
+        let settings = JSON.parse(localStorage.getItem(SETTINGS_KEY)) || {
+            weeklyReport: true,
+            dailyReminder: true,
+            achievements: true
+        };
+        let achievements = JSON.parse(localStorage.getItem(ACHIEVEMENTS_KEY)) || [];
+
+        const dayNames = ['سبت', 'أحد', 'إثنين', 'ثلاثاء', 'أربعاء', 'خميس', 'جمعة'];
+
+        // ========================================
+        // تحويل الأرقام للعربية
+        // ========================================
+        function toArabic(n) {
+            return n.toString().replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
+        }
+
+        // ========================================
+        // قراءة بيانات القراءة
+        // ========================================
+        function getReadingData() {
+            const stored = localStorage.getItem(READING_DATA_KEY);
+            return stored ? JSON.parse(stored) : {};
+        }
+
+        // ========================================
+        // الحصول على مفتاح التاريخ
+        // ========================================
+        function getDateKey(date) {
+            return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+        }
+
+        // ========================================
+        // تحديث إحصائيات اليوم
+        // ========================================
+        function updateTodayStats() {
+            const data = getReadingData();
+            const todayKey = getDateKey(new Date());
+            const todayData = data[todayKey] || { count: 0, totalDuration: 0, sessions: [] };
+
+            document.getElementById('today-pages').textContent = toArabic(todayData.count || 0);
+            document.getElementById('today-minutes').textContent = toArabic(Math.round((todayData.totalDuration || 0) / 60));
+            document.getElementById('today-sessions').textContent = toArabic((todayData.sessions || []).length);
+        }
+
+        // ========================================
+        // تحديث الملخص الأسبوعي
+        // ========================================
+        function updateWeeklySummary() {
+            const data = getReadingData();
+            const weekData = getWeekData(data);
+            const lastWeekData = getLastWeekData(data);
+
+            const weekTotal = weekData.reduce((a, b) => a + b, 0);
+            const lastWeekTotal = lastWeekData.reduce((a, b) => a + b, 0);
+            const dailyAvg = Math.round(weekTotal / 7);
+            const bestDay = Math.max(...weekData);
+            const activeDays = weekData.filter(d => d > 0).length;
+
+            document.getElementById('week-total-pages').textContent = toArabic(weekTotal);
+            document.getElementById('week-daily-avg').textContent = toArabic(dailyAvg);
+            document.getElementById('week-best-day').textContent = toArabic(bestDay);
+            document.getElementById('week-active-days').textContent = `${toArabic(activeDays)}/٧`;
+
+            // نطاق التاريخ
+            const today = new Date();
+            const dayOfWeek = today.getDay();
+            const diff = dayOfWeek === 6 ? 0 : dayOfWeek + 1;
+            const saturday = new Date(today);
+            saturday.setDate(today.getDate() - diff);
+            const friday = new Date(saturday);
+            friday.setDate(saturday.getDate() + 6);
+
+            document.getElementById('week-date-range').textContent = 
+                `${formatDateArabic(saturday)} - ${formatDateArabic(friday)}`;
+
+            // رسم شريط الأيام
+            renderWeekDays(weekData, bestDay);
+
+            // المقارنة
+            updateComparison(weekTotal, lastWeekTotal);
+        }
+
+        // ========================================
+        // رسم شريط الأيام
+        // ========================================
+        function renderWeekDays(weekData, maxValue) {
+            const container = document.getElementById('week-days');
+            const maxHeight = maxValue > 0 ? maxValue : 1;
+
+            container.innerHTML = weekData.map((count, i) => {
+                const height = maxValue > 0 ? (count / maxHeight) * 100 : 0;
+                return `
+                    <div class="day-item">
+                        <div class="day-name">${dayNames[i]}</div>
+                        <div class="day-bar">
+                            <div class="day-fill" style="height: ${height}%"></div>
+                        </div>
+                        <div class="day-count">${toArabic(count)}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // ========================================
+        // تحديث المقارنة
+        // ========================================
+        function updateComparison(weekTotal, lastWeekTotal) {
+            const badge = document.getElementById('week-comparison');
+            
+            if (lastWeekTotal > 0) {
+                const change = Math.round(((weekTotal - lastWeekTotal) / lastWeekTotal) * 100);
+                if (change > 0) {
+                    badge.className = 'comparison-badge positive';
+                    badge.innerHTML = `<span>↑</span><span>أفضل بـ ${toArabic(change)}٪ من الأسبوع الماضي</span>`;
+                } else if (change < 0) {
+                    badge.className = 'comparison-badge negative';
+                    badge.innerHTML = `<span>↓</span><span>أقل بـ ${toArabic(Math.abs(change))}٪ من الأسبوع الماضي</span>`;
+                } else {
+                    badge.className = 'comparison-badge neutral';
+                    badge.innerHTML = `<span>↔</span><span>مثل الأسبوع الماضي</span>`;
+                }
+            } else if (weekTotal > 0) {
+                badge.className = 'comparison-badge positive';
+                badge.innerHTML = `<span>🌟</span><span>بداية موفقة! استمر</span>`;
+            } else {
+                badge.className = 'comparison-badge neutral';
+                badge.innerHTML = `<span>📖</span><span>ابدأ القراءة اليوم</span>`;
+            }
+        }
+
+        // ========================================
+        // تحديث شريط التقدم الكلي
+        // ========================================
+        function updateTotalProgress() {
+            const data = getReadingData();
+            const allPages = new Set();
+
+            // جمع كل الصفحات المقروءة من كل الأيام
+            Object.values(data).forEach(dayData => {
+                if (dayData.pagesRead) {
+                    dayData.pagesRead.forEach(page => allPages.add(page));
+                }
+            });
+
+            const totalRead = allPages.size;
+            const percentage = Math.round((totalRead / TOTAL_QURAN_PAGES) * 100);
+            const remaining = TOTAL_QURAN_PAGES - totalRead;
+
+            document.getElementById('total-pages-read').textContent = toArabic(totalRead);
+            document.getElementById('remaining-pages').textContent = toArabic(remaining);
+            document.getElementById('total-percentage').textContent = `${toArabic(percentage)}٪`;
+            document.getElementById('total-progress-fill').style.width = `${percentage}%`;
+
+            // التحقق من ختم القرآن
+            if (totalRead >= TOTAL_QURAN_PAGES) {
+                checkKhatmaAchievement();
+            }
+
+            return { totalRead, percentage, remaining };
+        }
+
+        // ========================================
+        // الحصول على بيانات الأسبوع
+        // ========================================
+        function getWeekData(data) {
+            const weekData = [];
+            const today = new Date();
+            const dayOfWeek = today.getDay();
+            const diff = dayOfWeek === 6 ? 0 : dayOfWeek + 1;
+            const saturday = new Date(today);
+            saturday.setDate(today.getDate() - diff);
+
+            for (let i = 0; i < 7; i++) {
+                const date = new Date(saturday);
+                date.setDate(saturday.getDate() + i);
+                const dateKey = getDateKey(date);
+                const dayData = data[dateKey] || { count: 0 };
+                weekData.push(dayData.count || 0);
+            }
+            return weekData;
+        }
+
+        // ========================================
+        // الحصول على بيانات الأسبوع الماضي
+        // ========================================
+        function getLastWeekData(data) {
+            const weekData = [];
+            const today = new Date();
+            const dayOfWeek = today.getDay();
+            const diff = dayOfWeek === 6 ? 7 : dayOfWeek + 8;
+            const lastSaturday = new Date(today);
+            lastSaturday.setDate(today.getDate() - diff);
+
+            for (let i = 0; i < 7; i++) {
+                const date = new Date(lastSaturday);
+                date.setDate(lastSaturday.getDate() + i);
+                const dateKey = getDateKey(date);
+                const dayData = data[dateKey] || { count: 0 };
+                weekData.push(dayData.count || 0);
+            }
+            return weekData;
+        }
+
+        // ========================================
+        // تنسيق التاريخ
+        // ========================================
+        function formatDateArabic(date) {
+            return date.toLocaleDateString('ar-SA', { day: 'numeric', month: 'short' });
+        }
+
+        // ========================================
+        // التحقق من الإنجازات
+        // ========================================
+        function checkAchievements() {
+            const data = getReadingData();
+            const todayKey = getDateKey(new Date());
+            const todayData = data[todayKey] || { count: 0 };
+            const weekData = getWeekData(data);
+            const weekTotal = weekData.reduce((a, b) => a + b, 0);
+            const activeDays = weekData.filter(d => d > 0).length;
+
+            // إنجاز: أول صفحة
+            if (todayData.count >= 1 && !hasAchievement('first_page')) {
+                addAchievement('first_page', 'أول خطوة!', 'قرأت أول صفحة من المصحف', '🌱');
+            }
+
+            // إنجاز: 5 صفحات في يوم
+            if (todayData.count >= 5 && !hasAchievement('daily_5')) {
+                addAchievement('daily_5', 'قارئ نشيط!', 'قرأت 5 صفحات في يوم واحد', '⭐');
+            }
+
+            // إنجاز: 10 صفحات في يوم
+            if (todayData.count >= 10 && !hasAchievement('daily_10')) {
+                addAchievement('daily_10', 'ماشاء الله!', 'قرأت 10 صفحات في يوم واحد', '🌟');
+            }
+
+            // إنجاز: جزء كامل في يوم (20 صفحة)
+            if (todayData.count >= 20 && !hasAchievement('daily_juz')) {
+                addAchievement('daily_juz', 'جزء كامل!', 'قرأت جزءاً كاملاً في يوم واحد', '🏆');
+            }
+
+            // إنجاز: 50 صفحة في الأسبوع
+            if (weekTotal >= 50 && !hasAchievement('week_50')) {
+                addAchievement('week_50', 'أسبوع مثمر!', 'قرأت 50 صفحة هذا الأسبوع', '📚');
+            }
+
+            // إنجاز: 100 صفحة في الأسبوع
+            if (weekTotal >= 100 && !hasAchievement('week_100')) {
+                addAchievement('week_100', 'قارئ متميز!', 'قرأت 100 صفحة هذا الأسبوع', '💎');
+            }
+
+            // إنجاز: أسبوع متواصل
+            if (activeDays >= 7 && !hasAchievement('week_streak')) {
+                addAchievement('week_streak', 'أسبوع متواصل!', 'قرأت كل يوم هذا الأسبوع', '🔥');
+            }
+        }
+
+        // ========================================
+        // التحقق من ختم القرآن
+        // ========================================
+        function checkKhatmaAchievement() {
+            if (!hasAchievement('khatma')) {
+                addAchievement('khatma', '🎊 مبارك! ختمت القرآن الكريم', 'أتممت قراءة المصحف كاملاً، تقبل الله منك', '🕌');
+                
+                // إضافة تنبيه خاص بالختمة
+                const khatmaAlert = {
+                    id: Date.now(),
+                    type: 'khatma',
+                    icon: '🕌',
+                    title: '🎊 مبارك! ختمت القرآن الكريم',
+                    message: 'أتممت قراءة المصحف الشريف كاملاً (604 صفحة). تقبل الله منك وجعله حجة لك. نسأل الله أن يجعلك من أهل القرآن الذين هم أهل الله وخاصته.',
+                    time: new Date().toISOString(),
+                    read: false
+                };
+                alerts.unshift(khatmaAlert);
+                saveAlerts();
+            }
+        }
+
+        // ========================================
+        // التحقق من وجود إنجاز
+        // ========================================
+        function hasAchievement(id) {
+            return achievements.includes(id);
+        }
+
+        // ========================================
+        // إضافة إنجاز جديد
+        // ========================================
+        function addAchievement(id, title, message, icon) {
+            if (hasAchievement(id)) return;
+
+            achievements.push(id);
+            localStorage.setItem(ACHIEVEMENTS_KEY, JSON.stringify(achievements));
+
+            const alert = {
+                id: Date.now(),
+                type: 'achievement',
+                icon: icon,
+                title: title,
+                message: message,
+                time: new Date().toISOString(),
+                read: false
+            };
+
+            alerts.unshift(alert);
+            saveAlerts();
+            renderAlerts();
+        }
+
+        // ========================================
+        // التحقق من التذكير اليومي
+        // ========================================
+        function checkDailyReminder() {
+            if (!settings.dailyReminder) return;
+
+            const data = getReadingData();
+            const todayKey = getDateKey(new Date());
+            const todayData = data[todayKey] || { count: 0 };
+            const lastReminderDate = localStorage.getItem('last_reminder_date');
+
+            // إذا لم يقرأ اليوم ولم يُرسل تذكير اليوم
+            if (todayData.count === 0 && lastReminderDate !== todayKey) {
+                const hour = new Date().getHours();
+                
+                // إرسال التذكير بعد الظهر إذا لم يقرأ
+                if (hour >= 14) {
+                    const alert = {
+                        id: Date.now(),
+                        type: 'warning',
+                        icon: '⏰',
+                        title: 'تذكير بالقراءة',
+                        message: 'لم تقرأ اليوم بعد. حافظ على وردك اليومي من القرآن الكريم.',
+                        time: new Date().toISOString(),
+                        read: false
+                    };
+                    alerts.unshift(alert);
+                    saveAlerts();
+                    localStorage.setItem('last_reminder_date', todayKey);
+                }
+            }
+        }
+
+        // ========================================
+        // عرض التنبيهات
+        // ========================================
+        function renderAlerts() {
+            const container = document.getElementById('alerts-list');
+            
+            if (alerts.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">🔔</div>
+                        <h3 class="empty-title">لا توجد تنبيهات</h3>
+                        <p class="empty-text">ستظهر هنا إنجازاتك وتذكيراتك</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = alerts.slice(0, 10).map(alert => {
+                const timeAgo = getTimeAgo(new Date(alert.time));
+                const cardClass = alert.type === 'khatma' ? 'alert-card khatma' : 
+                                  alert.type === 'achievement' ? 'alert-card achievement' :
+                                  `alert-card ${alert.read ? '' : 'unread'}`;
+                
+                return `
+                    <div class="${cardClass}" onclick="markAsRead(${alert.id})">
+                        <div class="alert-icon-wrapper ${alert.type}">
+                            ${alert.icon}
+                        </div>
+                        <div class="alert-content">
+                            <h4 class="alert-title">${alert.title}</h4>
+                            <p class="alert-message">${alert.message}</p>
+                            <span class="alert-time">${timeAgo}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // ========================================
+        // حساب الوقت المنقضي
+        // ========================================
+        function getTimeAgo(date) {
+            const now = new Date();
+            const diff = now - date;
+            const minutes = Math.floor(diff / 60000);
+            const hours = Math.floor(diff / 3600000);
+            const days = Math.floor(diff / 86400000);
+
+            if (minutes < 1) return 'الآن';
+            if (minutes < 60) return `منذ ${toArabic(minutes)} دقيقة`;
+            if (hours < 24) return `منذ ${toArabic(hours)} ساعة`;
+            if (days < 7) return `منذ ${toArabic(days)} يوم`;
+            return date.toLocaleDateString('ar-SA', { day: 'numeric', month: 'short' });
+        }
+
+        // ========================================
+        // تحديد التنبيه كمقروء
+        // ========================================
+        function markAsRead(id) {
+            const alert = alerts.find(a => a.id === id);
+            if (alert) {
+                alert.read = true;
+                saveAlerts();
+                renderAlerts();
+            }
+        }
+
+        // ========================================
+        // مسح جميع التنبيهات
+        // ========================================
+        function clearAllAlerts() {
+            if (confirm('هل تريد مسح جميع التنبيهات؟')) {
+                alerts = [];
+                saveAlerts();
+                renderAlerts();
+                showToast('تم مسح جميع التنبيهات');
+            }
+        }
+
+        // ========================================
+        // حفظ التنبيهات
+        // ========================================
+        function saveAlerts() {
+            localStorage.setItem(ALERTS_KEY, JSON.stringify(alerts));
+        }
+
+        // ========================================
+        // تحميل الإعدادات
+        // ========================================
+        function loadSettings() {
+            document.getElementById('weekly-report-toggle').checked = settings.weeklyReport;
+            document.getElementById('daily-reminder-toggle').checked = settings.dailyReminder;
+            document.getElementById('achievement-toggle').checked = settings.achievements;
+        }
+
+        // ========================================
+        // حفظ الإعدادات
+        // ========================================
+        function saveSettings() {
+            settings.weeklyReport = document.getElementById('weekly-report-toggle').checked;
+            settings.dailyReminder = document.getElementById('daily-reminder-toggle').checked;
+            settings.achievements = document.getElementById('achievement-toggle').checked;
+            localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+            showToast('تم حفظ الإعدادات');
+        }
+
+        // ========================================
+        // عرض Toast
+        // ========================================
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 2000);
+        }
+
+        // ========================================
+        // تهيئة الصفحة
+        // ========================================
+        function init() {
+            loadSettings();
+            updateTodayStats();
+            updateWeeklySummary();
+            updateTotalProgress();
+            checkAchievements();
+            checkDailyReminder();
+            renderAlerts();
+        }
+
+        // ========================================
+        // تحديث عند العودة للصفحة
+        // ========================================
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) {
+                init();
+            }
+        });
+
+        // ========================================
+        // بدء التطبيق
+        // ========================================
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+
+</body>
+</html>

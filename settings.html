@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الإعدادات</title>
+    
+    <!-- ===== PWA الأساسيات ===== -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#d4af37">
+    
+    <!-- ===== iOS Safari المُحسَّن ===== -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="القرآن الكريم">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- ===== أيقونات iOS ===== -->
+    <link rel="apple-touch-icon" href="icons/icon-180x180.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="icons/icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180x180.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="icons/icon-167x167.png">
+    
+    <!-- ===== Splash Screens لـ iOS ===== -->
+    <!-- iPhone X / XS / 11 Pro -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-1125x2436.png"
+          media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)">
+    
+    <!-- iPhone XR / 11 -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-828x1792.png"
+          media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)">
+    
+    <!-- iPhone 12/13/14 -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-1170x2532.png"
+          media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3)">
+    
+    <!-- iPhone 12/13/14 Pro Max -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-1284x2778.png"
+          media="(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3)">
+    
+    <!-- iPhone 14 Pro -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-1179x2556.png"
+          media="(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3)">
+    
+    <!-- iPhone 14 Pro Max -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-1290x2796.png"
+          media="(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3)">
+    
+    <!-- ===== معلومات التطبيق ===== -->
+    <meta name="application-name" content="القرآن الكريم">
+    <meta name="description" content="تطبيق إسلامي شامل - المصحف الشريف، أوقات الصلاة، الأذان">
+    <meta name="author" content="Your Name">
+    
+    <title>تطبيق القرآن الكريم</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- تحميل الثيم فوراً -->
+    <script>
+        (function() {
+            var theme = localStorage.getItem('appTheme') || 'dark';
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+    
+    <style>
+        /* ========== قسم الألوان ========== */
+        .color-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            padding: 16px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+        }
+        
+        .color-option {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            border: 3px solid transparent;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+        
+        .color-option:hover {
+            transform: scale(1.1);
+        }
+        
+        .color-option:active {
+            transform: scale(0.95);
+        }
+        
+        .color-option.selected {
+            border-color: var(--golden) !important;
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.3);
+        }
+        
+        .color-option.selected::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        /* ألوان المربعات */
+        .color-light {
+            background: linear-gradient(135deg, #ffffff 0%, #e8e8e8 100%);
+            border: 2px solid #cccccc !important;
+        }
+        .color-light.selected::after { color: #333333; }
+        
+        .color-blue {
+            background: linear-gradient(135deg, #e3f2fd 0%, #90caf9 100%);
+        }
+        .color-blue.selected::after { color: #1565c0; }
+        
+        .color-green {
+            background: linear-gradient(135deg, #e8f5e9 0%, #a5d6a7 100%);
+        }
+        .color-green.selected::after { color: #2e7d32; }
+        
+        .color-brown {
+            background: linear-gradient(135deg, #efebe9 0%, #bcaaa4 100%);
+        }
+        .color-brown.selected::after { color: #5d4037; }
+        
+        .color-pink {
+            background: linear-gradient(135deg, #fce4ec 0%, #f48fb1 100%);
+        }
+        .color-pink.selected::after { color: #c2185b; }
+        
+        .color-dark {
+            background: linear-gradient(135deg, #2d2d3a 0%, #1a1a24 100%);
+            border: 2px solid #d4af37 !important;
+        }
+        .color-dark.selected::after { color: #ffffff; }
+
+        /* أنماط إضافية */
+        .settings-item-link {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 14px 16px;
+            transition: all 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            margin-bottom: 10px;
+        }
+        
+        .settings-item-link:hover {
+            background: var(--hover-bg);
+            border-color: var(--golden);
+        }
+        
+        .settings-item-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+        }
+        
+        .settings-item-icon-wrapper {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--golden-light);
+            border-radius: 10px;
+        }
+        
+        .settings-item-icon-wrapper svg {
+            width: 20px;
+            height: 20px;
+            color: var(--golden);
+        }
+        
+        .settings-item-info {
+            flex: 1;
+        }
+        
+        .settings-item-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+        
+        .settings-item-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+        
+        .settings-item-arrow {
+            display: flex;
+            align-items: center;
+            color: var(--text-muted);
+        }
+        
+        .settings-item-arrow svg {
+            width: 20px;
+            height: 20px;
+        }
+    </style>
+
+    <style>
+
+
+        /* ========== قسم المشاركة ========== */
+
+        /* إطار بسيط لقسم المشاركة */
+        .share-frame {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 16px;
+            margin: 20px 0;
+        }
+
+        .share-section {
+            margin-top: 20px;
+        }
+
+        .share-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .share-info {
+            flex: 1;
+        }
+
+        .share-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 0 0 5px 0;
+        }
+
+        .share-title-icon {
+            font-size: 1.2rem;
+        }
+
+        .share-desc {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        .share-buttons {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .share-btn {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border: 1.5px solid var(--border-color);
+            background: var(--hover-bg);
+            color: var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            padding: 0;
+        }
+
+        .share-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .share-btn:hover {
+            transform: scale(1.1);
+            border-color: var(--golden);
+        }
+
+        .share-btn:active {
+            transform: scale(0.95);
+        }
+
+        .share-native {
+            border-color: var(--golden);
+            background: var(--golden-light);
+            color: var(--golden);
+        }
+
+        .share-native:hover {
+            background: var(--golden);
+            color: var(--bg-primary);
+        }
+
+        .share-facebook {
+            border-color: #1877f2;
+            background: rgba(24, 119, 242, 0.1);
+            color: #1877f2;
+        }
+
+        .share-facebook:hover {
+            background: #1877f2;
+            color: #fff;
+        }
+
+        .share-x {
+            border-color: var(--text-primary);
+            background: rgba(0, 0, 0, 0.1);
+            color: var(--text-primary);
+        }
+
+        .share-x:hover {
+            background: var(--text-primary);
+            color: var(--bg-primary);
+        }
+
+        html[data-theme="light"] .share-x {
+            border-color: #000;
+            background: rgba(0, 0, 0, 0.05);
+            color: #000;
+        }
+
+        html[data-theme="light"] .share-x:hover {
+            background: #000;
+            color: #fff;
+        }
+
+        .share-toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: var(--success, #27ae60);
+            color: #fff;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 0.95rem;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            font-family: inherit;
+        }
+
+        .share-toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        @media (max-width: 400px) {
+            .share-content {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+            
+            .share-buttons {
+                width: 100%;
+                justify-content: flex-start;
+            }
+            
+            .share-btn {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .share-btn svg {
+                width: 18px;
+                height: 18px;
+            }
+        }
+        </style>
+</head>
+<body>
+    <div class="settings-container">
+        
+        <!-- Header -->
+        <header class="page-header">
+            <div class="header-right">
+                <a href="tools.html" class="back-btn">
+                    <i data-lucide="chevron-right"></i>
+                </a>
+                <h1>الإعدادات</h1>
+            </div>
+        </header>
+        
+        <!-- Settings Content -->
+        <main class="settings-content">
+            
+            <!-- ========== قسم اللون ========== -->
+            <section class="settings-section">
+                <h2 class="section-label">اللون</h2>
+                
+                <div class="color-options" id="colorOptions">
+                    <div class="color-option color-light" data-theme="light" title="فاتح"></div>
+                    <div class="color-option color-blue" data-theme="blue" title="أزرق"></div>
+                    <div class="color-option color-green" data-theme="green" title="أخضر"></div>
+                    <div class="color-option color-brown" data-theme="brown" title="بني"></div>
+                    <div class="color-option color-pink" data-theme="pink" title="وردي"></div>
+                    <div class="color-option color-dark" data-theme="dark" title="داكن"></div>
+                </div>
+                
+                <p class="settings-hint">اختر لون الواجهة المفضل لديك</p>
+            </section>
+
+            <!-- أيقونة القبلة - ضعها فوق "الموقع" وأسفل "لون" -->
+            <div class="settings-item" onclick="location.href='qibla.html'">
+                <div class="item-icon">🧭</div>
+                <div class="item-info">
+                    <span class="item-title">اتجاه القبلة</span>
+                    <span class="item-desc">تحديد اتجاه القبلة من موقعك</span>
+                </div>
+                <span class="item-arrow">›</span>
+            </div>
+            
+            <!-- ========== قسم الموقع ========== -->
+            <section class="settings-section">
+                <h2 class="section-label">الموقع</h2>
+                
+                <a href="location-picker.html" class="settings-item-link">
+                    <div class="settings-item-content">
+                        <div class="settings-item-icon-wrapper">
+                            <i data-lucide="map-pin"></i>
+                        </div>
+                        <div class="settings-item-info">
+                            <span class="settings-item-title">تحديد الموقع على الخريطة</span>
+                            <span class="settings-item-desc">اختر موقعك لحساب أوقات الصلاة</span>
+                        </div>
+                    </div>
+                    <div class="settings-item-arrow">
+                        <i data-lucide="chevron-left"></i>
+                    </div>
+                </a>
+            </section>
+            
+            <!-- ========== قسم طريقة الحساب ========== -->
+            <section class="settings-section">
+                <h2 class="section-label">طريقة الحساب</h2>
+                
+                <div class="settings-item">
+                    <span class="settings-item-text">طريقة حساب المواقيت</span>
+                    <select id="calculationMethod" class="settings-select">
+                        <option value="4">أم القرى (السعودية)</option>
+                        <option value="5">الهيئة المصرية</option>
+                        <option value="3">رابطة العالم الإسلامي</option>
+                        <option value="2">أمريكا الشمالية (ISNA)</option>
+                        <option value="1">جامعة كراتشي</option>
+                    </select>
+                </div>
+            </section>
+            
+            <!-- ========== قسم المزامنة ========== -->
+            <section class="settings-section">
+                <h2 class="section-label">البيانات</h2>
+                
+                <a href="sync.html" class="settings-item-link">
+                    <div class="settings-item-content">
+                        <div class="settings-item-icon-wrapper">
+                            <i data-lucide="refresh-cw"></i>
+                        </div>
+                        <div class="settings-item-info">
+                            <span class="settings-item-title">مزامنة</span>
+                            <span class="settings-item-desc">مزامنة البيانات والإعدادات</span>
+                        </div>
+                    </div>
+                    <div class="settings-item-arrow">
+                        <i data-lucide="chevron-left"></i>
+                    </div>
+                </a>
+            </section>
+            
+            <!-- ========== قسم الموقع المحفوظ ========== -->
+            <section class="settings-section">
+                <h2 class="section-label">الموقع المحفوظ</h2>
+                
+                <div class="saved-location-card">
+                    <div class="location-icon-wrapper">
+                        <i data-lucide="map-pin"></i>
+                    </div>
+                    <div class="location-details">
+                        <h4 id="savedCity">غير محدد</h4>
+                        <p id="savedCoords">--</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- ========== قسم حول التطبيق ========== -->
+            <section class="settings-section">
+                <h2 class="section-label">حول التطبيق</h2>
+                
+                <div class="app-info-card">
+                    <div class="app-info-row">
+                        <span class="app-info-label">الإصدار</span>
+                        <span class="app-info-value">1.0.0</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========== قسم المشاركة ========== -->
+            <div class="settings-card share-section">
+                <div class="share-frame">   
+                <div class="share-content">
+                    <div class="share-info">
+                        <h3 class="share-title">
+                            <span class="share-title-icon">📤</span>
+                            مشاركة
+                        </h3>
+                        <p class="share-desc">لمشاركة التطبيق مع الأهل أو الأصدقاء</p>
+                    </div>
+                    <div class="share-buttons">
+                        <button class="share-btn share-native" onclick="shareApp('native')" title="مشاركة">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+                                <polyline points="16 6 12 2 8 6"/>
+                                <line x1="12" y1="2" x2="12" y2="15"/>
+                            </svg>
+                        </button>
+                        <button class="share-btn share-facebook" onclick="shareApp('facebook')" title="فيسبوك">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                        </button>
+                        <button class="share-btn share-x" onclick="shareApp('x')" title="X (تويتر)">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </main>
+        
+    </div>
+    
+    <script>
+        // تفعيل الأيقونات
+        lucide.createIcons();
+        
+        // ========== نظام الألوان ==========
+        
+        // تحميل الثيم المحفوظ وتحديد المربع
+        function loadSavedTheme() {
+            var savedTheme = localStorage.getItem('appTheme') || 'dark';
+            
+            // إزالة التحديد من الكل
+            document.querySelectorAll('.color-option').forEach(function(opt) {
+                opt.classList.remove('selected');
+            });
+            
+            // تحديد المربع الصحيح
+            var selectedOption = document.querySelector('[data-theme="' + savedTheme + '"]');
+            if (selectedOption) {
+                selectedOption.classList.add('selected');
+            }
+        }
+        
+        // تطبيق الثيم
+        function applyTheme(theme) {
+            // تطبيق على HTML
+            document.documentElement.setAttribute('data-theme', theme);
+            
+            // حفظ في localStorage
+            localStorage.setItem('appTheme', theme);
+            
+            // تحديث التحديد
+            document.querySelectorAll('.color-option').forEach(function(opt) {
+                opt.classList.remove('selected');
+            });
+            
+            var selectedOption = document.querySelector('[data-theme="' + theme + '"]');
+            if (selectedOption) {
+                selectedOption.classList.add('selected');
+            }
+            
+            console.log('✅ تم تغيير اللون إلى:', theme);
+        }
+        
+        // إضافة أحداث الضغط على مربعات الألوان
+        document.querySelectorAll('.color-option').forEach(function(option) {
+            option.addEventListener('click', function() {
+                var theme = this.getAttribute('data-theme');
+                applyTheme(theme);
+            });
+        });
+        
+        // تحميل الثيم عند فتح الصفحة
+        loadSavedTheme();
+        
+        // ========== باقي الإعدادات ==========
+        
+        // عرض الموقع المحفوظ
+        var savedLocation = localStorage.getItem('userLocation');
+        if (savedLocation) {
+            var loc = JSON.parse(savedLocation);
+            document.getElementById('savedCity').textContent = 
+                (loc.city || 'غير معروف') + (loc.country ? ' - ' + loc.country : '');
+            document.getElementById('savedCoords').textContent = 
+                loc.lat.toFixed(4) + ', ' + loc.lng.toFixed(4);
+        }
+        
+        // طريقة الحساب
+        var methodSelect = document.getElementById('calculationMethod');
+        var savedMethod = localStorage.getItem('calculationMethod');
+        if (savedMethod) methodSelect.value = savedMethod;
+        
+        methodSelect.addEventListener('change', function(e) {
+            localStorage.setItem('calculationMethod', e.target.value);
+        });
+
+    </script>
+
+    <script>
+        const APP_URL = window.location.origin;
+        const APP_TITLE = 'تطبيق القرآن الكريم';
+        const APP_DESCRIPTION = 'تطبيق إسلامي شامل - المصحف الشريف، أوقات الصلاة، الأذان، والمزيد';
+
+        function shareApp(platform) {
+            const shareData = {
+                title: APP_TITLE,
+                text: APP_DESCRIPTION,
+                url: APP_URL
+            };
+
+            switch(platform) {
+                case 'native':
+                    if (navigator.share) {
+                        navigator.share(shareData)
+                            .then(() => showShareToast('تمت المشاركة بنجاح ✓'))
+                            .catch(err => {
+                                if (err.name !== 'AbortError') {
+                                    copyToClipboard(APP_URL);
+                                }
+                            });
+                    } else {
+                        copyToClipboard(APP_URL);
+                    }
+                    break;
+
+                case 'facebook':
+                    const fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(APP_URL)}`;
+                    openShareWindow(fbUrl, 'facebook');
+                    break;
+
+                case 'x':
+                    const xUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(APP_URL)}&text=${encodeURIComponent(APP_DESCRIPTION)}`;
+                    openShareWindow(xUrl, 'x');
+                    break;
+            }
+            
+            if (navigator.vibrate) {
+                navigator.vibrate(50);
+            }
+        }
+
+        function openShareWindow(url, platform) {
+            const width = 600;
+            const height = 400;
+            const left = (screen.width - width) / 2;
+            const top = (screen.height - height) / 2;
+            
+            window.open(
+                url,
+                `share_${platform}`,
+                `width=${width},height=${height},left=${left},top=${top},toolbar=no,menubar=no,scrollbars=yes`
+            );
+        }
+
+        function copyToClipboard(text) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text)
+                    .then(() => showShareToast('تم نسخ الرابط ✓'))
+                    .catch(() => fallbackCopy(text));
+            } else {
+                fallbackCopy(text);
+            }
+        }
+
+        function fallbackCopy(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            
+            try {
+                document.execCommand('copy');
+                showShareToast('تم نسخ الرابط ✓');
+            } catch(err) {
+                showShareToast('تعذر نسخ الرابط');
+            }
+            
+            document.body.removeChild(textarea);
+        }
+
+        function showShareToast(message) {
+            if (typeof showToast === 'function') {
+                showToast(message);
+                return;
+            }
+            
+            let toast = document.getElementById('share-toast');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'share-toast';
+                toast.className = 'share-toast';
+                document.body.appendChild(toast);
+            }
+            
+            toast.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+        }
+    </script>
+</body>
+</html>

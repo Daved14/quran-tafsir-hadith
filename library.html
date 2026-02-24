@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>المكتبة المقروءة</title>
+    
+    <!-- ===== PWA الأساسيات ===== -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#d4af37">
+    
+    <!-- ===== iOS Safari المُحسَّن ===== -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="القرآن الكريم">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- ===== أيقونات iOS ===== -->
+    <link rel="apple-touch-icon" href="icons/icon-180x180.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="icons/icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180x180.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="icons/icon-167x167.png">
+    
+    <!-- ===== Splash Screens لـ iOS ===== -->
+    <!-- iPhone X / XS / 11 Pro -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-1125x2436.png"
+          media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)">
+    
+    <!-- iPhone XR / 11 -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-828x1792.png"
+          media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)">
+    
+    <!-- iPhone 12/13/14 -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-1170x2532.png"
+          media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3)">
+    
+    <!-- iPhone 12/13/14 Pro Max -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-1284x2778.png"
+          media="(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3)">
+    
+    <!-- iPhone 14 Pro -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-1179x2556.png"
+          media="(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3)">
+    
+    <!-- iPhone 14 Pro Max -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-1290x2796.png"
+          media="(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3)">
+    
+    <!-- ===== معلومات التطبيق ===== -->
+    <meta name="application-name" content="القرآن الكريم">
+    <meta name="description" content="تطبيق إسلامي شامل - المصحف الشريف، أوقات الصلاة، الأذان">
+    <meta name="author" content="Your Name">
+    
+    <title>تطبيق القرآن الكريم</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- ⚡ تحميل الثيم فوراً -->
+    <script>
+        (function() {
+            var theme = localStorage.getItem('appTheme') || 'dark';
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+
+    <style>
+        /* ========================================
+           نظام الثيمات
+        ======================================== */
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #111118;
+            --card-bg: #1a1a1a;
+            --border-color: #333;
+            --golden: #d4af37;
+            --golden-light: rgba(212, 175, 55, 0.1);
+            --golden-bg: rgba(212, 175, 55, 0.15);
+            --text-primary: #ffffff;
+            --text-secondary: #888;
+            --text-muted: #666;
+            --hover-bg: #222;
+        }
+
+        html[data-theme="light"] {
+            --bg-primary: #f5f5f7;
+            --bg-secondary: #ffffff;
+            --card-bg: #ffffff;
+            --border-color: #ddd;
+            --golden: #b8860b;
+            --golden-light: rgba(184, 134, 11, 0.1);
+            --golden-bg: rgba(184, 134, 11, 0.15);
+            --text-primary: #1a1a1a;
+            --text-secondary: #555;
+            --text-muted: #888;
+            --hover-bg: #f0f0f0;
+        }
+
+        html[data-theme="blue"] {
+            --bg-primary: #e8f4fc;
+            --bg-secondary: #d0e8f7;
+            --card-bg: #ffffff;
+            --border-color: #a8d4f0;
+            --golden: #1565c0;
+            --golden-light: rgba(21, 101, 192, 0.1);
+            --golden-bg: rgba(21, 101, 192, 0.15);
+            --text-primary: #0d3b66;
+            --text-secondary: #2e6da4;
+            --text-muted: #5a9bd4;
+            --hover-bg: #cce5f7;
+        }
+
+        html[data-theme="green"] {
+            --bg-primary: #e8f5e9;
+            --bg-secondary: #d0ecd1;
+            --card-bg: #ffffff;
+            --border-color: #a5d6a7;
+            --golden: #2e7d32;
+            --golden-light: rgba(46, 125, 50, 0.1);
+            --golden-bg: rgba(46, 125, 50, 0.15);
+            --text-primary: #1b4d1e;
+            --text-secondary: #3d8b40;
+            --text-muted: #6abf6e;
+            --hover-bg: #c8e6c9;
+        }
+
+        html[data-theme="brown"] {
+            --bg-primary: #f5f0eb;
+            --bg-secondary: #e8ddd4;
+            --card-bg: #ffffff;
+            --border-color: #c9b8a8;
+            --golden: #6d4c41;
+            --golden-light: rgba(109, 76, 65, 0.1);
+            --golden-bg: rgba(109, 76, 65, 0.15);
+            --text-primary: #3e2723;
+            --text-secondary: #6d4c41;
+            --text-muted: #a1887f;
+            --hover-bg: #d7ccc8;
+        }
+
+        html[data-theme="pink"] {
+            --bg-primary: #fdf2f5;
+            --bg-secondary: #fce4ec;
+            --card-bg: #ffffff;
+            --border-color: #f8b4c8;
+            --golden: #d81b60;
+            --golden-light: rgba(216, 27, 96, 0.1);
+            --golden-bg: rgba(216, 27, 96, 0.15);
+            --text-primary: #6d1039;
+            --text-secondary: #c2185b;
+            --text-muted: #e57399;
+            --hover-bg: #fce4ec;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body { 
+            font-family: 'Amiri', serif; 
+            background: var(--bg-primary); 
+            color: var(--text-primary); 
+            min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* ========== الشريط العلوي ========== */
+        .top-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--bg-secondary);
+            border-bottom: 2px solid var(--golden);
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--golden);
+            text-decoration: none;
+            font-size: 1rem;
+            transition: opacity 0.3s;
+        }
+
+        .back-btn:hover { opacity: 0.7; }
+
+        .page-title {
+            color: var(--golden);
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+
+        .header-icon { font-size: 1.5rem; }
+
+        /* ========== محتوى الصفحة ========== */
+        .page-content {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .section-title {
+            color: var(--golden);
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            text-align: center;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* ========== بطاقات الأذكار ========== */
+        .azkar-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .azkar-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .azkar-card:hover {
+            border-color: var(--golden);
+            background: var(--hover-bg);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .azkar-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--golden-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+
+        .azkar-info {
+            flex: 1;
+        }
+
+        .azkar-name {
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .azkar-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .azkar-count {
+            background: var(--golden-bg);
+            color: var(--golden);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .azkar-arrow {
+            color: var(--golden);
+            font-size: 1.5rem;
+        }
+
+        /* ========== قسم إضافي ========== */
+        .coming-soon {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
+        }
+
+        .coming-soon-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ========== الشريط العلوي ========== -->
+    <header class="top-header">
+        <a href="index.html" class="back-btn">
+            <span>→</span>
+            <span>الرئيسية</span>
+        </a>
+        <h1 class="page-title">المكتبة المقروءة</h1>
+        <span class="header-icon">📚</span>
+    </header>
+
+    <!-- ========== المحتوى ========== -->
+    <main class="page-content">
+        
+        <h2 class="section-title">📿 الأذكار والأدعية</h2>
+        
+        <div class="azkar-grid">
+
+             <!-- أذكار بعد الصلاة -->
+            <a href="prayer-azkar.html" class="azkar-card">
+                <div class="azkar-icon">🕌</div>
+                <div class="azkar-info">
+                    <h3 class="azkar-name">أذكار بعد الصلاة</h3>
+                    <p class="azkar-desc">بعد التسليم من الصلاة</p>
+                </div>
+                <span class="azkar-count">٩ أذكار</span>
+                <span class="azkar-arrow">←</span>
+            </a>
+            
+            <!-- أذكار الصباح -->
+            <a href="morning-azkar.html" class="azkar-card">
+                <div class="azkar-icon">🌅</div>
+                <div class="azkar-info">
+                    <h3 class="azkar-name">أذكار الصباح</h3>
+                    <p class="azkar-desc">من بعد الفجر حتى طلوع الشمس</p>
+                </div>
+                <span class="azkar-count">٢٥ ذكر</span>
+                <span class="azkar-arrow">←</span>
+            </a>
+            
+            <!-- أذكار المساء -->
+            <a href="evening-azkar.html" class="azkar-card">
+                <div class="azkar-icon">🌙</div>
+                <div class="azkar-info">
+                    <h3 class="azkar-name">أذكار المساء</h3>
+                    <p class="azkar-desc">من بعد العصر حتى غروب الشمس</p>
+                </div>
+                <span class="azkar-count">٢٥ ذكر</span>
+                <span class="azkar-arrow">←</span>
+            </a>
+
+            <!-- دعاء ختم القرآن -->
+            <a href="khatm-quran.html" class="azkar-card">
+                <div class="azkar-icon">📖</div>
+                <div class="azkar-info">
+                    <h3 class="azkar-name">دعاء ختم القرآن</h3>
+                    <p class="azkar-desc">دعاء يُقال بعد ختم القرآن الكريم</p>
+                </div>
+                <span class="azkar-count">١٠ أدعية</span>
+                <span class="azkar-arrow">←</span>
+            </a>
+            
+            <!-- أذكار النوم -->
+            <a href="sleep-azkar.html" class="azkar-card">
+                <div class="azkar-icon">😴</div>
+                <div class="azkar-info">
+                    <h3 class="azkar-name">أذكار النوم</h3>
+                    <p class="azkar-desc">قبل النوم مباشرة</p>
+                </div>
+                <span class="azkar-count">١٥ ذكر</span>
+                <span class="azkar-arrow">←</span>
+            </a>
+            
+            <!-- أذكار الاستيقاظ -->
+            <a href="wakeup-azkar.html" class="azkar-card">
+                <div class="azkar-icon">⏰</div>
+                <div class="azkar-info">
+                    <h3 class="azkar-name">أذكار الاستيقاظ</h3>
+                    <p class="azkar-desc">عند الاستيقاظ من النوم</p>
+                </div>
+                <span class="azkar-count">٥ أذكار</span>
+                <span class="azkar-arrow">←</span>
+            </a>
+
+            <!-- الرقية الشرعية -->
+            <a href="ruqyah.html" class="azkar-card">
+                <div class="azkar-icon">🛡️</div>
+                <div class="azkar-info">
+                    <h3 class="azkar-name">الرقية الشرعية</h3>
+                    <p class="azkar-desc">للتحصين والشفاء بإذن الله</p>
+                </div>
+                <span class="azkar-count">١٢ ذكر</span>
+                <span class="azkar-arrow">←</span>
+            </a>
+
+            <!-- المكتبة السمعية -->
+            <!-- <a href="audio.html" class="azkar-card">
+                <div class="azkar-icon">🎧</div>
+                <div class="azkar-info">
+                    <h3 class="azkar-name">المكتبة السمعية</h3>
+                    <p class="azkar-desc">استمع للقرآن بأصوات القراء</p>
+                </div>
+                <span class="azkar-count">٨ قراء</span>
+                <span class="azkar-arrow">←</span>
+            </a> -->
+
+            <!-- الاستغفار -->
+            <a href="istighfar.html" class="azkar-card">
+                <div class="azkar-icon">🕊️</div>
+                <div class="azkar-info">
+                    <h3 class="azkar-name">الاستغفار</h3>
+                    <p class="azkar-desc">أدعية التوبة والاستغفار</p>
+                </div>
+                <span class="azkar-count">٣٣ دعاء</span>
+                <span class="azkar-arrow">←</span>
+            </a>
+            
+        </div>
+        
+        <!-- قريباً -->
+        <div class="coming-soon">
+            <div class="coming-soon-icon">📖</div>
+            <p>المزيد من الأذكار والأدعية قريباً...</p>
+        </div>
+        
+    </main>
+
+</body>
+</html>

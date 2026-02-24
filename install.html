@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>تحميل التطبيق</title>
+    
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="apple-touch-icon" href="icons/icon-180x180.png">
+    
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0d0d0d 0%, #1a1a2e 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        /* ===== الهيدر ===== */
+        .header {
+            text-align: center;
+            padding: 30px 0;
+        }
+
+        .app-icon {
+            width: 100px;
+            height: 100px;
+            border-radius: 22px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+        }
+
+        .app-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #d4af37;
+            margin-bottom: 8px;
+        }
+
+        .app-desc {
+            color: #888;
+            font-size: 0.95rem;
+        }
+
+        /* ===== حالة التثبيت ===== */
+        .install-status {
+            background: linear-gradient(145deg, #1f1f2e, #16162a);
+            border: 2px solid #d4af37;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .status-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .status-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .status-text {
+            color: #aaa;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* ===== خطوات التثبيت ===== */
+        .steps-section {
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .steps-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #d4af37;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .step {
+            display: flex;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .step:last-child {
+            border-bottom: none;
+        }
+
+        .step-number {
+            width: 32px;
+            height: 32px;
+            background: #d4af37;
+            color: #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .step-desc {
+            color: #888;
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        .step-icon {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(212, 175, 55, 0.2);
+            padding: 3px 10px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            color: #d4af37;
+            margin-top: 8px;
+        }
+
+        /* ===== صورة توضيحية ===== */
+        .demo-image {
+            width: 100%;
+            border-radius: 15px;
+            margin: 15px 0;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* ===== زر الدخول ===== */
+        .enter-btn {
+            width: 100%;
+            background: linear-gradient(145deg, #d4af37, #b8962e);
+            color: #000;
+            border: none;
+            padding: 16px;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .enter-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+        }
+
+        /* ===== ملاحظة ===== */
+        .note {
+            background: rgba(39, 174, 96, 0.15);
+            border: 1px solid rgba(39, 174, 96, 0.3);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .note-icon {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .note-text {
+            color: #27ae60;
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        /* ===== إذا كان مثبت ===== */
+        .installed-message {
+            display: none;
+        }
+
+        .is-standalone .install-steps {
+            display: none;
+        }
+
+        .is-standalone .installed-message {
+            display: block;
+        }
+
+        /* ===== الفوتر ===== */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #555;
+            font-size: 0.8rem;
+        }
+
+        /* ===== أنيميشن ===== */
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .bounce {
+            animation: bounce 2s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+        <!-- ===== الهيدر ===== -->
+        <div class="header">
+            <img src="icons/icon-180x180.png" alt="أيقونة التطبيق" class="app-icon">
+            <h1 class="app-name">القرآن الكريم</h1>
+            <p class="app-desc">تطبيق إسلامي شامل</p>
+        </div>
+
+        <!-- ===== حالة التثبيت ===== -->
+        <div class="install-status">
+            <div class="status-icon bounce">📲</div>
+            <h2 class="status-title">أضف التطبيق لشاشتك الرئيسية</h2>
+            <p class="status-text">
+                للحصول على تجربة كاملة بدون شريط المتصفح،<br>
+                اتبع الخطوات البسيطة أدناه
+            </p>
+        </div>
+
+        <!-- ===== خطوات التثبيت ===== -->
+        <div class="steps-section install-steps">
+            <h3 class="steps-title">
+                <span>📱</span>
+                خطوات التثبيت على iPhone
+            </h3>
+
+            <div class="step">
+                <span class="step-number">1</span>
+                <div class="step-content">
+                    <div class="step-title">اضغط على زر المشاركة</div>
+                    <div class="step-desc">
+                        في أسفل الشاشة ستجد أيقونة المشاركة
+                    </div>
+                    <div class="step-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+                            <polyline points="16 6 12 2 8 6"/>
+                            <line x1="12" y1="2" x2="12" y2="15"/>
+                        </svg>
+                        زر المشاركة
+                    </div>
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">2</span>
+                <div class="step-content">
+                    <div class="step-title">اختر "إضافة إلى الشاشة الرئيسية"</div>
+                    <div class="step-desc">
+                        مرر للأسفل في القائمة حتى تجد الخيار
+                    </div>
+                    <div class="step-icon">
+                        <span>➕</span>
+                        Add to Home Screen
+                    </div>
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">3</span>
+                <div class="step-content">
+                    <div class="step-title">اضغط "إضافة"</div>
+                    <div class="step-desc">
+                        سيظهر التطبيق على شاشتك الرئيسية كأي تطبيق آخر
+                    </div>
+                    <div class="step-icon">
+                        <span>✓</span>
+                        Add
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== رسالة إذا كان مثبت ===== -->
+        <div class="steps-section installed-message">
+            <div style="text-align: center; padding: 20px;">
+                <div style="font-size: 3rem; margin-bottom: 15px;">✅</div>
+                <h3 style="color: #27ae60; margin-bottom: 10px;">التطبيق مثبت بنجاح!</h3>
+                <p style="color: #888;">أنت تستخدم التطبيق الآن في وضع ملء الشاشة</p>
+            </div>
+        </div>
+
+        <!-- ===== زر الدخول ===== -->
+        <a href="index.html" class="enter-btn">
+            <span>🚀</span>
+            <span>دخول التطبيق</span>
+        </a>
+
+        <!-- ===== ملاحظة ===== -->
+        <div class="note">
+            <div class="note-icon">💡</div>
+            <p class="note-text">
+                <strong>لا حاجة لـ App Store!</strong><br>
+                التطبيق يعمل مباشرة من المتصفح بكل المميزات
+            </p>
+        </div>
+
+        <!-- ===== الفوتر ===== -->
+        <div class="footer">
+            <p>تطبيق القرآن الكريم © 2025</p>
+        </div>
+
+    </div>
+
+    <script>
+        // التحقق إذا كان التطبيق مثبتاً
+        if (window.navigator.standalone === true || 
+            window.matchMedia('(display-mode: standalone)').matches) {
+            document.body.classList.add('is-standalone');
+        }
+
+        // تسجيل Service Worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+                .then(reg => console.log('SW registered'))
+                .catch(err => console.log('SW failed', err));
+        }
+    </script>
+</body>
+</html>

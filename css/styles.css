@@ -1,0 +1,867 @@
+/* ========================================
+   نظام الثيمات المتعددة
+======================================== */
+
+/* ===== الثيم الداكن (الافتراضي) ===== */
+:root {
+    --bg-primary: #0a0a0f;
+    --bg-secondary: #111118;
+    --card-bg: #16161d;
+    --border-color: #2a2a35;
+    --golden: #d4af37;
+    --golden-light: rgba(212, 175, 55, 0.1);
+    --text-primary: #ffffff;
+    --text-secondary: #888899;
+    --text-muted: #666677;
+    --hover-bg: #1e1e28;
+    --success: #22c55e;
+    --error: #ef4444;
+    --shadow: rgba(0, 0, 0, 0.3);
+}
+
+/* ===== الثيم الفاتح (أبيض) ===== */
+html[data-theme="light"],
+html[data-theme="light"] body {
+    --bg-primary: #f5f5f7;
+    --bg-secondary: #ffffff;
+    --card-bg: #ffffff;
+    --border-color: #e0e0e0;
+    --golden: #b8960c;
+    --golden-light: rgba(184, 150, 12, 0.15);
+    --text-primary: #1a1a1a;
+    --text-secondary: #555555;
+    --text-muted: #888888;
+    --hover-bg: #eeeeee;
+    --shadow: rgba(0, 0, 0, 0.1);
+}
+
+/* ===== الثيم الأزرق ===== */
+html[data-theme="blue"],
+html[data-theme="blue"] body {
+    --bg-primary: #e8f4fc;
+    --bg-secondary: #d0e8f7;
+    --card-bg: #ffffff;
+    --border-color: #a8d4f0;
+    --golden: #1565c0;
+    --golden-light: rgba(21, 101, 192, 0.15);
+    --text-primary: #0d3b66;
+    --text-secondary: #2e6da4;
+    --text-muted: #5a9bd4;
+    --hover-bg: #cce5f7;
+    --shadow: rgba(21, 101, 192, 0.15);
+}
+
+/* ===== الثيم الأخضر ===== */
+html[data-theme="green"],
+html[data-theme="green"] body {
+    --bg-primary: #e8f5e9;
+    --bg-secondary: #d0ecd1;
+    --card-bg: #ffffff;
+    --border-color: #a5d6a7;
+    --golden: #2e7d32;
+    --golden-light: rgba(46, 125, 50, 0.15);
+    --text-primary: #1b4d1e;
+    --text-secondary: #3d8b40;
+    --text-muted: #6abf6e;
+    --hover-bg: #c8e6c9;
+    --shadow: rgba(46, 125, 50, 0.15);
+}
+
+/* ===== الثيم البني ===== */
+html[data-theme="brown"],
+html[data-theme="brown"] body {
+    --bg-primary: #f5f0eb;
+    --bg-secondary: #e8ddd4;
+    --card-bg: #ffffff;
+    --border-color: #c9b8a8;
+    --golden: #6d4c41;
+    --golden-light: rgba(109, 76, 65, 0.15);
+    --text-primary: #3e2723;
+    --text-secondary: #6d4c41;
+    --text-muted: #a1887f;
+    --hover-bg: #d7ccc8;
+    --shadow: rgba(109, 76, 65, 0.15);
+}
+
+/* ===== الثيم الوردي ===== */
+html[data-theme="pink"],
+html[data-theme="pink"] body {
+    --bg-primary: #fdf2f5;
+    --bg-secondary: #fce4ec;
+    --card-bg: #ffffff;
+    --border-color: #f8b4c8;
+    --golden: #d81b60;
+    --golden-light: rgba(216, 27, 96, 0.12);
+    --text-primary: #6d1039;
+    --text-secondary: #c2185b;
+    --text-muted: #e57399;
+    --hover-bg: #fce4ec;
+    --shadow: rgba(216, 27, 96, 0.15);
+}
+
+/* ===== الثيم الداكن ===== */
+html[data-theme="dark"],
+html[data-theme="dark"] body {
+    --bg-primary: #0a0a0f;
+    --bg-secondary: #111118;
+    --card-bg: #16161d;
+    --border-color: #2a2a35;
+    --golden: #d4af37;
+    --golden-light: rgba(212, 175, 55, 0.1);
+    --text-primary: #ffffff;
+    --text-secondary: #888899;
+    --text-muted: #666677;
+    --hover-bg: #1e1e28;
+    --shadow: rgba(0, 0, 0, 0.3);
+}
+
+/* ========================================
+   الأساسيات
+======================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    transition: all 0.3s ease;
+}
+
+body {
+    font-family: 'Cairo', sans-serif;
+    background-color: var(--bg-primary) !important;
+    color: var(--text-primary) !important;
+    min-height: 100vh;
+    line-height: 1.6;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* ========================================
+   الحاوية الرئيسية
+======================================== */
+.app-container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 16px;
+    padding-bottom: 100px;
+}
+
+/* ========================================
+   الهيدر الرئيسي
+======================================== */
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+    margin-bottom: 8px;
+}
+
+.back-to-home {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.back-to-home:hover {
+    background: var(--hover-bg);
+    border-color: var(--golden);
+    transform: translateX(3px);
+}
+
+.back-to-home svg {
+    width: 22px;
+    height: 22px;
+    color: var(--golden);
+}
+
+.header-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.header-title h1 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.header-title .title-icon {
+    width: 28px;
+    height: 28px;
+    color: var(--golden);
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.header-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.header-btn:hover {
+    background: var(--hover-bg);
+    border-color: var(--golden);
+}
+
+.header-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* ========================================
+   قسم أوقات الصلاة
+======================================== */
+.prayer-section {
+    margin-bottom: 24px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.icon-title {
+    width: 24px;
+    height: 24px;
+    color: var(--golden);
+}
+
+.settings-link {
+    padding: 8px;
+    border-radius: 50%;
+    transition: background 0.3s;
+}
+
+.settings-link:hover {
+    background: var(--hover-bg);
+}
+
+.icon-settings {
+    width: 22px;
+    height: 22px;
+    color: var(--text-secondary);
+}
+
+/* ========================================
+   عرض الموقع
+======================================== */
+.location-display {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    transition: all 0.3s ease;
+}
+
+.location-icon-wrapper {
+    background: var(--golden-light);
+    border-radius: 50%;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.location-icon {
+    width: 18px;
+    height: 18px;
+    color: var(--golden);
+}
+
+.location-info {
+    flex: 1;
+}
+
+.location-text {
+    display: block;
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+}
+
+.location-coords {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    direction: ltr;
+    text-align: right;
+}
+
+.change-location-btn {
+    padding: 8px;
+    border-radius: 8px;
+    transition: background 0.3s;
+}
+
+.change-location-btn:hover {
+    background: var(--hover-bg);
+}
+
+.change-location-btn svg {
+    width: 18px;
+    height: 18px;
+    color: var(--text-secondary);
+}
+
+/* ========================================
+   البطاقة الرئيسية
+======================================== */
+.main-prayer-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.main-prayer-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--golden), transparent);
+}
+
+.prayer-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.next-prayer-label {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.hijri-date {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--golden-light);
+    padding: 6px 12px;
+    border-radius: 20px;
+}
+
+.hijri-day {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--golden);
+}
+
+.hijri-month {
+    font-size: 0.85rem;
+    color: var(--golden);
+}
+
+.prayer-card-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.current-prayer-name {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.current-prayer-time {
+    font-size: 1.5rem;
+    color: var(--golden);
+    margin: 4px 0 0;
+    font-weight: 600;
+}
+
+.countdown-section {
+    text-align: left;
+}
+
+.countdown-label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+}
+
+.countdown-timer {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
+    direction: ltr;
+}
+
+.prayer-card-progress {
+    margin-top: 8px;
+}
+
+.progress-bar {
+    height: 4px;
+    background: var(--border-color);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--golden);
+    border-radius: 2px;
+    transition: width 1s linear;
+    width: 0%;
+}
+
+/* ========================================
+   قائمة الصلوات
+======================================== */
+.prayers-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.prayer-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 14px 16px;
+    transition: all 0.3s;
+}
+
+.prayer-item:hover {
+    background: var(--hover-bg);
+}
+
+.prayer-item.active {
+    border-color: var(--golden);
+    background: var(--golden-light);
+}
+
+.prayer-item.passed {
+    opacity: 0.5;
+}
+
+.prayer-item-icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-secondary);
+    border-radius: 10px;
+}
+
+.prayer-item-icon svg {
+    width: 18px;
+    height: 18px;
+    color: var(--golden);
+}
+
+.prayer-item-icon.sunrise svg {
+    color: #f59e0b;
+}
+
+.prayer-item-name {
+    flex: 1;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.prayer-item-time {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    direction: ltr;
+}
+
+.prayer-item.active .prayer-item-time {
+    color: var(--golden);
+}
+
+/* ========================================
+   قسم الأدوات
+======================================== */
+.tools-section {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.coming-soon {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+/* ========================================
+   التحميل
+======================================== */
+.loading-overlay {
+    position: fixed;
+    inset: 0;
+    background: var(--bg-primary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    z-index: 9999;
+    transition: opacity 0.3s;
+}
+
+.loading-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--border-color);
+    border-top-color: var(--golden);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.loading-overlay p {
+    color: var(--text-secondary);
+}
+
+/* ========================================
+   صفحة الإعدادات والموقع
+======================================== */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    border-bottom: 1px solid var(--border-color);
+    background: var(--bg-primary);
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.back-btn {
+    padding: 8px;
+    border-radius: 50%;
+    transition: background 0.3s;
+    display: flex;
+}
+
+.back-btn:hover {
+    background: var(--hover-bg);
+}
+
+.back-btn svg {
+    width: 24px;
+    height: 24px;
+    color: var(--text-primary);
+}
+
+.page-header h1 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.save-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--golden);
+    color: #000;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-family: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.save-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.save-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* صفحة الإعدادات */
+.settings-container {
+    max-width: 500px;
+    margin: 0 auto;
+    background: var(--bg-primary);
+    min-height: 100vh;
+}
+
+.settings-content {
+    padding: 24px 16px;
+}
+
+.settings-section {
+    margin-bottom: 32px;
+}
+
+.section-label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+}
+
+.settings-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 16px;
+    transition: background 0.3s;
+}
+
+.settings-item:hover {
+    background: var(--hover-bg);
+}
+
+.settings-item-text {
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.settings-item-icon {
+    width: 22px;
+    height: 22px;
+    color: var(--golden);
+}
+
+.settings-hint {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 8px;
+    padding: 0 4px;
+}
+
+.settings-select {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 8px 12px;
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.saved-location-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 16px;
+}
+
+.saved-location-card .location-icon-wrapper {
+    background: var(--golden-light);
+    border-radius: 50%;
+    padding: 10px;
+}
+
+.saved-location-card .location-icon-wrapper svg {
+    width: 20px;
+    height: 20px;
+    color: var(--golden);
+}
+
+.saved-location-card .location-details h4 {
+    font-weight: 600;
+    margin: 0;
+    color: var(--text-primary);
+}
+
+.saved-location-card .location-details p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin: 4px 0 0;
+    direction: ltr;
+    text-align: right;
+}
+
+/* معلومات التطبيق */
+.app-info-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.app-info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.app-info-row:last-child {
+    border-bottom: none;
+}
+
+.app-info-label {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.app-info-value {
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+/* ========================================
+   Responsive
+======================================== */
+@media (max-width: 400px) {
+    .current-prayer-name {
+        font-size: 1.6rem;
+    }
+    
+    .countdown-timer {
+        font-size: 1.4rem;
+    }
+}
+
+/* ========== Mini Player Global ========== */
+.mini-player-global {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: var(--bg-secondary);
+    border-top: 2px solid var(--golden);
+    padding: 10px 20px;
+    display: none;
+    align-items: center;
+    gap: 15px;
+    z-index: 999;
+}
+
+.mini-player-global.active {
+    display: flex;
+}
+
+.mini-progress-global {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--border-color);
+}
+
+.mini-progress-fill-global {
+    height: 100%;
+    background: var(--golden);
+    width: 0%;
+}
+
+.mini-player-info-global {
+    flex: 1;
+}
+
+.mini-title-global {
+    color: var(--golden);
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.mini-reciter-global {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+}
+
+.mini-controls-global {
+    display: flex;
+    gap: 10px;
+}
+
+.mini-btn-global {
+    background: var(--golden);
+    color: var(--bg-primary);
+    border: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 1rem;
+}

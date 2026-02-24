@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>أدعية الاستغفار</title>
+    
+    <!-- ===== PWA الأساسيات ===== -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#d4af37">
+    
+    <!-- ===== iOS Safari المُحسَّن ===== -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="القرآن الكريم">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- ===== أيقونات iOS ===== -->
+    <link rel="apple-touch-icon" href="icons/icon-180x180.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="icons/icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180x180.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="icons/icon-167x167.png">
+    
+    <!-- ===== Splash Screens لـ iOS ===== -->
+    <!-- iPhone X / XS / 11 Pro -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-1125x2436.png"
+          media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)">
+    
+    <!-- iPhone XR / 11 -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-828x1792.png"
+          media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)">
+    
+    <!-- iPhone 12/13/14 -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-1170x2532.png"
+          media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3)">
+    
+    <!-- iPhone 12/13/14 Pro Max -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-1284x2778.png"
+          media="(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3)">
+    
+    <!-- iPhone 14 Pro -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-1179x2556.png"
+          media="(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3)">
+    
+    <!-- iPhone 14 Pro Max -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-1290x2796.png"
+          media="(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3)">
+    
+    <!-- ===== معلومات التطبيق ===== -->
+    <meta name="application-name" content="القرآن الكريم">
+    <meta name="description" content="تطبيق إسلامي شامل - المصحف الشريف، أوقات الصلاة، الأذان">
+    <meta name="author" content="Your Name">
+    
+    <title>تطبيق القرآن الكريم</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&display=swap" rel="stylesheet">
+    
+    <script>
+        (function() {
+            var theme = localStorage.getItem('appTheme') || 'dark';
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+    
+    <style>
+        /* ========================================
+           نظام الثيمات
+        ======================================== */
+        :root {
+            --bg-primary: #0d0d0d;
+            --bg-secondary: #000;
+            --card-bg: #1a1a1a;
+            --card-bg-gradient: linear-gradient(145deg, #1a1a1a, #141414);
+            --border-color: #2a2a2a;
+            --golden: #d4af37;
+            --golden-light: rgba(212, 175, 55, 0.08);
+            --golden-bg: rgba(212, 175, 55, 0.15);
+            --text-primary: #fff;
+            --text-secondary: #f5f5f5;
+            --text-muted: #888;
+            --text-dim: #666;
+            --hover-bg: #222;
+            --success: #27ae60;
+            --intro-gradient: linear-gradient(180deg, rgba(212,175,55,0.1) 0%, transparent 100%);
+        }
+
+        html[data-theme="light"] {
+            --bg-primary: #f5f5f7;
+            --bg-secondary: #ffffff;
+            --card-bg: #ffffff;
+            --card-bg-gradient: linear-gradient(145deg, #ffffff, #f8f8f8);
+            --border-color: #e0e0e0;
+            --golden: #b8860b;
+            --golden-light: rgba(184, 134, 11, 0.08);
+            --golden-bg: rgba(184, 134, 11, 0.15);
+            --text-primary: #1a1a1a;
+            --text-secondary: #333;
+            --text-muted: #666;
+            --text-dim: #999;
+            --hover-bg: #f0f0f0;
+            --success: #27ae60;
+            --intro-gradient: linear-gradient(180deg, rgba(184,134,11,0.1) 0%, transparent 100%);
+        }
+
+        html[data-theme="blue"] {
+            --bg-primary: #e8f4fc;
+            --bg-secondary: #d0e8f7;
+            --card-bg: #ffffff;
+            --card-bg-gradient: linear-gradient(145deg, #ffffff, #f0f8ff);
+            --border-color: #a8d4f0;
+            --golden: #1565c0;
+            --golden-light: rgba(21, 101, 192, 0.08);
+            --golden-bg: rgba(21, 101, 192, 0.15);
+            --text-primary: #0d3b66;
+            --text-secondary: #1a5276;
+            --text-muted: #5a9bd4;
+            --text-dim: #85c1e9;
+            --hover-bg: #cce5f7;
+            --success: #27ae60;
+            --intro-gradient: linear-gradient(180deg, rgba(21,101,192,0.1) 0%, transparent 100%);
+        }
+
+        html[data-theme="green"] {
+            --bg-primary: #e8f5e9;
+            --bg-secondary: #d0ecd1;
+            --card-bg: #ffffff;
+            --card-bg-gradient: linear-gradient(145deg, #ffffff, #f1f8e9);
+            --border-color: #a5d6a7;
+            --golden: #2e7d32;
+            --golden-light: rgba(46, 125, 50, 0.08);
+            --golden-bg: rgba(46, 125, 50, 0.15);
+            --text-primary: #1b4d1e;
+            --text-secondary: #2e7d32;
+            --text-muted: #66bb6a;
+            --text-dim: #a5d6a7;
+            --hover-bg: #c8e6c9;
+            --success: #1b5e20;
+            --intro-gradient: linear-gradient(180deg, rgba(46,125,50,0.1) 0%, transparent 100%);
+        }
+
+        html[data-theme="brown"] {
+            --bg-primary: #f5f0eb;
+            --bg-secondary: #e8ddd4;
+            --card-bg: #ffffff;
+            --card-bg-gradient: linear-gradient(145deg, #ffffff, #faf7f4);
+            --border-color: #c9b8a8;
+            --golden: #6d4c41;
+            --golden-light: rgba(109, 76, 65, 0.08);
+            --golden-bg: rgba(109, 76, 65, 0.15);
+            --text-primary: #3e2723;
+            --text-secondary: #5d4037;
+            --text-muted: #8d6e63;
+            --text-dim: #bcaaa4;
+            --hover-bg: #d7ccc8;
+            --success: #558b2f;
+            --intro-gradient: linear-gradient(180deg, rgba(109,76,65,0.1) 0%, transparent 100%);
+        }
+
+        html[data-theme="pink"] {
+            --bg-primary: #fdf2f5;
+            --bg-secondary: #fce4ec;
+            --card-bg: #ffffff;
+            --card-bg-gradient: linear-gradient(145deg, #ffffff, #fff5f8);
+            --border-color: #f8b4c8;
+            --golden: #d81b60;
+            --golden-light: rgba(216, 27, 96, 0.08);
+            --golden-bg: rgba(216, 27, 96, 0.15);
+            --text-primary: #6d1039;
+            --text-secondary: #ad1457;
+            --text-muted: #e57399;
+            --text-dim: #f48fb1;
+            --hover-bg: #fce4ec;
+            --success: #4caf50;
+            --intro-gradient: linear-gradient(180deg, rgba(216,27,96,0.1) 0%, transparent 100%);
+        }
+
+        /* ========================================
+           الأساسيات
+        ======================================== */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Amiri', serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.8;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        /* ========== الشريط العلوي ========== */
+        .top-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--bg-secondary);
+            border-bottom: 2px solid var(--golden);
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .back-section {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            color: var(--golden);
+            font-size: 1rem;
+            transition: opacity 0.3s;
+            text-decoration: none;
+        }
+        
+        .back-section:hover { opacity: 0.7; }
+        .back-arrow { font-size: 1.4rem; }
+        
+        .page-title-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .page-title {
+            color: var(--golden);
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+        
+        .star { color: var(--golden); font-size: 0.9rem; }
+        .header-icon { font-size: 1.5rem; }
+        
+        /* ========== مقدمة الصفحة ========== */
+        .page-intro {
+            text-align: center;
+            padding: 30px 20px;
+            background: var(--intro-gradient);
+        }
+        
+        .intro-icon { 
+            font-size: 3.5rem; 
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .intro-decoration {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .decoration-line {
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--golden), transparent);
+        }
+        
+        .decoration-star { color: var(--golden); font-size: 1.5rem; }
+        
+        .intro-title {
+            color: var(--golden);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .intro-text { 
+            color: var(--text-muted); 
+            font-size: 1rem;
+            max-width: 350px;
+            margin: 0 auto;
+        }
+
+        .intro-hadith {
+            background: var(--golden-light);
+            border: 1px solid var(--golden);
+            border-radius: 15px;
+            padding: 15px 20px;
+            margin: 20px auto 0;
+            max-width: 400px;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+        
+        /* ========== حاوية الأدعية ========== */
+        .duas-container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 15px 15px 60px;
+        }
+
+        /* ========== تصنيف الأدعية ========== */
+        .category-header {
+            background: var(--golden-bg);
+            border: 1px solid var(--golden);
+            border-radius: 15px;
+            padding: 12px 20px;
+            margin: 25px 0 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .category-icon { font-size: 1.3rem; }
+
+        .category-title {
+            color: var(--golden);
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+        
+        /* ========== بطاقة الدعاء ========== */
+        .dua-card {
+            background: var(--card-bg-gradient);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+        
+        .dua-card:hover {
+            border-color: var(--golden);
+            transform: translateY(-2px);
+        }
+        
+        .dua-header {
+            background: var(--golden-light);
+            padding: 12px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .dua-number {
+            background: var(--golden);
+            color: var(--bg-primary);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+        
+        .dua-source {
+            color: var(--text-dim);
+            font-size: 0.75rem;
+        }
+
+        .dua-icon { font-size: 1.5rem; }
+        
+        .dua-content { padding: 25px 20px; }
+        
+        .dua-text {
+            font-family: 'Amiri Quran', 'Amiri', serif;
+            font-size: 1.4rem;
+            line-height: 2.4;
+            color: var(--text-secondary);
+            text-align: justify;
+            text-align-last: center;
+        }
+
+        .dua-translation {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        
+        /* ========== قسم الختام ========== */
+        .closing-section {
+            text-align: center;
+            padding: 40px 20px 60px;
+            background: var(--intro-gradient);
+        }
+        
+        .closing-decoration {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .closing-line {
+            width: 50px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--golden), transparent);
+        }
+        
+        .closing-icon { color: var(--golden); font-size: 1.5rem; }
+        
+        .closing-text {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+        }
+        
+        .amen-btn {
+            background: var(--golden);
+            color: var(--bg-primary);
+            border: none;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-family: 'Amiri', serif;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px var(--golden-bg);
+        }
+        
+        .amen-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px var(--golden-bg);
+        }
+        
+        .amen-btn:active { transform: scale(0.95); }
+        
+        .amen-btn.clicked { background: var(--success); }
+        
+        /* ========== رسالة التأمين ========== */
+        .amen-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: var(--card-bg);
+            border: 2px solid var(--golden);
+            border-radius: 20px;
+            padding: 30px 50px;
+            text-align: center;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        
+        .amen-message.show { transform: translate(-50%, -50%) scale(1); }
+        .amen-message-icon { font-size: 3rem; margin-bottom: 15px; display: block; }
+        .amen-message-text { color: var(--golden); font-size: 1.5rem; font-weight: bold; }
+        .amen-message-sub { color: var(--text-muted); font-size: 1rem; margin-top: 10px; }
+        
+        /* ========== الخلفية المعتمة ========== */
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        
+        .overlay.show { opacity: 1; pointer-events: auto; }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 480px) {
+            .page-title { font-size: 1.1rem; }
+            .dua-text { font-size: 1.25rem; }
+            .intro-hadith { font-size: 0.85rem; padding: 12px 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ========== الشريط العلوي ========== -->
+    <header class="top-header">
+        <a href="library.html" class="back-section">
+            <span class="back-arrow">→</span>
+            <span>الأذكار</span>
+        </a>
+        <div class="page-title-container">
+            <span class="star">✦</span>
+            <h1 class="page-title">الاستغفار</h1>
+            <span class="star">✦</span>
+        </div>
+        <span class="header-icon">🤲</span>
+    </header>
+
+    <!-- ========== مقدمة الصفحة ========== -->
+    <div class="page-intro">
+        <span class="intro-icon">🕊️</span>
+        <div class="intro-decoration">
+            <div class="decoration-line"></div>
+            <span class="decoration-star">✦</span>
+            <div class="decoration-line"></div>
+        </div>
+        <h2 class="intro-title">أدعية الاستغفار والتوبة</h2>
+        <p class="intro-text">من القرآن الكريم والسنة النبوية الشريفة</p>
+        <div class="intro-hadith">
+            💎 قال رسول الله ﷺ: «مَنْ لَزِمَ الاسْتِغْفَارَ جَعَلَ اللَّهُ لَهُ مِنْ كُلِّ ضِيقٍ مَخْرَجًا، وَمِنْ كُلِّ هَمٍّ فَرَجًا، وَرَزَقَهُ مِنْ حَيْثُ لاَ يَحْتَسِبُ»
+        </div>
+    </div>
+
+    <!-- ========== حاوية الأدعية ========== -->
+    <main class="duas-container">
+        
+        <!-- ===== أدعية من القرآن الكريم ===== -->
+        <div class="category-header">
+            <span class="category-icon">📖</span>
+            <span class="category-title">أدعية الاستغفار من القرآن الكريم</span>
+        </div>
+
+        <!-- الدعاء 1 -->
+        <div class="dua-card">
+            <div class="dua-header">
+                <span class="dua-number">١</span>
+                <span class="dua-source">سورة التحريم: 8</span>
+            </div>
+            <div class="dua-content">
+                <p class="dua-text">رَبَّنَا أَتْمِمْ لَنَا نُورَنَا وَاغْفِرْ لَنَا إِنَّكَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ</p>
+            </div>
+        </div>
+
+        <!-- الدعاء 2 -->
+        <div class="dua-card">
+            <div class="dua-header">
+                <span class="dua-number">٢</span>
+                <span class="dua-source">سورة آل عمران: 16</span>
+            </div>
+            <div class="dua-content">
+                <p class="dua-text">رَبَّنَا إِنَّنَا آمَنَّا فَاغْفِرْ لَنَا ذُنُوبَنَا وَقِنَا عَذَابَ النَّارِ</p>
+            </div>
+        </div>
+
+        <!-- الدعاء 3 -->
+        <div class="dua-card">
+            <div class="dua-header">
+                <span class="dua-number">٣</span>
+                <span class="dua-source">سورة آل عمران: 147</span>
+            </div>
+            <div class="dua-content">
+                <p class="dua-text">رَبَّنَا اغْفِرْ لَنَا ذُنُوبَنَا وَإِسْرَافَنَا فِي أَمْرِنَا وَثَبِّتْ أَقْدَامَنَا وَانصُرْنَا عَلَى الْقَوْمِ الْكَافِرِينَ</p>
+            </div>
+        </div>
+
+        <!-- الدعاء 4 -->
+        <div class="dua-card">
+            <div class="dua-header">
+                <span class="dua-number">٤</span>
+                <span class="dua-source">سورة غافر: 7</span>
+            </div>
+            <div class="dua-content">
+                <p class="dua-text">رَبَّنَا وَسِعْتَ كُلَّ شَيْءٍ رَحْمَةً وَعِلْمًا فَاغْفِرْ لِلَّذِينَ تَابُوا وَاتَّبَعُوا سَبِيلَكَ وَقِهِمْ عَذَابَ الْجَحِيمِ</p>
+            </div>
+        </div>
+
+        <!-- الدعاء 5 -->
+        <div class="dua-card">
+            <div class="dua-header">
+                <span class="dua-number">٥</span>
+                <span class="dua-source">سورة القصص: 16</span>
+            </div>
+            <div class="dua-content">
+                <p class="dua-text">رَبِّ إِنِّي ظَلَمْتُ نَفْسِي فَاغْفِرْ لِي</p>
+            </div>
+        </div>
+
+        <!-- الدعاء 6 -->
+        <div class="dua-card">
+            <div class="dua-header">
+                <span class="dua-number">٦</span>
+                <span class="dua-source">سورة المؤمنون: 118</span>
+            </div>
+            <div class="dua-content">
+                <p class="dua-text">رَبِّ اغْفِرْ وَارْحَمْ وَأَنتَ خَيْرُ الرَّاحِمِينَ</p>
+            </div>
+        </div>
+
+        <!-- الدعاء 7 -->
+        <div class="dua-card">
+            <div class="dua-header">
+                <span class="dua-number">٧</span>
+                <span class="dua-source">سورة الأعراف: 23</span>
+            </div>
+            <div class="dua-content">
+                <p class="dua-text">رَبَّنَا ظَلَمْنَا أَنفُسَنَا وَإِن لَّمْ تَغْفِرْ لَنَا وَتَرْحَمْنَا لَنَكُونَنَّ مِنَ الْخَاسِرِينَ</p>
+            </div>
+        </div>
+
+        <!-- الدعاء 8 -->
+        <div class="dua-card">
+            <div class="dua-header">
+                <span class="dua-number">٨</span>
+                <span class="dua-source">سورة إبراهيم: 41</span>
+            </div>
+            <div class="dua-content">
+                <p class="dua-text">رَبَّنَا اغْفِرْ لِي وَلِوَالِدَيَّ وَلِلْمُؤْمِنِينَ يَوْمَ يَقُومُ الْحِسَابُ</p>
+            </div>
+        </div>
+
+        <!-- الدعاء 9 -->
+        <div class="dua-card">
+            <div class="dua-header">
+                <span class="dua-number">٩</span>
+                <span class="dua-source">سورة البقرة: 286</span>
+            </div>
+            <div class="dua-content">
+                <p class="dua-text">رَبَّنَا لَا تُؤَاخِذْنَا إِن نَّسِينَا أَوْ أَخْطَأْنَا رَبَّنَا وَلَا تَحْمِلْ عَلَيْنَا إِصْرًا كَمَا حَمَلْتَهُ عَلَى الَّذِينَ مِن قَبْلِنَا رَبَّنَا وَلَا تُحَمِّلْنَا مَا لَا طَاقَةَ لَنَا بِهِ وَاعْفُ عَنَّا وَاغْفِرْ لَنَا وَارْحَمْنَا أَنتَ مَوْلَانَا فَانصُرْنَا عَلَى الْقَوْمِ الْكَافِرِينَ</p>
+            </div>
+        </div>
+
+        <!-- الدعاء 10 -->
+        <div class="dua-card">
+            <div class="dua-header">
+                <span class="dua-number">١٠</span>
+                <span class="dua-source">سورة آل عمران: 193-194</span>
+            </div>
+            <div class="dua-content">
+                <p class="dua-text">رَّبَّنَا إِنَّنَا سَمِعْنَا مُنَادِيًا يُنَادِي لِلْإِيمَانِ أَنْ آمِنُوا بِرَبِّكُمْ فَآمَنَّا رَبَّنَا فَاغْفِرْ لَنَا ذُنُوبَنَا وَكَفِّرْ عَنَّا سَيِّئَاتِنَا وَتَوَفَّنَا مَعَ الْأَبْرَارِ ۝ رَبَّنَا وَآتِنَا مَا وَعَدتَّنَا عَلَىٰ رُسُلِكَ وَلَا تُخْزِنَا يَوْمَ الْقِيَامَةِ إِنَّكَ لَا تُخْلِفُ الْمِيعَادَ</p>
+            </div>
+        </div>
+
+        <!-- الدعاء 11 -->
+        <div class="dua-card">
+            <div class="dua-header">
+                <span class="dua-number">١١</span>
+                <span class="dua-source">سورة الحشر: 10</span>
+            </div>
+            <div class="dua-content">
+                <p class="dua-text">رَبَّنَا اغْفِرْ لَنَا وَلِإِخْوَانِنَا الَّذِينَ سَبَقُونَا بِالْإِيمَانِ وَلَا تَجْعَلْ فِي قُلُوبِنَا غِلًّا لِّلَّذِينَ آمَنُوا رَبَّنَا إِنَّكَ رَءُوفٌ رَّحِيمٌ</p>
+            </div>
+        </div>
+
+        <!-- الدعاء 12 -->
+        <div class="dua-card">
+            <div class="dua-header">
+                <span class="dua-number">١٢</span>
+                <span class="dua-source">سورة الشعراء: 82</span>
+            </div>
+            <div class="dua-content">
+                <p class="dua-text">رَبِّ اغْفِرْ لِي خَطِيئَتِي يَوْمَ الدِّينِ</p>
+            </div>
+        </div>
+
+        <!-- ===== أدعية من السنة النبوية ===== -->
+        <div class="category-header">
+            <span class="category-icon">🕌</span>
+            <span class="category-title">أدعية الاستغفار من السنة النبوية</span>
+        </div>
+
+        <!-- الدعاء 13 -->
+        <div class="dua-card">
+            <div class="dua-header">
+                <span class="dua-number">١٣</span>
+                <span class="dua-source">صحيح مسلم - دعاء الاستفتاح</span>
+            </div>
+            <div class="dua-content">
+                <p class="dua-text">وَجَّهْتُ وَجْهِيَ لِلَّذِي فَطَرَ السَّمَاوَاتِ وَالْأَرْضَ حَنِيفًا وَمَا أَنَا مِنَ الْمُشْرِكِينَ، إِنَّ صَلَاتِي، وَنُسُكِي، وَمَحْيَايَ، وَمَمَاتِي، لِلَّهِ رَبِّ الْعَالَمِينَ، لَا شَرِيكَ لَهُ؛ وَبِذَلِكَ أُمِرْتُ وَأَنَا مِنَ الْمُسْلِمِينَ. اللَّهُمَّ أَنْتَ الْمَلِكُ لَا إِلَٰهَ إِلَّا أَنتَ، أَنْتَ رَبِّي وَأَنَا عَبْدُكَ، ظَلَمْتُ نَفْسِي وَاعْتَرَفْتُ بِذَنْبِي، فَاغْفِرْ لِي ذُنُوبِي جَمِيعًا، إِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ</p>
+            </div>
+        </div>
+
+        <!-- الدعاء 14 -->
+        <div class="dua-card">
+            <div class="dua-header">
+                <span class="dua-number">١٤</span>
+                <span class="dua-source">سنن أبي داود</span>
+            </div>
+            <div class="dua-content">
+                <p class="dua-text">اللَّهُمَّ إِنِّي أَسْأَلُكَ يَا اللَّهُ، الْأَحَدُ الصَّمَدُ، الَّذِي لَمْ يَلِدْ وَلَمْ يُولَدْ، وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ، أَنْ تَغْفِرَ لِي ذُنُوبِي، إِنَّكَ أَنْتَ الْغَفُورُ الرَّحِيمُ</p>
+            </div>
+        </div>
+
+        <!-- الدعاء 15 -->
+        <div class="dua-card">
+            <div class="dua-header">
+                <span class="dua-number">١٥</span>
+                <span class="dua-source">صحيح البخاري ومسلم</span>
+            </div>
+            <div class="dua-content">
+                <p class="dua-text">اللَّهُمَّ اغْفِرْ لِي خَطِيئَتِي وَجَهْلِي، وَإِسْرَافِي فِي أَمْرِي، وَمَا أَنْتَ أَعْلَمُ بِهِ مِنِّي، اللَّهُمَّ اغْفِرْ لِي جِدِّي وَهَزْلِي، وَخَطَئِي وَعَمْدِي، وَكُلُّ ذَلِكَ عِنْدِي، اللَّهُمَّ اغْفِرْ لِي مَا قَدَّمْتُ وَمَا أَخَّرْتُ، وَمَا أَسْرَرْتُ وَمَا أَعْلَنْتُ، وَمَا أَنْتَ أَعْلَمُ بِهِ مِنِّي، أَنْتَ الْمُقَدِّمُ وَأَنْتَ الْمُؤَخِّرُ، وَأَنْتَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ</p>
+            </div>
+        </div>
+
+        <!-- الدعاء 16 -->
+        <div class="dua-card">
+            <div class="dua-header">
+                <span class="dua-number">١٦</span>
+                <span class="dua-source">صحيح البخاري ومسلم</span>
+            </div>
+            <div class="dua-content">
+                <p class="dua-text">اللَّهُمَّ إِنِّي ظَلَمْتُ نَفْسِي ظُلْمًا كَثِيرًا، وَلَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ، فَاغْفِرْ لِي مَغْفِرَةً مِنْ عِنْدِكَ، وَارْحَمْنِي، إِنَّكَ أَنْتَ الْغَفُورُ الرَّحِيمُ</p>
+            </div>
+        </div>
+
+        <!-- الدعاء 17 -->
+        <div class="dua-card">
+            <div class="dua-header">
+                <span class="dua-number">١٧</span>
+                <span class="dua-source">صحيح البخاري ومسلم</span>
+            </div>
+            <div class="dua-content">
+                <p class="dua-text">اللَّهُمَّ طَهِّرْنِي مِنَ الذُّنُوبِ وَالْخَطَايَا، اللَّهُمَّ نَقِّنِي مِنْهَا كَمَا يُنَقَّى الثَّوْبُ الْأَبْيَضُ مِنَ الدَّنَسِ، اللَّهُمَّ طَهِّرْنِي بِالثَّلْجِ وَالْبَرَدِ وَالْمَاءِ الْبَارِدِ</p>
+            </div>
+        </div>
+
+        <!-- الدعاء 18 -->
+        <div class="dua-card">
+            <div class="dua-header">
+                <span class="dua-number">١٨</span>
+                <span class="dua-source">سنن الترمذي</span>
+            </div>
+            <div class="dua-content">
+                <p class="dua-text">اللَّهُمَّ اغْفِرْ لِي ذَنْبِي وَوَسِّعْ لِي فِي دَارِي، وَبَارِكْ لِي فِيمَا رَزَقْتَنِي</p>
+            </div>
+        </div>
+
+        <!-- الدعاء 19 -->
+        <div class="dua-card">
+            <div class="dua-header">
+                <span class="dua-number">١٩</span>
+                <span class="dua-source">سنن الترمذي</span>
+            </div>
+            <div class="dua-content">
+                <p class="dua-text">اللَّهُمَّ اغْفِرْ لِي ذُنُوبِي وَخَطَايَايَ كُلَّهَا، اللَّهُمَّ أَنْعِشْنِي وَاجْبُرْنِي وَاهْدِنِي لِصَالِحِ الْأَخْلَاقِ وَالْأَعْمَالِ، لَا يَهْدِي لِصَالِحِهَا وَلَا يَصْرِفُ سَيِّئَهَا إِلَّا أَنْتَ</p>
+            </div>
+        </div>
+
+        <!-- الدعاء 20 -->
+        <div class="dua-card">
+            <div class="dua-header">
+                <span class="dua-number">٢٠</span>
+                <span class="dua-source">سنن الترمذي</span>
+            </div>
+            <div class="dua-content">
+                <p class="dua-text">اللَّهُمَّ اغْفِرْ لِي، وَارْحَمْنِي، وَاجْبُرْنِي، وَارْفَعْنِي، وَاهْدِنِي، وَعَافِنِي، وَارْزُقْنِي</p>
+            </div>
+        </div>
+
+        <!-- الدعاء 21 -->
+        <div class="dua-card">
+            <div class="dua-header">
+                <span class="dua-number">٢١</span>
+                <span class="dua-source">سنن أبي داود</span>
+            </div>
+            <div class="dua-content">
+                <p class="dua-text">اللَّهُمَّ اغْفِرْ لِي ذَنْبِي، وَأَخْسِئْ شَيْطَانِي، وَفُكَّ رِهَانِي، وَثَقِّلْ مِيزَانِي، وَاجْعَلْنِي فِي النَّدِيِّ الْأَعْلَى</p>
+            </div>
+        </div>
+
+        <!-- الدعاء 22 -->
+        <div class="dua-card">
+            <div class="dua-header">
+                <span class="dua-number">٢٢</span>
+                <span class="dua-source">صحيح مسلم</span>
+            </div>
+            <div class="dua-content">
+                <p class="dua-text">اللَّهُمَّ اغْفِرْ لِي مَا قَدَّمْتُ وَمَا أَخَّرْتُ، وَمَا أَسْرَرْتُ وَمَا أَعْلَنْتُ، وَمَا أَسْرَفْتُ، وَمَا أَنْتَ أَعْلَمُ بِهِ مِنِّي، أَنْتَ الْمُقَدِّمُ وَأَنْتَ الْمُؤَخِّرُ، لَا إِلَٰهَ إِلَّا أَنْتَ</p>
+            </div>
+        </div>
+
+        <!-- الدعاء 23 -->
+        <div class="dua-card">
+            <div class="dua-header">
+                <span class="dua-number">٢٣</span>
+                <span class="dua-source">سنن النسائي</span>
+            </div>
+            <div class="dua-content">
+                <p class="dua-text">اللَّهُمَّ أَنْتَ رَبِّي وَأَنَا عَبْدُكَ، ظَلَمْتُ نَفْسِي وَاعْتَرَفْتُ بِذَنْبِي، يَا رَبِّ فَاغْفِرْ لِي ذَنْبِي إِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ</p>
+            </div>
+        </div>
+
+        <!-- الدعاء 24 -->
+        <div class="dua-card">
+            <div class="dua-header">
+                <span class="dua-number">٢٤</span>
+                <span class="dua-source">صحيح مسلم</span>
+            </div>
+            <div class="dua-content">
+                <p class="dua-text">اللَّهُمَّ اغْفِرْ لِلْمُؤْمِنِينَ وَالْمُؤْمِنَاتِ</p>
+            </div>
+        </div>
+
+        <!-- الدعاء 25 -->
+        <div class="dua-card">
+            <div class="dua-header">
+                <span class="dua-number">٢٥</span>
+                <span class="dua-source">سنن الترمذي</span>
+            </div>
+            <div class="dua-content">
+                <p class="dua-text">اللَّهُمَّ اغْفِرْ لِي ذَنْبِي، وَطَهِّرْ قَلْبِي، وَحَصِّنْ فَرْجِي</p>
+            </div>
+        </div>
+
+        <!-- الدعاء 26 -->
+        <div class="dua-card">
+            <div class="dua-header">
+                <span class="dua-number">٢٦</span>
+                <span class="dua-source">سنن الترمذي وابن ماجه</span>
+            </div>
+            <div class="dua-content">
+                <p class="dua-text">رَبِّ اغْفِرْ لِي وَتُبْ عَلَيَّ إِنَّكَ أَنْتَ التَّوَّابُ الرَّحِيمُ</p>
+                <p class="dua-translation">💡 يُستحب قولها 100 مرة في المجلس</p>
+            </div>
+        </div>
+
+        <!-- ===== صيغ الاستغفار ===== -->
+        <div class="category-header">
+            <span class="category-icon">💎</span>
+            <span class="category-title">صيغ الاستغفار والتسبيح</span>
+        </div>
+
+        <!-- الدعاء 27 -->
+        <div class="dua-card">
+            <div class="dua-header">
+                <span class="dua-number">٢٧</span>
+                <span class="dua-source">سيد الاستغفار - صحيح البخاري</span>
+            </div>
+            <div class="dua-content">
+                <p class="dua-text">أَسْتَغْفِرُ اللَّهَ الْعَظِيمَ الَّذِي لَا إِلَٰهَ إِلَّا هُوَ، الْحَيُّ الْقَيُّومُ، وَأَتُوبُ إِلَيْهِ</p>
+                <p class="dua-translation">💡 من قالها غُفر له وإن كان فرّ من الزحف</p>
+            </div>
+        </div>
+
+        <!-- الدعاء 28 -->
+        <div class="dua-card">
+            <div class="dua-header">
+                <span class="dua-number">٢٨</span>
+                <span class="dua-source">سنن أبي داود والترمذي</span>
+            </div>
+            <div class="dua-content">
+                <p class="dua-text">سُبْحَانَ اللَّهِ وَبِحَمْدِهِ، سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ، أَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا أَنْتَ، أَسْتَغْفِرُكَ وَأَتُوبُ إِلَيْكَ</p>
+                <p class="dua-translation">💡 كفارة المجلس</p>
+            </div>
+        </div>
+
+        <!-- الدعاء 29 -->
+        <div class="dua-card">
+            <div class="dua-header">
+                <span class="dua-number">٢٩</span>
+                <span class="dua-source">صحيح مسلم</span>
+            </div>
+            <div class="dua-content">
+                <p class="dua-text">سُبْحَانَ اللَّهِ، وَالْحَمْدُ لِلَّهِ، وَلَا إِلَٰهَ إِلَّا اللَّهُ، وَاللَّهُ أَكْبَرُ</p>
+            </div>
+        </div>
+
+        <!-- الدعاء 30 -->
+        <div class="dua-card">
+            <div class="dua-header">
+                <span class="dua-number">٣٠</span>
+                <span class="dua-source">سنن النسائي</span>
+            </div>
+            <div class="dua-content">
+                <p class="dua-text">سُبْحَانَ اللَّهِ، وَالْحَمْدُ لِلَّهِ، وَلَا إِلَٰهَ إِلَّا اللَّهُ، وَاللَّهُ أَكْبَرُ، اللَّهُمَّ اغْفِرْ لِي، اللَّهُمَّ ارْحَمْنِي، اللَّهُمَّ ارْزُقْنِي</p>
+            </div>
+        </div>
+
+        <!-- الدعاء 31 -->
+        <div class="dua-card">
+            <div class="dua-header">
+                <span class="dua-number">٣١</span>
+                <span class="dua-source">صحيح مسلم</span>
+            </div>
+            <div class="dua-content">
+                <p class="dua-text">سُبْحَانَ اللَّهِ وَبِحَمْدِهِ</p>
+                <p class="dua-translation">💡 من قالها 100 مرة غُفرت خطاياه وإن كانت مثل زبد البحر</p>
+            </div>
+        </div>
+
+        <!-- الدعاء 32 -->
+        <div class="dua-card">
+            <div class="dua-header">
+                <span class="dua-number">٣٢</span>
+                <span class="dua-source">صحيح البخاري ومسلم</span>
+            </div>
+            <div class="dua-content">
+                <p class="dua-text">لَا إِلَٰهَ إِلَّا اللَّهُ الْحَلِيمُ الْكَرِيمُ، لَا إِلَٰهَ إِلَّا اللَّهُ الْعَلِيُّ الْعَظِيمُ، سُبْحَانَ اللَّهِ رَبِّ السَّمَاوَاتِ السَّبْعِ، وَرَبِّ الْعَرْشِ الْعَظِيمِ، الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ</p>
+            </div>
+        </div>
+
+        <!-- الدعاء 33 -->
+        <div class="dua-card">
+            <div class="dua-header">
+                <span class="dua-number">٣٣</span>
+                <span class="dua-source">الصلاة على النبي ﷺ</span>
+            </div>
+            <div class="dua-content">
+                <p class="dua-text">اللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَىٰ نَبِيِّنَا مُحَمَّدٍ ﷺ</p>
+                <p class="dua-translation">💡 من صلّى عليّ صلاة صلّى الله عليه بها عشرًا</p>
+            </div>
+        </div>
+        
+    </main>
+
+    <!-- ========== قسم الختام ========== -->
+    <div class="closing-section">
+        <div class="closing-decoration">
+            <div class="closing-line"></div>
+            <span class="closing-icon">✦</span>
+            <div class="closing-line"></div>
+        </div>
+        <p class="closing-text">غفر الله لنا ولكم وتاب علينا وعليكم</p>
+        <button class="amen-btn" id="amenBtn" onclick="sayAmen()">آمين يا رب العالمين</button>
+    </div>
+
+    <!-- ========== رسالة التأمين ========== -->
+    <div class="overlay" id="overlay" onclick="closeAmenMessage()"></div>
+    <div class="amen-message" id="amenMessage">
+        <span class="amen-message-icon">🤲</span>
+        <p class="amen-message-text">آمين آمين آمين</p>
+        <p class="amen-message-sub">تقبّل الله توبتكم واستغفاركم</p>
+    </div>
+
+    <!-- ========== JavaScript ========== -->
+    <script>
+        function sayAmen() {
+            const btn = document.getElementById('amenBtn');
+            const overlay = document.getElementById('overlay');
+            const message = document.getElementById('amenMessage');
+            
+            btn.classList.add('clicked');
+            btn.textContent = '✓ آمين';
+            
+            overlay.classList.add('show');
+            message.classList.add('show');
+            
+            if (navigator.vibrate) {
+                navigator.vibrate([100, 50, 100]);
+            }
+            
+            setTimeout(() => {
+                closeAmenMessage();
+            }, 2500);
+        }
+        
+        function closeAmenMessage() {
+            const overlay = document.getElementById('overlay');
+            const message = document.getElementById('amenMessage');
+            
+            overlay.classList.remove('show');
+            message.classList.remove('show');
+        }
+    </script>
+
+</body>
+</html>

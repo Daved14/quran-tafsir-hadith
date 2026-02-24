@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>بوصلة القبلة</title>
+    
+    <!-- ===== PWA الأساسيات ===== -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#d4af37">
+    
+    <!-- ===== iOS Safari المُحسَّن ===== -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="القرآن الكريم">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- ===== أيقونات iOS ===== -->
+    <link rel="apple-touch-icon" href="icons/icon-180x180.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="icons/icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180x180.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="icons/icon-167x167.png">
+    
+    <!-- ===== Splash Screens لـ iOS ===== -->
+    <!-- iPhone X / XS / 11 Pro -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-1125x2436.png"
+          media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)">
+    
+    <!-- iPhone XR / 11 -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-828x1792.png"
+          media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)">
+    
+    <!-- iPhone 12/13/14 -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-1170x2532.png"
+          media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3)">
+    
+    <!-- iPhone 12/13/14 Pro Max -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-1284x2778.png"
+          media="(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3)">
+    
+    <!-- iPhone 14 Pro -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-1179x2556.png"
+          media="(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3)">
+    
+    <!-- iPhone 14 Pro Max -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-1290x2796.png"
+          media="(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3)">
+    
+    <!-- ===== معلومات التطبيق ===== -->
+    <meta name="application-name" content="القرآن الكريم">
+    <meta name="description" content="تطبيق إسلامي شامل - المصحف الشريف، أوقات الصلاة، الأذان">
+    <meta name="author" content="Your Name">
+    
+    <title>تطبيق القرآن الكريم</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ========================================
+           الثيمات
+        ======================================== */
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #111118;
+            --card-bg: #1a1a22;
+            --border-color: #2a2a35;
+            --golden: #d4af37;
+            --golden-light: rgba(212, 175, 55, 0.15);
+            --golden-glow: rgba(212, 175, 55, 0.4);
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --text-muted: #888888;
+            --red: #e74c3c;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Amiri', serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* ========================================
+           الشريط العلوي
+        ======================================== */
+        .header {
+            background: var(--bg-secondary);
+            border-bottom: 2px solid var(--golden);
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--golden);
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 10px;
+            background: var(--golden-light);
+            font-size: 1rem;
+        }
+
+        .page-title {
+            color: var(--golden);
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .settings-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--golden-light);
+            color: var(--golden);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+
+        /* ========================================
+           المحتوى الرئيسي
+        ======================================== */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* ========================================
+           البوصلة
+        ======================================== */
+        .compass-wrapper {
+            position: relative;
+            width: min(85vw, 340px);
+            height: min(85vw, 340px);
+        }
+
+        /* القرص الخارجي - يدور مع الجهاز */
+        .compass-dial {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: var(--card-bg);
+            border: 5px solid var(--golden);
+            box-shadow: 
+                0 0 0 10px var(--bg-secondary),
+                0 0 40px rgba(0, 0, 0, 0.5),
+                0 0 80px var(--golden-glow),
+                inset 0 0 50px rgba(0, 0, 0, 0.4);
+            transition: transform 0.1s ease-out;
+            will-change: transform;
+        }
+
+        /* الدرجات على القرص */
+        .degree-label {
+            position: absolute;
+            font-size: clamp(12px, 3.5vw, 16px);
+            font-weight: bold;
+            color: var(--text-primary);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        /* الاتجاهات الرئيسية */
+        .direction-n { color: var(--red); font-size: clamp(16px, 5vw, 22px); }
+        .direction-e, .direction-w, .direction-s { color: var(--text-muted); }
+
+        /* علامات الدرجات الصغيرة */
+        .tick-mark {
+            position: absolute;
+            left: 50%;
+            top: 8px;
+            width: 2px;
+            background: var(--text-muted);
+            transform-origin: center calc(min(42.5vw, 170px) - 8px);
+        }
+
+        .tick-mark.major {
+            height: 15px;
+            width: 3px;
+            background: var(--golden);
+        }
+
+        .tick-mark.minor {
+            height: 8px;
+            background: var(--border-color);
+        }
+
+        /* ========================================
+           أيقونة الكعبة - ثابتة عند 93 درجة
+        ======================================== */
+        .kaaba-marker {
+            position: absolute;
+            width: 55px;
+            height: 55px;
+            /* تحديد الموقع عند 93 درجة من المركز */
+            top: 50%;
+            left: 50%;
+            transform: rotate(93deg) translateY(-105px) rotate(-93deg);
+            z-index: 10;
+            filter: drop-shadow(0 0 15px var(--golden));
+        }
+
+        .kaaba-box {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(145deg, #2a1a3a, #0f0515);
+            border-radius: 8px;
+            position: relative;
+            border: 3px solid var(--golden);
+            box-shadow: 
+                0 0 20px var(--golden-glow),
+                inset 0 0 15px rgba(0, 0, 0, 0.6);
+        }
+
+        .kaaba-band {
+            position: absolute;
+            top: 28%;
+            left: 0;
+            right: 0;
+            height: 20%;
+            background: linear-gradient(to right, var(--golden), #ffd700, var(--golden));
+        }
+
+        .kaaba-door {
+            position: absolute;
+            bottom: 8%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 32%;
+            height: 40%;
+            background: linear-gradient(to bottom, #ffd700, var(--golden));
+            border-radius: 4px 4px 0 0;
+        }
+
+        /* علامة 93° بجانب الكعبة */
+        .qibla-degree-label {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--golden);
+            color: var(--bg-primary);
+            padding: 3px 10px;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        /* ========================================
+           مؤشر الاتجاه الثابت (للأعلى)
+        ======================================== */
+        .direction-pointer {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 20;
+        }
+
+        .pointer-arrow {
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-top: 25px solid var(--golden);
+            filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.5));
+        }
+
+        /* النقطة المركزية */
+        .center-dot {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 18px;
+            height: 18px;
+            background: var(--golden);
+            border-radius: 50%;
+            border: 4px solid var(--card-bg);
+            box-shadow: 0 0 15px var(--golden);
+            z-index: 15;
+        }
+
+        /* ========================================
+           عرض الدرجة الحالية
+        ======================================== */
+        .current-heading {
+            margin-top: 30px;
+            text-align: center;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 20px 40px;
+        }
+
+        .heading-value {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--golden);
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .heading-value span {
+            font-size: 1.5rem;
+        }
+
+        .heading-label {
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin-top: 5px;
+        }
+
+        .qibla-hint {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .qibla-hint strong {
+            color: var(--golden);
+        }
+
+        /* ========================================
+           مؤشر التوجه الصحيح
+        ======================================== */
+        .alignment-alert {
+            position: fixed;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #27ae60;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            box-shadow: 0 5px 25px rgba(39, 174, 96, 0.5);
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 100;
+        }
+
+        .alignment-alert.show {
+            opacity: 1;
+        }
+
+        /* ========================================
+           زر التفعيل (iOS)
+        ======================================== */
+        .enable-btn {
+            margin-top: 20px;
+            padding: 15px 35px;
+            background: var(--golden);
+            border: none;
+            border-radius: 30px;
+            color: var(--bg-primary);
+            font-family: inherit;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: none;
+            box-shadow: 0 5px 25px var(--golden-glow);
+        }
+
+        .enable-btn.show {
+            display: block;
+        }
+
+        /* ========================================
+           التعليمات
+        ======================================== */
+        .instructions {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 15px 20px;
+            padding-bottom: calc(15px + env(safe-area-inset-bottom, 0));
+            text-align: center;
+        }
+
+        .instructions p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .instructions strong {
+            color: var(--golden);
+        }
+
+        /* ========================================
+           Responsive
+        ======================================== */
+        @media (max-height: 700px) {
+            .compass-wrapper {
+                width: min(70vw, 280px);
+                height: min(70vw, 280px);
+            }
+            
+            .kaaba-marker {
+                width: 45px;
+                height: 45px;
+                transform: rotate(93deg) translateY(-85px) rotate(-93deg);
+            }
+            
+            .current-heading {
+                padding: 15px 30px;
+                margin-top: 20px;
+            }
+            
+            .heading-value {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- الشريط العلوي -->
+    <header class="header">
+        <a href="settings.html" class="back-btn">
+            <span>›</span>
+            <span>رجوع</span>
+        </a>
+        <h1 class="page-title">
+            <span>🧭</span>
+            <span>بوصلة القبلة</span>
+        </h1>
+        <a href="settings.html" class="settings-btn">⚙️</a>
+    </header>
+
+    <!-- مؤشر التوجه -->
+    <div class="alignment-alert" id="alignmentAlert">
+        ✓ أنت تواجه القبلة!
+    </div>
+
+    <!-- المحتوى -->
+    <main class="main-content">
+        
+        <!-- البوصلة -->
+        <div class="compass-wrapper">
+            
+            <!-- مؤشر الاتجاه الثابت -->
+            <div class="direction-pointer">
+                <div class="pointer-arrow"></div>
+            </div>
+            
+            <!-- القرص الدوار -->
+            <div class="compass-dial" id="compassDial">
+                
+                <!-- علامات الدرجات -->
+                <div id="tickMarks"></div>
+                
+                <!-- أرقام الدرجات -->
+                <div class="degree-label direction-n" style="top: 12%; left: 50%; transform: translateX(-50%);">0</div>
+                <div class="degree-label" style="top: 18%; right: 18%; transform: translate(50%, -50%);">30</div>
+                <div class="degree-label" style="top: 32%; right: 8%;">60</div>
+                <div class="degree-label direction-e" style="top: 50%; right: 10%; transform: translateY(-50%);">90</div>
+                <div class="degree-label" style="bottom: 32%; right: 8%;">120</div>
+                <div class="degree-label" style="bottom: 18%; right: 18%;">150</div>
+                <div class="degree-label direction-s" style="bottom: 12%; left: 50%; transform: translateX(-50%);">180</div>
+                <div class="degree-label" style="bottom: 18%; left: 18%;">210</div>
+                <div class="degree-label" style="bottom: 32%; left: 8%;">240</div>
+                <div class="degree-label direction-w" style="top: 50%; left: 10%; transform: translateY(-50%);">270</div>
+                <div class="degree-label" style="top: 32%; left: 8%;">300</div>
+                <div class="degree-label" style="top: 18%; left: 18%;">330</div>
+                
+                <!-- أيقونة الكعبة عند 93 درجة -->
+                <div class="kaaba-marker">
+                    <div class="qibla-degree-label">93° القبلة</div>
+                    <div class="kaaba-box">
+                        <div class="kaaba-band"></div>
+                        <div class="kaaba-door"></div>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <!-- النقطة المركزية -->
+            <div class="center-dot"></div>
+            
+        </div>
+
+        <!-- عرض الدرجة الحالية -->
+        <div class="current-heading">
+            <div class="heading-value">
+                <span id="headingValue">0</span>
+                <span>°</span>
+            </div>
+            <p class="heading-label">اتجاه الهاتف من الشمال</p>
+            <p class="qibla-hint">
+                وجّه الهاتف حتى يصبح الرقم <strong>93°</strong> 🕋
+            </p>
+        </div>
+
+        <!-- زر التفعيل -->
+        <button class="enable-btn" id="enableBtn" onclick="enableCompass()">
+            🧭 تفعيل البوصلة
+        </button>
+
+    </main>
+
+    <!-- التعليمات -->
+    <div class="instructions">
+        <p>
+            أمسك الهاتف <strong>أفقياً</strong> وأدره حتى تصل الكعبة 🕋 إلى <strong>المؤشر العلوي</strong>
+        </p>
+    </div>
+
+    <script>
+        // ========================================
+        // العناصر
+        // ========================================
+        const compassDial = document.getElementById('compassDial');
+        const headingValue = document.getElementById('headingValue');
+        const alignmentAlert = document.getElementById('alignmentAlert');
+        const enableBtn = document.getElementById('enableBtn');
+        
+        const QIBLA_DEGREE = 93; // زاوية القبلة
+
+        // ========================================
+        // إنشاء علامات الدرجات
+        // ========================================
+        function createTickMarks() {
+            const container = document.getElementById('tickMarks');
+            
+            for (let i = 0; i < 72; i++) {
+                const tick = document.createElement('div');
+                tick.className = 'tick-mark ' + (i % 6 === 0 ? 'major' : 'minor');
+                tick.style.transform = `translateX(-50%) rotate(${i * 5}deg)`;
+                container.appendChild(tick);
+            }
+        }
+
+        // ========================================
+        // تحديث البوصلة
+        // ========================================
+        let currentHeading = 0;
+        let targetHeading = 0;
+        
+        function updateCompass(heading) {
+            targetHeading = heading;
+        }
+        
+        // تحريك سلس
+        function animateCompass() {
+            // حساب أقصر مسافة للدوران
+            let diff = targetHeading - currentHeading;
+            
+            if (diff > 180) diff -= 360;
+            if (diff < -180) diff += 360;
+            
+            currentHeading += diff * 0.15;
+            
+            if (currentHeading > 360) currentHeading -= 360;
+            if (currentHeading < 0) currentHeading += 360;
+            
+            // تدوير القرص (عكس اتجاه الهاتف)
+            compassDial.style.transform = `rotate(${-currentHeading}deg)`;
+            
+            // عرض الدرجة
+            headingValue.textContent = Math.round(currentHeading);
+            
+            // التحقق من التوجه للقبلة (±10 درجات)
+            const qiblaDiff = Math.abs(currentHeading - QIBLA_DEGREE);
+            const isAligned = qiblaDiff <= 10 || qiblaDiff >= 350;
+            
+            if (isAligned) {
+                alignmentAlert.classList.add('show');
+                // اهتزاز خفيف
+                if (qiblaDiff <= 3 && navigator.vibrate) {
+                    navigator.vibrate(30);
+                }
+            } else {
+                alignmentAlert.classList.remove('show');
+            }
+            
+            requestAnimationFrame(animateCompass);
+        }
+
+        // ========================================
+        // البوصلة (DeviceOrientation)
+        // ========================================
+        function handleOrientation(event) {
+            let heading;
+            
+            // iOS
+            if (event.webkitCompassHeading !== undefined) {
+                heading = event.webkitCompassHeading;
+            }
+            // Android
+            else if (event.alpha !== null) {
+                heading = (360 - event.alpha) % 360;
+            }
+            else {
+                return;
+            }
+            
+            updateCompass(heading);
+        }
+
+        // ========================================
+        // تفعيل البوصلة (iOS)
+        // ========================================
+        function enableCompass() {
+            if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+                DeviceOrientationEvent.requestPermission()
+                    .then(response => {
+                        if (response === 'granted') {
+                            window.addEventListener('deviceorientation', handleOrientation, true);
+                            enableBtn.classList.remove('show');
+                        }
+                    })
+                    .catch(console.error);
+            }
+        }
+
+        // ========================================
+        // التهيئة
+        // ========================================
+        function init() {
+            createTickMarks();
+            animateCompass();
+            
+            // التحقق من iOS
+            if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+                enableBtn.classList.add('show');
+            } else {
+                window.addEventListener('deviceorientation', handleOrientation, true);
+            }
+        }
+
+        // بدء التشغيل
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+
+</body>
+</html>

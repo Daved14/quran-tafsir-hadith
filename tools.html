@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أوقات الصلاة</title>
+    
+    <!-- ===== PWA الأساسيات ===== -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#d4af37">
+    
+    <!-- ===== iOS Safari المُحسَّن ===== -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="القرآن الكريم">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- ===== أيقونات iOS ===== -->
+    <link rel="apple-touch-icon" href="icons/icon-180x180.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="icons/icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180x180.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="icons/icon-167x167.png">
+    
+    <!-- ===== Splash Screens لـ iOS ===== -->
+    <!-- iPhone X / XS / 11 Pro -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-1125x2436.png"
+          media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)">
+    
+    <!-- iPhone XR / 11 -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-828x1792.png"
+          media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)">
+    
+    <!-- iPhone 12/13/14 -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-1170x2532.png"
+          media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3)">
+    
+    <!-- iPhone 12/13/14 Pro Max -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-1284x2778.png"
+          media="(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3)">
+    
+    <!-- iPhone 14 Pro -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-1179x2556.png"
+          media="(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3)">
+    
+    <!-- iPhone 14 Pro Max -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-1290x2796.png"
+          media="(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3)">
+    
+    <!-- ===== معلومات التطبيق ===== -->
+    <meta name="application-name" content="القرآن الكريم">
+    <meta name="description" content="تطبيق إسلامي شامل - المصحف الشريف، أوقات الصلاة، الأذان">
+    <meta name="author" content="Your Name">
+    
+    <title>تطبيق القرآن الكريم</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <script>
+        (function() {
+            var theme = localStorage.getItem('appTheme') || 'dark';
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+
+    <style>
+        /* ========== الهيدر الرئيسي ========== */
+        .main-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            margin-bottom: 8px;
+        }
+        
+        .back-to-home {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .back-to-home:hover {
+            background: var(--hover-bg);
+            border-color: var(--golden);
+            transform: translateX(3px);
+        }
+        
+        .back-to-home svg {
+            width: 22px;
+            height: 22px;
+            color: var(--golden);
+        }
+        
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .header-title h1 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0;
+        }
+        
+        .header-title .title-icon {
+            width: 28px;
+            height: 28px;
+            color: var(--golden);
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .header-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .header-btn:hover {
+            background: var(--hover-bg);
+            border-color: var(--golden);
+        }
+        
+        .header-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* ========== شريط عنوان القسم ========== */
+        .section-header-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 5px;
+            margin-bottom: 10px;
+        }
+
+        .section-title {
+            color: var(--golden);
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .more-link-btn {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--golden);
+            font-size: 0.9rem;
+            text-decoration: none;
+            padding: 6px 14px;
+            border-radius: 20px;
+            background: var(--golden-light);
+            border: 1px solid var(--golden);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .more-link-btn:hover {
+            background: var(--golden);
+            color: var(--bg-primary);
+            transform: translateX(-3px);
+        }
+
+        .more-link-btn .more-arrow {
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: transform 0.3s;
+        }
+
+        .more-link-btn:hover .more-arrow {
+            transform: translateX(-4px);
+        }
+
+        /* ========== شريط حالة الأذان ========== */
+        .adhan-status-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+        }
+
+        .adhan-status-bar.enabled {
+            border-color: var(--success, #27ae60);
+            background: rgba(39, 174, 96, 0.1);
+        }
+
+        .adhan-status-bar.disabled {
+            border-color: var(--border-color);
+        }
+
+        .adhan-status-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .adhan-status-icon {
+            font-size: 1.5rem;
+        }
+
+        .adhan-status-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .adhan-status-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .adhan-status-value {
+            font-size: 0.95rem;
+            font-weight: bold;
+            color: var(--text-primary);
+        }
+
+        .adhan-toggle-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .adhan-toggle-btn.enable {
+            background: var(--success, #27ae60);
+            color: #fff;
+        }
+
+        .adhan-toggle-btn.disable {
+            background: var(--danger, #e74c3c);
+            color: #fff;
+        }
+
+        .adhan-toggle-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* ========== إشعار الأذان ========== */
+        .adhan-notification {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .adhan-notification.active {
+            display: flex;
+        }
+
+        .adhan-notification-card {
+            background: var(--card-bg, #1a1a1a);
+            border: 3px solid var(--golden, #d4af37);
+            border-radius: 25px;
+            padding: 40px;
+            text-align: center;
+            max-width: 350px;
+            width: 90%;
+            animation: scaleIn 0.3s ease;
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .adhan-notification-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            animation: float 2s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .adhan-notification-title {
+            color: var(--golden, #d4af37);
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .adhan-notification-prayer {
+            color: var(--text-primary, #fff);
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .adhan-notification-time {
+            color: var(--text-muted, #888);
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+        }
+
+        .adhan-notification-btn {
+            background: var(--danger, #e74c3c);
+            color: #fff;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-family: 'Cairo', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .adhan-notification-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(231, 76, 60, 0.4);
+        }
+
+        /* ========== Toast ========== */
+        .toast-message {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: var(--success, #27ae60);
+            color: #fff;
+            padding: 12px 25px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        .toast-message.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        
+        <!-- ========== الهيدر الرئيسي ========== -->
+        <header class="main-header">
+            <a href="index.html" class="back-to-home" title="الصفحة الرئيسية">
+                <i data-lucide="chevron-right"></i>
+            </a>
+            
+            <div class="header-title">
+                <i data-lucide="clock" class="title-icon"></i>
+                <h1>أوقات الصلاة</h1>
+            </div>
+            
+            <div class="header-actions">
+                <a href="settings.html" class="header-btn" title="الإعدادات">
+                    <i data-lucide="settings"></i>
+                </a>
+            </div>
+        </header>
+        
+        <!-- ========== قسم أوقات الصلاة ========== -->
+        <section class="prayer-section">
+            
+            <!-- عرض الموقع الحالي -->
+            <div class="location-display" id="locationDisplay">
+                <div class="location-icon-wrapper">
+                    <i data-lucide="map-pin" class="location-icon"></i>
+                </div>
+                <div class="location-info">
+                    <span class="location-text" id="locationText">جارٍ تحديد الموقع...</span>
+                    <span class="location-coords" id="locationCoords"></span>
+                </div>
+                <a href="location-picker.html" class="change-location-btn">
+                    <i data-lucide="edit-2"></i>
+                </a>
+            </div>
+
+            <!-- ========== شريط حالة الأذان ========== -->
+            <div class="adhan-status-bar disabled" id="adhanStatusBar">
+                <div class="adhan-status-info">
+                    <span class="adhan-status-icon" id="adhanStatusIcon">🔕</span>
+                    <div class="adhan-status-text">
+                        <span class="adhan-status-label">الأذان التلقائي</span>
+                        <span class="adhan-status-value" id="adhanStatusValue">متوقف</span>
+                    </div>
+                </div>
+                <button class="adhan-toggle-btn enable" id="adhanToggleBtn" onclick="toggleAdhan()">
+                    <span>🔔</span>
+                    <span id="adhanToggleBtnText">تفعيل</span>
+                </button>
+            </div>
+
+            <!-- ========== شريط عنوان القسم ========== -->
+            <div class="section-header-bar">
+                <span class="section-title">🕌 أوقات الصلاة</span>
+                <a href="adhan.html" class="more-link-btn">
+                    <span class="more-text">إعدادات الأذان</span>
+                    <span class="more-arrow">></span>
+                </a>
+            </div>
+            
+            <!-- البطاقة الرئيسية - الصلاة القادمة -->
+            <div class="main-prayer-card">
+                <div class="prayer-card-header">
+                    <span class="next-prayer-label">الصلاة القادمة</span>
+                    <div class="hijri-date">
+                        <span class="hijri-day" id="hijriDay">--</span>
+                        <span class="hijri-month" id="hijriMonth">---</span>
+                    </div>
+                </div>
+                
+                <div class="prayer-card-body">
+                    <div class="current-prayer-info">
+                        <h3 class="current-prayer-name" id="currentPrayerName">---</h3>
+                        <p class="current-prayer-time" id="currentPrayerTime">--:--</p>
+                    </div>
+                    
+                    <div class="countdown-section">
+                        <span class="countdown-label">متبقي</span>
+                        <div class="countdown-timer" id="countdownTimer">--:--:--</div>
+                    </div>
+                </div>
+                
+                <div class="prayer-card-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- قائمة جميع الصلوات -->
+            <div class="prayers-list">
+                <div class="prayer-item" data-prayer="fajr">
+                    <div class="prayer-item-icon">
+                        <i data-lucide="sunrise"></i>
+                    </div>
+                    <span class="prayer-item-name">الفجر</span>
+                    <span class="prayer-item-time" id="fajrTime">--:--</span>
+                </div>
+                
+                <div class="prayer-item" data-prayer="sunrise">
+                    <div class="prayer-item-icon sunrise">
+                        <i data-lucide="sun"></i>
+                    </div>
+                    <span class="prayer-item-name">الشروق</span>
+                    <span class="prayer-item-time" id="sunriseTime">--:--</span>
+                </div>
+                
+                <div class="prayer-item" data-prayer="dhuhr">
+                    <div class="prayer-item-icon">
+                        <i data-lucide="sun"></i>
+                    </div>
+                    <span class="prayer-item-name">الظهر</span>
+                    <span class="prayer-item-time" id="dhuhrTime">--:--</span>
+                </div>
+                
+                <div class="prayer-item" data-prayer="asr">
+                    <div class="prayer-item-icon">
+                        <i data-lucide="cloud-sun"></i>
+                    </div>
+                    <span class="prayer-item-name">العصر</span>
+                    <span class="prayer-item-time" id="asrTime">--:--</span>
+                </div>
+                
+                <div class="prayer-item" data-prayer="maghrib">
+                    <div class="prayer-item-icon">
+                        <i data-lucide="sunset"></i>
+                    </div>
+                    <span class="prayer-item-name">المغرب</span>
+                    <span class="prayer-item-time" id="maghribTime">--:--</span>
+                </div>
+                
+                <div class="prayer-item" data-prayer="isha">
+                    <div class="prayer-item-icon">
+                        <i data-lucide="moon"></i>
+                    </div>
+                    <span class="prayer-item-name">العشاء</span>
+                    <span class="prayer-item-time" id="ishaTime">--:--</span>
+                </div>
+            </div>
+            
+        </section>
+        
+        <!-- قسم أدوات إضافية -->
+        <section class="tools-section">
+            <p class="coming-soon">المزيد من الأدوات قريباً...</p>
+        </section>
+        
+    </div>
+    
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <p>جارٍ تحميل البيانات...</p>
+    </div>
+
+    <!-- إشعار الأذان -->
+    <div class="adhan-notification" id="adhanNotification">
+        <div class="adhan-notification-card">
+            <div class="adhan-notification-icon">🕌</div>
+            <div class="adhan-notification-title">حان الآن موعد</div>
+            <div class="adhan-notification-prayer" id="notificationPrayerName">صلاة الظهر</div>
+            <div class="adhan-notification-time" id="notificationPrayerTime">--:--</div>
+            <button class="adhan-notification-btn" onclick="stopAdhan()">إيقاف الأذان</button>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast-message" id="toast">
+        <span>✓</span>
+        <span id="toastText">تم بنجاح</span>
+    </div>
+
+    <!-- عنصر الصوت -->
+    <audio id="adhanAudio"></audio>
+    
+    <!-- JavaScript -->
+    <script src="js/prayer-times.js"></script>
+    
+    <script>
+        // ========================================
+        // ⭐ نظام الأذان التلقائي المتكامل
+        // ========================================
+        
+        const AdhanSystem = {
+            // ========== الإعدادات ==========
+            config: {
+                storageKeys: {
+                    enabled: 'adhanEnabled',
+                    selectedAdhan: 'selectedAdhanId',
+                    selectedAdhanName: 'selectedAdhanName',
+                    lastPlayed: 'lastPlayedPrayer',
+                    prayerTimes: 'prayerTimes'
+                },
+                checkInterval: 30000, // 30 ثانية
+            },
+
+            // ========== قاعدة بيانات الأذان ==========
+            adhanDatabase: {
+                'short_takbeer': {
+                    name: 'تكبيرات الأذان',
+                    url: 'https://www.islamcan.com/audio/adhan/azan1.mp3'
+                },
+                'full_makkah': {
+                    name: 'أذان مكة المكرمة',
+                    url: 'https://www.islamcan.com/audio/adhan/azan4.mp3'
+                },
+                'full_madinah': {
+                    name: 'أذان المدينة المنورة',
+                    url: 'https://www.islamcan.com/audio/adhan/azan5.mp3'
+                },
+                'full_mishary': {
+                    name: 'أذان مشاري العفاسي',
+                    url: 'https://www.islamcan.com/audio/adhan/azan7.mp3'
+                },
+                'full_alaqsa': {
+                    name: 'أذان المسجد الأقصى',
+                    url: 'https://www.islamcan.com/audio/adhan/azan6.mp3'
+                },
+                'fajr_makkah': {
+                    name: 'أذان الفجر - مكة',
+                    url: 'https://www.islamcan.com/audio/adhan/azan8.mp3'
+                }
+            },
+
+            // ========== أسماء الصلوات ==========
+            prayerNames: {
+                fajr: 'الفجر',
+                sunrise: 'الشروق',
+                dhuhr: 'الظهر',
+                asr: 'العصر',
+                maghrib: 'المغرب',
+                isha: 'العشاء'
+            },
+
+            // ========== المتغيرات ==========
+            enabled: false,
+            selectedAdhanId: 'full_makkah',
+            checkIntervalId: null,
+            audio: null,
+            prayerTimes: null,
+
+            // ========== التهيئة ==========
+            init() {
+                this.audio = document.getElementById('adhanAudio');
+                this.loadSettings();
+                this.updateUI();
+                
+                if (this.enabled) {
+                    this.startMonitoring();
+                }
+
+                // الاستماع لتغييرات أوقات الصلاة
+                window.addEventListener('prayerTimesUpdated', (e) => {
+                    this.prayerTimes = e.detail;
+                    this.savePrayerTimes();
+                });
+
+                // التحقق عند العودة للصفحة
+                document.addEventListener('visibilitychange', () => {
+                    if (!document.hidden && this.enabled) {
+                        this.checkPrayerTime();
+                    }
+                });
+
+                // حدث انتهاء الصوت
+                this.audio.addEventListener('ended', () => {
+                    this.hideNotification();
+                });
+
+                console.log('🕌 نظام الأذان جاهز');
+            },
+
+            // ========== تحميل الإعدادات ==========
+            loadSettings() {
+                this.enabled = localStorage.getItem(this.config.storageKeys.enabled) === 'true';
+                this.selectedAdhanId = localStorage.getItem(this.config.storageKeys.selectedAdhan) || 'full_makkah';
+                
+                // تحميل أوقات الصلاة المحفوظة
+                const savedTimes = localStorage.getItem(this.config.storageKeys.prayerTimes);
+                if (savedTimes) {
+                    try {
+                        this.prayerTimes = JSON.parse(savedTimes);
+                    } catch(e) {}
+                }
+            },
+
+            // ========== حفظ أوقات الصلاة ==========
+            savePrayerTimes() {
+                if (this.prayerTimes) {
+                    localStorage.setItem(this.config.storageKeys.prayerTimes, JSON.stringify(this.prayerTimes));
+                }
+            },
+
+            // ========== تحديث واجهة المستخدم ==========
+            updateUI() {
+                const statusBar = document.getElementById('adhanStatusBar');
+                const statusIcon = document.getElementById('adhanStatusIcon');
+                const statusValue = document.getElementById('adhanStatusValue');
+                const toggleBtn = document.getElementById('adhanToggleBtn');
+                const toggleBtnText = document.getElementById('adhanToggleBtnText');
+
+                if (this.enabled) {
+                    statusBar.classList.remove('disabled');
+                    statusBar.classList.add('enabled');
+                    statusIcon.textContent = '🔔';
+                    statusValue.textContent = 'مُفعّل';
+                    toggleBtn.classList.remove('enable');
+                    toggleBtn.classList.add('disable');
+                    toggleBtn.innerHTML = '<span>🔕</span><span>إيقاف</span>';
+                } else {
+                    statusBar.classList.remove('enabled');
+                    statusBar.classList.add('disabled');
+                    statusIcon.textContent = '🔕';
+                    statusValue.textContent = 'متوقف';
+                    toggleBtn.classList.remove('disable');
+                    toggleBtn.classList.add('enable');
+                    toggleBtn.innerHTML = '<span>🔔</span><span>تفعيل</span>';
+                }
+            },
+
+            // ========== تبديل حالة الأذان ==========
+            toggle() {
+                if (this.enabled) {
+                    this.disable();
+                } else {
+                    this.enable();
+                }
+            },
+
+            // ========== تفعيل الأذان ==========
+            enable() {
+                this.enabled = true;
+                localStorage.setItem(this.config.storageKeys.enabled, 'true');
+                this.updateUI();
+                this.startMonitoring();
+                this.requestNotificationPermission();
+                showToast('تم تفعيل الأذان التلقائي 🔔');
+            },
+
+            // ========== إيقاف الأذان ==========
+            disable() {
+                this.enabled = false;
+                localStorage.setItem(this.config.storageKeys.enabled, 'false');
+                this.updateUI();
+                this.stopMonitoring();
+                showToast('تم إيقاف الأذان التلقائي 🔕');
+            },
+
+            // ========== بدء المراقبة ==========
+            startMonitoring() {
+                if (this.checkIntervalId) {
+                    clearInterval(this.checkIntervalId);
+                }
+                
+                this.checkIntervalId = setInterval(() => {
+                    this.checkPrayerTime();
+                }, this.config.checkInterval);
+                
+                // التحقق فوراً
+                this.checkPrayerTime();
+                
+                console.log('🕌 بدء مراقبة أوقات الصلاة');
+            },
+
+            // ========== إيقاف المراقبة ==========
+            stopMonitoring() {
+                if (this.checkIntervalId) {
+                    clearInterval(this.checkIntervalId);
+                    this.checkIntervalId = null;
+                }
+                console.log('🔕 إيقاف مراقبة أوقات الصلاة');
+            },
+
+            // ========== التحقق من وقت الصلاة ==========
+            checkPrayerTime() {
+                if (!this.enabled) return;
+
+                // الحصول على أوقات الصلاة
+                const times = this.getPrayerTimes();
+                if (!times) {
+                    console.log('⚠️ أوقات الصلاة غير متوفرة');
+                    return;
+                }
+
+                const now = new Date();
+                const currentTime = this.formatTime(now);
+                const today = this.formatDate(now);
+
+                // التحقق من كل صلاة (ما عدا الشروق)
+                const prayers = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'];
+                
+                for (const prayer of prayers) {
+                    const prayerTime = times[prayer];
+                    if (!prayerTime) continue;
+
+                    // التحقق إذا كان الوقت الحالي هو وقت الصلاة
+                    if (currentTime === prayerTime) {
+                        const prayerKey = `${today}_${prayer}`;
+                        const lastPlayed = localStorage.getItem(this.config.storageKeys.lastPlayed);
+                        
+                        // التأكد من عدم تشغيل الأذان مرتين لنفس الصلاة
+                        if (lastPlayed !== prayerKey) {
+                            this.triggerAdhan(prayer, prayerTime);
+                            localStorage.setItem(this.config.storageKeys.lastPlayed, prayerKey);
+                        }
+                    }
+                }
+            },
+
+            // ========== الحصول على أوقات الصلاة ==========
+            getPrayerTimes() {
+                // أولاً: محاولة الحصول من المتغير المحلي
+                if (this.prayerTimes) {
+                    return this.prayerTimes;
+                }
+
+                // ثانياً: محاولة القراءة من العناصر في الصفحة
+                const fajr = document.getElementById('fajrTime')?.textContent;
+                const dhuhr = document.getElementById('dhuhrTime')?.textContent;
+                const asr = document.getElementById('asrTime')?.textContent;
+                const maghrib = document.getElementById('maghribTime')?.textContent;
+                const isha = document.getElementById('ishaTime')?.textContent;
+                const sunrise = document.getElementById('sunriseTime')?.textContent;
+
+                if (fajr && fajr !== '--:--') {
+                    return {
+                        fajr: fajr,
+                        sunrise: sunrise,
+                        dhuhr: dhuhr,
+                        asr: asr,
+                        maghrib: maghrib,
+                        isha: isha
+                    };
+                }
+
+                // ثالثاً: محاولة القراءة من localStorage
+                const saved = localStorage.getItem(this.config.storageKeys.prayerTimes);
+                if (saved) {
+                    try {
+                        return JSON.parse(saved);
+                    } catch(e) {}
+                }
+
+                return null;
+            },
+
+            // ========== تشغيل الأذان ==========
+            triggerAdhan(prayerKey, prayerTime) {
+                const prayerName = this.prayerNames[prayerKey];
+                console.log(`🕌 حان وقت صلاة ${prayerName}`);
+
+                // تحديد الأذان المناسب
+                let adhanToPlay = this.selectedAdhanId;
+                
+                // استخدام أذان الفجر الخاص
+                if (prayerKey === 'fajr') {
+                    adhanToPlay = 'fajr_makkah';
+                }
+
+                // إرسال إشعار
+                this.sendNotification(prayerName, prayerTime);
+                
+                // عرض واجهة الأذان
+                this.showNotification(prayerName, prayerTime);
+                
+                // تشغيل الصوت
+                this.playAdhan(adhanToPlay);
+            },
+
+            // ========== إرسال إشعار ==========
+            sendNotification(prayerName, prayerTime) {
+                if ('Notification' in window && Notification.permission === 'granted') {
+                    new Notification('حان الآن موعد الأذان', {
+                        body: `صلاة ${prayerName} - ${prayerTime}`,
+                        icon: '🕌',
+                        tag: 'adhan-notification',
+                        requireInteraction: true
+                    });
+                }
+            },
+
+            // ========== عرض واجهة الأذان ==========
+            showNotification(prayerName, prayerTime) {
+                document.getElementById('notificationPrayerName').textContent = `صلاة ${prayerName}`;
+                document.getElementById('notificationPrayerTime').textContent = prayerTime;
+                document.getElementById('adhanNotification').classList.add('active');
+            },
+
+            // ========== إخفاء واجهة الأذان ==========
+            hideNotification() {
+                document.getElementById('adhanNotification').classList.remove('active');
+            },
+
+            // ========== تشغيل الأذان ==========
+            playAdhan(adhanId) {
+                const adhan = this.adhanDatabase[adhanId];
+                if (!adhan) return;
+                
+                this.audio.src = adhan.url;
+                this.audio.play().catch(err => {
+                    console.error('خطأ في تشغيل الأذان:', err);
+                });
+            },
+
+            // ========== إيقاف الأذان ==========
+            stop() {
+                this.audio.pause();
+                this.audio.currentTime = 0;
+                this.hideNotification();
+            },
+
+            // ========== طلب إذن الإشعارات ==========
+            requestNotificationPermission() {
+                if ('Notification' in window && Notification.permission === 'default') {
+                    Notification.requestPermission().then(permission => {
+                        if (permission === 'granted') {
+                            showToast('تم تفعيل الإشعارات ✓');
+                        }
+                    });
+                }
+            },
+
+            // ========== تنسيق الوقت ==========
+            formatTime(date) {
+                return `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+            },
+
+            // ========== تنسيق التاريخ ==========
+            formatDate(date) {
+                return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+            }
+        };
+
+        // ========================================
+        // الدوال العامة
+        // ========================================
+        
+        function toggleAdhan() {
+            AdhanSystem.toggle();
+        }
+
+        function stopAdhan() {
+            AdhanSystem.stop();
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastText').textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+
+        // ========================================
+        // تهيئة
+        // ========================================
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            AdhanSystem.init();
+        });
+
+        // ========================================
+        // مراقب أوقات الصلاة (يتم استدعاؤه من prayer-times.js)
+        // ========================================
+        
+        // تحديث أوقات الصلاة في نظام الأذان عند تحميلها
+        function updateAdhanSystemTimes(times) {
+            AdhanSystem.prayerTimes = times;
+            AdhanSystem.savePrayerTimes();
+            
+            // إرسال حدث
+            window.dispatchEvent(new CustomEvent('prayerTimesUpdated', { detail: times }));
+        }
+    </script>
+</body>
+</html>

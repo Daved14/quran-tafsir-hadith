@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>أذكار النوم</title>
+    
+    <!-- ===== PWA الأساسيات ===== -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#d4af37">
+    
+    <!-- ===== iOS Safari المُحسَّن ===== -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="القرآن الكريم">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- ===== أيقونات iOS ===== -->
+    <link rel="apple-touch-icon" href="icons/icon-180x180.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="icons/icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180x180.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="icons/icon-167x167.png">
+    
+    <!-- ===== Splash Screens لـ iOS ===== -->
+    <!-- iPhone X / XS / 11 Pro -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-1125x2436.png"
+          media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)">
+    
+    <!-- iPhone XR / 11 -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-828x1792.png"
+          media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)">
+    
+    <!-- iPhone 12/13/14 -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-1170x2532.png"
+          media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3)">
+    
+    <!-- iPhone 12/13/14 Pro Max -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-1284x2778.png"
+          media="(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3)">
+    
+    <!-- iPhone 14 Pro -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-1179x2556.png"
+          media="(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3)">
+    
+    <!-- iPhone 14 Pro Max -->
+    <link rel="apple-touch-startup-image" 
+          href="splash/splash-1290x2796.png"
+          media="(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3)">
+    
+    <!-- ===== معلومات التطبيق ===== -->
+    <meta name="application-name" content="القرآن الكريم">
+    <meta name="description" content="تطبيق إسلامي شامل - المصحف الشريف، أوقات الصلاة، الأذان">
+    <meta name="author" content="Your Name">
+    
+    <title>تطبيق القرآن الكريم</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&display=swap" rel="stylesheet">
+    
+    <!-- ⚡ تحميل الثيم فوراً -->
+    <script>
+        (function() {
+            var theme = localStorage.getItem('appTheme') || 'dark';
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+    
+    <style>
+        /* ========================================
+           نظام الثيمات
+        ======================================== */
+        :root {
+            --bg-primary: #0d0d0d;
+            --bg-secondary: #000;
+            --card-bg: #1a1a1a;
+            --card-bg-gradient: linear-gradient(145deg, #1a1a1a, #141414);
+            --border-color: #2a2a2a;
+            --golden: #d4af37;
+            --golden-light: rgba(212, 175, 55, 0.08);
+            --golden-bg: rgba(212, 175, 55, 0.15);
+            --text-primary: #fff;
+            --text-secondary: #f5f5f5;
+            --text-muted: #888;
+            --text-dim: #666;
+            --hover-bg: #222;
+            --success: #27ae60;
+            --progress-gradient: linear-gradient(90deg, #d4af37, #f4d03f);
+            --intro-gradient: linear-gradient(180deg, rgba(212,175,55,0.1) 0%, transparent 100%);
+        }
+
+        html[data-theme="light"] {
+            --bg-primary: #f5f5f7;
+            --bg-secondary: #ffffff;
+            --card-bg: #ffffff;
+            --card-bg-gradient: linear-gradient(145deg, #ffffff, #f8f8f8);
+            --border-color: #e0e0e0;
+            --golden: #b8860b;
+            --golden-light: rgba(184, 134, 11, 0.08);
+            --golden-bg: rgba(184, 134, 11, 0.15);
+            --text-primary: #1a1a1a;
+            --text-secondary: #333;
+            --text-muted: #666;
+            --text-dim: #999;
+            --hover-bg: #f0f0f0;
+            --success: #27ae60;
+            --progress-gradient: linear-gradient(90deg, #b8860b, #daa520);
+            --intro-gradient: linear-gradient(180deg, rgba(184,134,11,0.1) 0%, transparent 100%);
+        }
+
+        html[data-theme="blue"] {
+            --bg-primary: #e8f4fc;
+            --bg-secondary: #d0e8f7;
+            --card-bg: #ffffff;
+            --card-bg-gradient: linear-gradient(145deg, #ffffff, #f0f8ff);
+            --border-color: #a8d4f0;
+            --golden: #1565c0;
+            --golden-light: rgba(21, 101, 192, 0.08);
+            --golden-bg: rgba(21, 101, 192, 0.15);
+            --text-primary: #0d3b66;
+            --text-secondary: #1a5276;
+            --text-muted: #5a9bd4;
+            --text-dim: #85c1e9;
+            --hover-bg: #cce5f7;
+            --success: #27ae60;
+            --progress-gradient: linear-gradient(90deg, #1565c0, #42a5f5);
+            --intro-gradient: linear-gradient(180deg, rgba(21,101,192,0.1) 0%, transparent 100%);
+        }
+
+        html[data-theme="green"] {
+            --bg-primary: #e8f5e9;
+            --bg-secondary: #d0ecd1;
+            --card-bg: #ffffff;
+            --card-bg-gradient: linear-gradient(145deg, #ffffff, #f1f8e9);
+            --border-color: #a5d6a7;
+            --golden: #2e7d32;
+            --golden-light: rgba(46, 125, 50, 0.08);
+            --golden-bg: rgba(46, 125, 50, 0.15);
+            --text-primary: #1b4d1e;
+            --text-secondary: #2e7d32;
+            --text-muted: #66bb6a;
+            --text-dim: #a5d6a7;
+            --hover-bg: #c8e6c9;
+            --success: #1b5e20;
+            --progress-gradient: linear-gradient(90deg, #2e7d32, #66bb6a);
+            --intro-gradient: linear-gradient(180deg, rgba(46,125,50,0.1) 0%, transparent 100%);
+        }
+
+        html[data-theme="brown"] {
+            --bg-primary: #f5f0eb;
+            --bg-secondary: #e8ddd4;
+            --card-bg: #ffffff;
+            --card-bg-gradient: linear-gradient(145deg, #ffffff, #faf7f4);
+            --border-color: #c9b8a8;
+            --golden: #6d4c41;
+            --golden-light: rgba(109, 76, 65, 0.08);
+            --golden-bg: rgba(109, 76, 65, 0.15);
+            --text-primary: #3e2723;
+            --text-secondary: #5d4037;
+            --text-muted: #8d6e63;
+            --text-dim: #bcaaa4;
+            --hover-bg: #d7ccc8;
+            --success: #558b2f;
+            --progress-gradient: linear-gradient(90deg, #6d4c41, #a1887f);
+            --intro-gradient: linear-gradient(180deg, rgba(109,76,65,0.1) 0%, transparent 100%);
+        }
+
+        html[data-theme="pink"] {
+            --bg-primary: #fdf2f5;
+            --bg-secondary: #fce4ec;
+            --card-bg: #ffffff;
+            --card-bg-gradient: linear-gradient(145deg, #ffffff, #fff5f8);
+            --border-color: #f8b4c8;
+            --golden: #d81b60;
+            --golden-light: rgba(216, 27, 96, 0.08);
+            --golden-bg: rgba(216, 27, 96, 0.15);
+            --text-primary: #6d1039;
+            --text-secondary: #ad1457;
+            --text-muted: #e57399;
+            --text-dim: #f48fb1;
+            --hover-bg: #fce4ec;
+            --success: #4caf50;
+            --progress-gradient: linear-gradient(90deg, #d81b60, #f06292);
+            --intro-gradient: linear-gradient(180deg, rgba(216,27,96,0.1) 0%, transparent 100%);
+        }
+
+        /* ========================================
+           الأساسيات
+        ======================================== */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Amiri', serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.8;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        /* ========== الشريط العلوي ========== */
+        .top-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--bg-secondary);
+            border-bottom: 2px solid var(--golden);
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .back-section {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            color: var(--golden);
+            font-size: 1rem;
+            transition: opacity 0.3s;
+            text-decoration: none;
+        }
+        
+        .back-section:hover { opacity: 0.7; }
+        .back-arrow { font-size: 1.4rem; }
+        
+        .page-title-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .page-title {
+            color: var(--golden);
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+        
+        .star {
+            color: var(--golden);
+            font-size: 0.9rem;
+        }
+        
+        .header-icon { font-size: 1.5rem; }
+        
+        /* ========== مقدمة الصفحة ========== */
+        .page-intro {
+            text-align: center;
+            padding: 30px 20px;
+            background: var(--intro-gradient);
+        }
+        
+        .intro-icon { 
+            font-size: 3.5rem; 
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .intro-decoration {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .decoration-line {
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--golden), transparent);
+        }
+        
+        .decoration-star {
+            color: var(--golden);
+            font-size: 1.5rem;
+        }
+        
+        .intro-title {
+            color: var(--golden);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .intro-text { 
+            color: var(--text-muted); 
+            font-size: 1rem;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        
+        /* ========== حاوية الأذكار ========== */
+        .azkar-container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 10px 15px 30px 15px;
+        }
+        
+        /* ========== بطاقة الذكر ========== */
+        .zikr-card {
+            background: var(--card-bg-gradient);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            transition: border-color 0.3s, opacity 0.3s;
+        }
+        
+        .zikr-card.completed {
+            border-color: var(--success);
+            opacity: 0.7;
+        }
+        
+        .zikr-header {
+            background: var(--golden-light);
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .zikr-number {
+            background: var(--golden);
+            color: var(--bg-primary);
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+        
+        .zikr-source { 
+            color: var(--text-dim); 
+            font-size: 0.75rem; 
+        }
+        
+        .zikr-content { 
+            padding: 20px; 
+        }
+        
+        .zikr-text {
+            font-family: 'Amiri Quran', 'Amiri', serif;
+            font-size: 1.35rem;
+            line-height: 2.2;
+            color: var(--text-secondary);
+            text-align: justify;
+            text-align-last: center;
+        }
+        
+        .zikr-note {
+            margin-top: 15px;
+            padding: 12px;
+            background: var(--golden-light);
+            border-radius: 10px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-align: center;
+            border-right: 3px solid var(--golden);
+        }
+        
+        /* ========== قسم السورة ========== */
+        .surah-section {
+            background: var(--golden-light);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .surah-section:last-of-type {
+            margin-bottom: 0;
+        }
+        
+        .surah-title {
+            color: var(--golden);
+            font-size: 1.1rem;
+            text-align: center;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed var(--border-color);
+            font-weight: bold;
+        }
+        
+        /* ========== شريط التكرار ========== */
+        .zikr-footer {
+            background: var(--bg-secondary);
+            padding: 12px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .repeat-info { 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+        }
+        
+        .repeat-badge {
+            background: var(--golden-bg);
+            color: var(--golden);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+        
+        .repeat-badge.highlight {
+            background: var(--golden);
+            color: var(--bg-primary);
+            font-weight: bold;
+        }
+        
+        .counter-section { 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+        }
+        
+        .counter-display {
+            background: var(--hover-bg);
+            color: var(--golden);
+            padding: 5px 15px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            min-width: 70px;
+            text-align: center;
+        }
+        
+        .count-btn {
+            background: var(--golden);
+            color: var(--bg-primary);
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
+            font-weight: bold;
+        }
+        
+        .count-btn:active { 
+            transform: scale(0.9); 
+        }
+        
+        .count-btn.done {
+            background: var(--success);
+            color: #fff;
+        }
+        
+        /* ========== قسم الختام ========== */
+        .closing-section {
+            text-align: center;
+            padding: 30px 20px 120px;
+            background: var(--intro-gradient);
+        }
+        
+        .closing-decoration {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .closing-line {
+            width: 50px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--golden), transparent);
+        }
+        
+        .closing-icon {
+            color: var(--golden);
+            font-size: 1.5rem;
+        }
+        
+        .closing-text {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+        
+        .reset-btn {
+            background: transparent;
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-family: 'Amiri', serif;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .reset-btn:hover {
+            border-color: var(--golden);
+            color: var(--golden);
+        }
+        
+        /* ========== شريط التقدم ========== */
+        .progress-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            z-index: 100;
+        }
+        
+        .progress-track {
+            flex: 1;
+            max-width: 300px;
+            height: 8px;
+            background: var(--border-color);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: var(--progress-gradient);
+            border-radius: 10px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+        
+        .progress-text {
+            color: var(--golden);
+            font-size: 0.9rem;
+            min-width: 80px;
+            text-align: center;
+        }
+        
+        .progress-icon {
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ========== الشريط العلوي ========== -->
+    <header class="top-header">
+        <a href="library.html" class="back-section">
+            <span class="back-arrow">→</span>
+            <span>الأذكار</span>
+        </a>
+        <div class="page-title-container">
+            <span class="star">✦</span>
+            <h1 class="page-title">أذكار النوم</h1>
+            <span class="star">✦</span>
+        </div>
+        <span class="header-icon">🌙</span>
+    </header>
+
+    <!-- ========== مقدمة الصفحة ========== -->
+    <div class="page-intro">
+        <span class="intro-icon">😴</span>
+        <div class="intro-decoration">
+            <div class="decoration-line"></div>
+            <span class="decoration-star">☽</span>
+            <div class="decoration-line"></div>
+        </div>
+        <h2 class="intro-title">أذكار قبل النوم</h2>
+        <p class="intro-text">نم على ذكر الله واجعل آخر كلامك لا إله إلا الله</p>
+    </div>
+
+    <!-- ========== حاوية الأذكار ========== -->
+    <main class="azkar-container" id="azkar-container">
+        
+        <!-- الذكر 1: المعوذات -->
+        <div class="zikr-card" data-count="3" data-current="0">
+            <div class="zikr-header">
+                <span class="zikr-number">١</span>
+                <span class="zikr-source">متفق عليه</span>
+            </div>
+            <div class="zikr-content">
+                <div class="surah-section">
+                    <div class="surah-title">سورة الإخلاص</div>
+                    <p class="zikr-text">
+                        بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ<br>
+                        قُلْ هُوَ اللَّهُ أَحَدٌ ۝ اللَّهُ الصَّمَدُ ۝ لَمْ يَلِدْ وَلَمْ يُولَدْ ۝ وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ
+                    </p>
+                </div>
+                <div class="surah-section">
+                    <div class="surah-title">سورة الفلق</div>
+                    <p class="zikr-text">
+                        بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ<br>
+                        قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ ۝ مِن شَرِّ مَا خَلَقَ ۝ وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ ۝ وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ ۝ وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ
+                    </p>
+                </div>
+                <div class="surah-section">
+                    <div class="surah-title">سورة الناس</div>
+                    <p class="zikr-text">
+                        بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ<br>
+                        قُلْ أَعُوذُ بِرَبِّ النَّاسِ ۝ مَلِكِ النَّاسِ ۝ إِلَٰهِ النَّاسِ ۝ مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ ۝ الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ ۝ مِنَ الْجِنَّةِ وَالنَّاسِ
+                    </p>
+                </div>
+                <p class="zikr-note">💡 تُقرأ ثم يُنفث في الكفين ويُمسح بهما الجسد</p>
+            </div>
+            <div class="zikr-footer">
+                <div class="repeat-info">
+                    <span class="repeat-badge highlight">٣ مرات</span>
+                </div>
+                <div class="counter-section">
+                    <span class="counter-display">0/3</span>
+                    <button class="count-btn" onclick="incrementCount(this)">+</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- الذكر 2: آية الكرسي -->
+        <div class="zikr-card" data-count="1" data-current="0">
+            <div class="zikr-header">
+                <span class="zikr-number">٢</span>
+                <span class="zikr-source">صحيح البخاري</span>
+            </div>
+            <div class="zikr-content">
+                <p class="zikr-text">
+                    اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَن ذَا الَّذِي يَشْفَعُ عِندَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ
+                </p>
+                <p class="zikr-note">💡 مَن قرأها لا يزال عليه من الله حافظ ولا يقربه شيطان حتى يُصبح</p>
+            </div>
+            <div class="zikr-footer">
+                <div class="repeat-info">
+                    <span class="repeat-badge">مرة واحدة</span>
+                </div>
+                <div class="counter-section">
+                    <span class="counter-display">0/1</span>
+                    <button class="count-btn" onclick="incrementCount(this)">+</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- الذكر 3: آخر آيتين من البقرة -->
+        <div class="zikr-card" data-count="1" data-current="0">
+            <div class="zikr-header">
+                <span class="zikr-number">٣</span>
+                <span class="zikr-source">متفق عليه</span>
+            </div>
+            <div class="zikr-content">
+                <p class="zikr-text">
+                    آمَنَ الرَّسُولُ بِمَا أُنزِلَ إِلَيْهِ مِن رَّبِّهِ وَالْمُؤْمِنُونَ ۚ كُلٌّ آمَنَ بِاللَّهِ وَمَلَائِكَتِهِ وَكُتُبِهِ وَرُسُلِهِ لَا نُفَرِّقُ بَيْنَ أَحَدٍ مِّن رُّسُلِهِ ۚ وَقَالُوا سَمِعْنَا وَأَطَعْنَا ۖ غُفْرَانَكَ رَبَّنَا وَإِلَيْكَ الْمَصِيرُ ۝ لَا يُكَلِّفُ اللَّهُ نَفْسًا إِلَّا وُسْعَهَا ۚ لَهَا مَا كَسَبَتْ وَعَلَيْهَا مَا اكْتَسَبَتْ ۗ رَبَّنَا لَا تُؤَاخِذْنَا إِن نَّسِينَا أَوْ أَخْطَأْنَا ۚ رَبَّنَا وَلَا تَحْمِلْ عَلَيْنَا إِصْرًا كَمَا حَمَلْتَهُ عَلَى الَّذِينَ مِن قَبْلِنَا ۚ رَبَّنَا وَلَا تُحَمِّلْنَا مَا لَا طَاقَةَ لَنَا بِهِ ۖ وَاعْفُ عَنَّا وَاغْفِرْ لَنَا وَارْحَمْنَا ۚ أَنتَ مَوْلَانَا فَانصُرْنَا عَلَى الْقَوْمِ الْكَافِرِينَ
+                </p>
+                <p class="zikr-note">💡 مَن قرأهما في ليلة كفتاه</p>
+            </div>
+            <div class="zikr-footer">
+                <div class="repeat-info">
+                    <span class="repeat-badge">مرة واحدة</span>
+                </div>
+                <div class="counter-section">
+                    <span class="counter-display">0/1</span>
+                    <button class="count-btn" onclick="incrementCount(this)">+</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- الذكر 4: باسمك ربي وضعت جنبي -->
+        <div class="zikr-card" data-count="1" data-current="0">
+            <div class="zikr-header">
+                <span class="zikr-number">٤</span>
+                <span class="zikr-source">متفق عليه</span>
+            </div>
+            <div class="zikr-content">
+                <p class="zikr-text">
+                    بِاسْمِكَ رَبِّي وَضَعْتُ جَنْبِي، وَبِكَ أَرْفَعُهُ، فَإِنْ أَمْسَكْتَ نَفْسِي فَارْحَمْهَا، وَإِنْ أَرْسَلْتَهَا فَاحْفَظْهَا بِمَا تَحْفَظُ بِهِ عِبَادَكَ الصَّالِحِينَ
+                </p>
+                <p class="zikr-note">💡 يُقال عند وضع الجنب على الفراش</p>
+            </div>
+            <div class="zikr-footer">
+                <div class="repeat-info">
+                    <span class="repeat-badge">مرة واحدة</span>
+                </div>
+                <div class="counter-section">
+                    <span class="counter-display">0/1</span>
+                    <button class="count-btn" onclick="incrementCount(this)">+</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- الذكر 5: اللهم إنك خلقت نفسي -->
+        <div class="zikr-card" data-count="1" data-current="0">
+            <div class="zikr-header">
+                <span class="zikr-number">٥</span>
+                <span class="zikr-source">صحيح مسلم</span>
+            </div>
+            <div class="zikr-content">
+                <p class="zikr-text">
+                    اللَّهُمَّ إِنَّكَ خَلَقْتَ نَفْسِي وَأَنْتَ تَوَفَّاهَا، لَكَ مَمَاتُهَا وَمَحْيَاهَا، إِنْ أَحْيَيْتَهَا فَاحْفَظْهَا، وَإِنْ أَمَتَّهَا فَاغْفِرْ لَهَا، اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَافِيَةَ
+                </p>
+            </div>
+            <div class="zikr-footer">
+                <div class="repeat-info">
+                    <span class="repeat-badge">مرة واحدة</span>
+                </div>
+                <div class="counter-section">
+                    <span class="counter-display">0/1</span>
+                    <button class="count-btn" onclick="incrementCount(this)">+</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- الذكر 6: اللهم قني عذابك -->
+        <div class="zikr-card" data-count="1" data-current="0">
+            <div class="zikr-header">
+                <span class="zikr-number">٦</span>
+                <span class="zikr-source">سنن أبي داود</span>
+            </div>
+            <div class="zikr-content">
+                <p class="zikr-text">
+                    اللَّهُمَّ قِنِي عَذَابَكَ يَوْمَ تَبْعَثُ عِبَادَكَ
+                </p>
+                <p class="zikr-note">💡 كان النبي ﷺ يقولها إذا أراد أن ينام واضعًا يده اليمنى تحت خده</p>
+            </div>
+            <div class="zikr-footer">
+                <div class="repeat-info">
+                    <span class="repeat-badge">مرة واحدة</span>
+                </div>
+                <div class="counter-section">
+                    <span class="counter-display">0/1</span>
+                    <button class="count-btn" onclick="incrementCount(this)">+</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- الذكر 7: باسمك اللهم أموت وأحيا -->
+        <div class="zikr-card" data-count="1" data-current="0">
+            <div class="zikr-header">
+                <span class="zikr-number">٧</span>
+                <span class="zikr-source">صحيح البخاري</span>
+            </div>
+            <div class="zikr-content">
+                <p class="zikr-text">
+                    بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا
+                </p>
+            </div>
+            <div class="zikr-footer">
+                <div class="repeat-info">
+                    <span class="repeat-badge">مرة واحدة</span>
+                </div>
+                <div class="counter-section">
+                    <span class="counter-display">0/1</span>
+                    <button class="count-btn" onclick="incrementCount(this)">+</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- الذكر 8: اللهم أسلمت نفسي إليك -->
+        <div class="zikr-card" data-count="1" data-current="0">
+            <div class="zikr-header">
+                <span class="zikr-number">٨</span>
+                <span class="zikr-source">متفق عليه</span>
+            </div>
+            <div class="zikr-content">
+                <p class="zikr-text">
+                    اللَّهُمَّ أَسْلَمْتُ نَفْسِي إِلَيْكَ، وَوَجَّهْتُ وَجْهِي إِلَيْكَ، وَفَوَّضْتُ أَمْرِي إِلَيْكَ، وَأَلْجَأْتُ ظَهْرِي إِلَيْكَ، رَغْبَةً وَرَهْبَةً إِلَيْكَ، لَا مَلْجَأَ وَلَا مَنْجَا مِنْكَ إِلَّا إِلَيْكَ، آمَنْتُ بِكِتَابِكَ الَّذِي أَنْزَلْتَ، وَبِنَبِيِّكَ الَّذِي أَرْسَلْتَ
+                </p>
+                <p class="zikr-note">💡 مَن قالها ثم مات مات على الفطرة</p>
+            </div>
+            <div class="zikr-footer">
+                <div class="repeat-info">
+                    <span class="repeat-badge">مرة واحدة</span>
+                </div>
+                <div class="counter-section">
+                    <span class="counter-display">0/1</span>
+                    <button class="count-btn" onclick="incrementCount(this)">+</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- الذكر 9: التسبيح -->
+        <div class="zikr-card" data-count="33" data-current="0">
+            <div class="zikr-header">
+                <span class="zikr-number">٩</span>
+                <span class="zikr-source">متفق عليه</span>
+            </div>
+            <div class="zikr-content">
+                <p class="zikr-text">
+                    سُبْحَانَ اللَّهِ
+                </p>
+            </div>
+            <div class="zikr-footer">
+                <div class="repeat-info">
+                    <span class="repeat-badge highlight">٣٣ مرة</span>
+                </div>
+                <div class="counter-section">
+                    <span class="counter-display">0/33</span>
+                    <button class="count-btn" onclick="incrementCount(this)">+</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- الذكر 10: التحميد -->
+        <div class="zikr-card" data-count="33" data-current="0">
+            <div class="zikr-header">
+                <span class="zikr-number">١٠</span>
+                <span class="zikr-source">متفق عليه</span>
+            </div>
+            <div class="zikr-content">
+                <p class="zikr-text">
+                    الْحَمْدُ لِلَّهِ
+                </p>
+            </div>
+            <div class="zikr-footer">
+                <div class="repeat-info">
+                    <span class="repeat-badge highlight">٣٣ مرة</span>
+                </div>
+                <div class="counter-section">
+                    <span class="counter-display">0/33</span>
+                    <button class="count-btn" onclick="incrementCount(this)">+</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- الذكر 11: التكبير -->
+        <div class="zikr-card" data-count="34" data-current="0">
+            <div class="zikr-header">
+                <span class="zikr-number">١١</span>
+                <span class="zikr-source">متفق عليه</span>
+            </div>
+            <div class="zikr-content">
+                <p class="zikr-text">
+                    اللَّهُ أَكْبَرُ
+                </p>
+                <p class="zikr-note">💡 هذا التسبيح أفضل من خادم للمعونة على أمور الدنيا</p>
+            </div>
+            <div class="zikr-footer">
+                <div class="repeat-info">
+                    <span class="repeat-badge highlight">٣٤ مرة</span>
+                </div>
+                <div class="counter-section">
+                    <span class="counter-display">0/34</span>
+                    <button class="count-btn" onclick="incrementCount(this)">+</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- الذكر 12: اللهم رب السماوات السبع -->
+        <div class="zikr-card" data-count="1" data-current="0">
+            <div class="zikr-header">
+                <span class="zikr-number">١٢</span>
+                <span class="zikr-source">سنن الترمذي</span>
+            </div>
+            <div class="zikr-content">
+                <p class="zikr-text">
+                    اللَّهُمَّ رَبَّ السَّمَاوَاتِ السَّبْعِ وَرَبَّ الْعَرْشِ الْعَظِيمِ، رَبَّنَا وَرَبَّ كُلِّ شَيْءٍ، فَالِقَ الْحَبِّ وَالنَّوَى، وَمُنْزِلَ التَّوْرَاةِ وَالْإِنْجِيلِ وَالْفُرْقَانِ، أَعُوذُ بِكَ مِنْ شَرِّ كُلِّ شَيْءٍ أَنْتَ آخِذٌ بِنَاصِيَتِهِ، اللَّهُمَّ أَنْتَ الْأَوَّلُ فَلَيْسَ قَبْلَكَ شَيْءٌ، وَأَنْتَ الْآخِرُ فَلَيْسَ بَعْدَكَ شَيْءٌ، وَأَنْتَ الظَّاهِرُ فَلَيْسَ فَوْقَكَ شَيْءٌ، وَأَنْتَ الْبَاطِنُ فَلَيْسَ دُونَكَ شَيْءٌ، اقْضِ عَنَّا الدَّيْنَ وَأَغْنِنَا مِنَ الْفَقْرِ
+                </p>
+            </div>
+            <div class="zikr-footer">
+                <div class="repeat-info">
+                    <span class="repeat-badge">مرة واحدة</span>
+                </div>
+                <div class="counter-section">
+                    <span class="counter-display">0/1</span>
+                    <button class="count-btn" onclick="incrementCount(this)">+</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- الذكر 13: الحمد لله الذي أطعمنا -->
+        <div class="zikr-card" data-count="1" data-current="0">
+            <div class="zikr-header">
+                <span class="zikr-number">١٣</span>
+                <span class="zikr-source">صحيح مسلم</span>
+            </div>
+            <div class="zikr-content">
+                <p class="zikr-text">
+                    الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنَا وَسَقَانَا، وَكَفَانَا وَآوَانَا، فَكَمْ مِمَّنْ لَا كَافِيَ لَهُ وَلَا مُؤْوِيَ
+                </p>
+            </div>
+            <div class="zikr-footer">
+                <div class="repeat-info">
+                    <span class="repeat-badge">مرة واحدة</span>
+                </div>
+                <div class="counter-section">
+                    <span class="counter-display">0/1</span>
+                    <button class="count-btn" onclick="incrementCount(this)">+</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- الذكر 14: اللهم عالم الغيب -->
+        <div class="zikr-card" data-count="1" data-current="0">
+            <div class="zikr-header">
+                <span class="zikr-number">١٤</span>
+                <span class="zikr-source">سنن الترمذي</span>
+            </div>
+            <div class="zikr-content">
+                <p class="zikr-text">
+                    اللَّهُمَّ عَالِمَ الْغَيْبِ وَالشَّهَادَةِ، فَاطِرَ السَّمَاوَاتِ وَالْأَرْضِ، رَبَّ كُلِّ شَيْءٍ وَمَلِيكَهُ، أَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا أَنْتَ، أَعُوذُ بِكَ مِنْ شَرِّ نَفْسِي وَمِنْ شَرِّ الشَّيْطَانِ وَشِرْكِهِ، وَأَنْ أَقْتَرِفَ عَلَىٰ نَفْسِي سُوءًا أَوْ أَجُرَّهُ إِلَىٰ مُسْلِمٍ
+                </p>
+            </div>
+            <div class="zikr-footer">
+                <div class="repeat-info">
+                    <span class="repeat-badge">مرة واحدة</span>
+                </div>
+                <div class="counter-section">
+                    <span class="counter-display">0/1</span>
+                    <button class="count-btn" onclick="incrementCount(this)">+</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- الذكر 15: سورة السجدة وتبارك -->
+        <div class="zikr-card" data-count="1" data-current="0">
+            <div class="zikr-header">
+                <span class="zikr-number">١٥</span>
+                <span class="zikr-source">سنن الترمذي</span>
+            </div>
+            <div class="zikr-content">
+                <div class="surah-section">
+                    <div class="surah-title">سورة السجدة</div>
+                    <p class="zikr-text">
+                        الٓمٓ تَنزِيلُ الْكِتَابِ لَا رَيْبَ فِيهِ مِن رَّبِّ الْعَالَمِينَ...
+                    </p>
+                </div>
+                <div class="surah-section">
+                    <div class="surah-title">سورة الملك</div>
+                    <p class="zikr-text">
+                        تَبَارَكَ الَّذِي بِيَدِهِ الْمُلْكُ وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ...
+                    </p>
+                </div>
+                <p class="zikr-note">💡 كان النبي ﷺ لا ينام حتى يقرأ سورة السجدة وسورة الملك</p>
+            </div>
+            <div class="zikr-footer">
+                <div class="repeat-info">
+                    <span class="repeat-badge">مرة واحدة</span>
+                </div>
+                <div class="counter-section">
+                    <span class="counter-display">0/1</span>
+                    <button class="count-btn" onclick="incrementCount(this)">+</button>
+                </div>
+            </div>
+        </div>
+        
+    </main>
+
+    <!-- ========== قسم الختام ========== -->
+    <div class="closing-section">
+        <div class="closing-decoration">
+            <div class="closing-line"></div>
+            <span class="closing-icon">☽</span>
+            <div class="closing-line"></div>
+        </div>
+        <p class="closing-text">نوماً هنيئاً وأحلاماً سعيدة</p>
+        <button class="reset-btn" onclick="resetAll()">🔄 إعادة تعيين الأذكار</button>
+    </div>
+
+    <!-- ========== شريط التقدم ========== -->
+    <div class="progress-bar">
+        <span class="progress-icon">🌙</span>
+        <span class="progress-text" id="progress-text">٠ / ١٥</span>
+        <div class="progress-track">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+    </div>
+
+    <!-- ========== JavaScript ========== -->
+    <script>
+        let totalAzkar = 0;
+        let completedAzkar = 0;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            totalAzkar = document.querySelectorAll('.zikr-card').length;
+            loadProgress();
+            updateProgressBar();
+        });
+
+        function incrementCount(btn) {
+            const card = btn.closest('.zikr-card');
+            const maxCount = parseInt(card.dataset.count);
+            let currentCount = parseInt(card.dataset.current);
+
+            if (currentCount < maxCount) {
+                currentCount++;
+                card.dataset.current = currentCount;
+
+                const display = card.querySelector('.counter-display');
+                display.textContent = `${currentCount}/${maxCount}`;
+
+                btn.style.transform = 'scale(0.8)';
+                setTimeout(() => btn.style.transform = 'scale(1)', 100);
+
+                if (navigator.vibrate) navigator.vibrate(30);
+
+                if (currentCount >= maxCount) {
+                    card.classList.add('completed');
+                    btn.classList.add('done');
+                    btn.textContent = '✓';
+                }
+
+                saveProgress();
+                updateProgressBar();
+            }
+        }
+
+        function updateProgressBar() {
+            completedAzkar = document.querySelectorAll('.zikr-card.completed').length;
+            const percentage = (completedAzkar / totalAzkar) * 100;
+            
+            document.getElementById('progress-fill').style.width = percentage + '%';
+            document.getElementById('progress-text').textContent = `${toArabic(completedAzkar)} / ${toArabic(totalAzkar)}`;
+        }
+
+        function saveProgress() {
+            const progress = {};
+            document.querySelectorAll('.zikr-card').forEach((card, index) => {
+                progress[index] = {
+                    current: card.dataset.current,
+                    completed: card.classList.contains('completed')
+                };
+            });
+            localStorage.setItem('sleep_azkar_progress', JSON.stringify(progress));
+            localStorage.setItem('sleep_azkar_date', new Date().toDateString());
+        }
+
+        function loadProgress() {
+            const savedDate = localStorage.getItem('sleep_azkar_date');
+            const today = new Date().toDateString();
+
+            if (savedDate !== today) {
+                localStorage.removeItem('sleep_azkar_progress');
+                return;
+            }
+
+            const progress = JSON.parse(localStorage.getItem('sleep_azkar_progress'));
+            if (!progress) return;
+
+            document.querySelectorAll('.zikr-card').forEach((card, index) => {
+                if (progress[index]) {
+                    card.dataset.current = progress[index].current;
+                    const maxCount = parseInt(card.dataset.count);
+                    const currentCount = parseInt(progress[index].current);
+                    
+                    card.querySelector('.counter-display').textContent = `${currentCount}/${maxCount}`;
+                    
+                    if (progress[index].completed) {
+                        card.classList.add('completed');
+                        const btn = card.querySelector('.count-btn');
+                        btn.classList.add('done');
+                        btn.textContent = '✓';
+                    }
+                }
+            });
+        }
+
+        function resetAll() {
+            if (!confirm('هل تريد إعادة تعيين جميع الأذكار؟')) return;
+
+            document.querySelectorAll('.zikr-card').forEach(card => {
+                card.dataset.current = 0;
+                card.classList.remove('completed');
+                
+                const maxCount = card.dataset.count;
+                card.querySelector('.counter-display').textContent = `0/${maxCount}`;
+                
+                const btn = card.querySelector('.count-btn');
+                btn.classList.remove('done');
+                btn.textContent = '+';
+            });
+
+            localStorage.removeItem('sleep_azkar_progress');
+            completedAzkar = 0;
+            updateProgressBar();
+        }
+
+        function toArabic(num) {
+            return num.toString().replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
+        }
+    </script>
+
+</body>
+</html>
