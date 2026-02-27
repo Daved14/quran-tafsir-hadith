@@ -1,8 +1,9 @@
+@"
 {
   "name": "القرآن الكريم - التفسير والحديث",
   "short_name": "القرآن",
   "description": "تطبيق القرآن الكريم مع التفسير والأحاديث",
-  "start_url": "/index.html",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#1a1a2e",
   "theme_color": "#d4af37",
@@ -22,3 +23,4 @@
     }
   ]
 }
+"@ | Out-File -FilePath manifest.json -Encoding UTF8
