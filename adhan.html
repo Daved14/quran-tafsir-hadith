@@ -1236,6 +1236,7 @@
 
     <!-- ========== JavaScript ========== -->
     <script>
+
         // ========================================
         // قاعدة بيانات الأذان
         // ========================================
@@ -1289,6 +1290,21 @@
         let lastPlayedPrayer = localStorage.getItem('lastPlayedPrayer') || '';
         let prayerCheckInterval = null;
         let prayerTimes = null;
+        // نافذة التسامح للوقت (2 دقيقة لضمان عدم فوات الأذان حتى إذا تباطأ الفاصل الزمني)
+        const TIME_TOLERANCE_MINUTES = 2;
+
+        // ========================================
+        // حل مشكلة تشغيل الصوت في iOS: فتح سياق الصوت عند أول تفاعل مستخدم
+        // ========================================
+        function unlockAudio() {
+            if (audio.context) return;
+            const silentAudio = new AudioContext();
+            silentAudio.resume();
+            audio.play().then(() => audio.pause()).catch(() => {});
+            document.removeEventListener('click', unlockAudio);
+            console.log('✅ تم فتح قفل الصوت في المتصفح');
+        }
+        document.addEventListener('click', unlockAudio);
 
         // ========================================
         // تهيئة الصفحة
@@ -1314,8 +1330,8 @@
                 startPrayerMonitoring();
             }
             
-            // تحديث الصلاة القادمة كل دقيقة
-            setInterval(updateNextPrayer, 60000);
+            // تحديث الصلاة القادمة كل 15 ثانية (بدلاً من دقيقة لزيادة الدقة)
+            setInterval(updateNextPrayer, 15000);
             
             // تحديث العد التنازلي كل ثانية
             setInterval(updateCountdownOnly, 1000);
@@ -1329,8 +1345,8 @@
             
             // محاولة قراءة الموقع من localStorage
             const savedLocation = localStorage.getItem('selectedCity') || 
-                                  localStorage.getItem('userLocation') ||
-                                  localStorage.getItem('locationName');
+                                localStorage.getItem('userLocation') ||
+                                localStorage.getItem('locationName');
             
             if (savedLocation) {
                 try {
@@ -1345,7 +1361,7 @@
         }
 
         // ========================================
-        // ⭐ تحميل أوقات الصلاة من localStorage
+        // تحميل أوقات الصلاة من localStorage
         // ========================================
         function loadPrayerTimes() {
             const stored = localStorage.getItem('prayerTimes');
@@ -1443,14 +1459,14 @@
         }
 
         // ========================================
-        // بدء مراقبة أوقات الصلاة
+        // بدء مراقبة أوقات الصلاة (تم تصليح الفاصل الزمني ليعمل كل 15 ثانية)
         // ========================================
         function startPrayerMonitoring() {
             if (prayerCheckInterval) {
                 clearInterval(prayerCheckInterval);
             }
             
-            prayerCheckInterval = setInterval(checkPrayerTime, 30000);
+            prayerCheckInterval = setInterval(checkPrayerTime, 15000);
             checkPrayerTime();
             
             console.log('🕌 بدء مراقبة أوقات الصلاة');
@@ -1468,7 +1484,15 @@
         }
 
         // ========================================
-        // التحقق من وقت الصلاة
+        // تحويل وقت HH:MM إلى دقائق منذ منتصف الليل للمقارنة الدقيقة
+        // ========================================
+        function timeToMinutes(timeStr) {
+            const [hours, minutes] = timeStr.split(':').map(Number);
+            return hours * 60 + minutes;
+        }
+
+        // ========================================
+        // التحقق من وقت الصلاة (تم التصليح بالكامل)
         // ========================================
         function checkPrayerTime() {
             if (!adhanEnabled) return;
@@ -1477,7 +1501,7 @@
             if (!times) return;
 
             const now = new Date();
-            const currentTime = formatTime(now);
+            const currentMinutes = timeToMinutes(formatTime(now));
             const today = formatDate(now);
 
             const prayers = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'];
@@ -1486,13 +1510,19 @@
                 const prayerTime = times[prayer];
                 if (!prayerTime) continue;
 
-                if (currentTime === prayerTime) {
+                const prayerMinutes = timeToMinutes(prayerTime);
+                const timeDifference = currentMinutes - prayerMinutes;
+                
+                // التحقق: الوقت الحالي ضمن نافذة التسامح (بعد وقت الصلاة بأقل من 2 دقيقة)
+                // والصلاة لم يتم تشغيل الأذان لها اليوم
+                if (timeDifference >= 0 && timeDifference < TIME_TOLERANCE_MINUTES) {
                     const prayerKey = `${today}_${prayer}`;
                     
                     if (lastPlayedPrayer !== prayerKey) {
                         triggerAdhan(prayer, prayerTime);
                         lastPlayedPrayer = prayerKey;
                         localStorage.setItem('lastPlayedPrayer', prayerKey);
+                        console.log(`✅ تم تشغيل الأذان لصلاة ${prayerNames[prayer]}`);
                     }
                 }
             }
@@ -1504,11 +1534,11 @@
         function triggerAdhan(prayerKey, prayerTime) {
             const prayerName = prayerNames[prayerKey];
             
-            console.log(`🕌 حان وقت صلاة ${prayerName}`);
+            console.log(`🕌 حان وقت صلاة ${prayerName} - ${prayerTime}`);
             
             let adhanToPlay = selectedAdhanId;
             
-            if (prayerKey === 'fajr') {
+            if (prayerKey === 'fajr' && localStorage.getItem('fajrAdhanEnabled') !== 'false') {
                 adhanToPlay = 'fajr_makkah';
             }
             
@@ -1524,9 +1554,11 @@
             if ('Notification' in window && Notification.permission === 'granted') {
                 const notification = new Notification('حان الآن موعد الأذان', {
                     body: `صلاة ${prayerName} - ${prayerTime}`,
-                    icon: '🕌',
+                    icon: '/images/icon-192.png',
+                    badge: '/images/icon-192.png',
                     tag: 'adhan-notification',
-                    requireInteraction: true
+                    requireInteraction: true,
+                    sound: adhanDatabase[selectedAdhanId].url
                 });
                 
                 notification.onclick = function() {
@@ -1563,11 +1595,12 @@
             audio.src = adhan.url;
             audio.play().catch(err => {
                 console.error('خطأ في تشغيل الأذان:', err);
+                showToast('تعذر تشغيل الأذان، يرجى التفاعل مع الصفحة أولاً');
             });
         }
 
         // ========================================
-        // ⭐ تحديث الصلاة القادمة
+        // تحديث الصلاة القادمة
         // ========================================
         function updateNextPrayer() {
             const times = getPrayerTimes();
@@ -1579,7 +1612,7 @@
             }
 
             const now = new Date();
-            const currentMinutes = now.getHours() * 60 + now.getMinutes();
+            const currentMinutes = timeToMinutes(formatTime(now));
             
             const prayers = [
                 { key: 'fajr', name: 'الفجر', time: times.fajr },
@@ -1587,14 +1620,12 @@
                 { key: 'asr', name: 'العصر', time: times.asr },
                 { key: 'maghrib', name: 'المغرب', time: times.maghrib },
                 { key: 'isha', name: 'العشاء', time: times.isha }
-            ].filter(p => p.time); // تصفية الصلوات بدون وقت
+            ].filter(p => p.time);
 
             let nextPrayer = null;
             
             for (const prayer of prayers) {
-                const [hours, minutes] = prayer.time.split(':').map(Number);
-                const prayerMinutes = hours * 60 + minutes;
-                
+                const prayerMinutes = timeToMinutes(prayer.time);
                 if (prayerMinutes > currentMinutes) {
                     nextPrayer = prayer;
                     break;
@@ -1682,7 +1713,7 @@
         }
 
         // ========================================
-        // طلب إذن الإشعارات
+        // طلب إذن الإشعارات (تم التصليح ليطلب فقط بعد نقرة مستخدم)
         // ========================================
         function requestNotificationPermission() {
             if (!('Notification' in window)) {
@@ -1695,7 +1726,7 @@
                     showToast('تم تفعيل الإشعارات ✓');
                     document.getElementById('permission-notice').classList.remove('show');
                 } else {
-                    showToast('تم رفض الإشعارات - الصوت سيعمل فقط');
+                    showToast('تم رفض الإشعارات - الصوت سيعمل فقط إذا كان التطبيق مفتوحاً');
                 }
             });
         }
@@ -1852,7 +1883,7 @@
         });
 
         // ========================================
-        // التحقق عند العودة للصفحة
+        // التحقق عند العودة للصفحة: قم بفحص أوقات الصلاة فوراً
         // ========================================
         document.addEventListener('visibilitychange', () => {
             if (!document.hidden) {
@@ -1862,10 +1893,11 @@
                 
                 if (adhanEnabled) {
                     checkPrayerTime();
+                    console.log('📱 عاد المستخدم للتطبيق، تم إعادة فحص أوقات الصلاة');
                 }
             }
         });
+       
     </script>
-
 </body>
 </html>
